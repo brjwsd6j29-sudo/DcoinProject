@@ -10,9 +10,9 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
 
 # ══════════ НАСТРОЙКИ ══════════
-BOT_TOKEN   = "СЮДА_ТОКЕН_ОТ_BOTFATHER"
-ADMIN_ID    = 123456789                        # свой ID (узнать: @userinfobot)
-WEBAPP_URL  = "https://ТВОЙ-САЙТ.netlify.app"  # адрес сайта с Netlify
+BOT_TOKEN   = "7688724556:AAGUWmLvh1V4lVnEbifjIpZTcFUqGLQlRFs"
+ADMIN_ID    = 7895911575                        # свой ID (узнать: @userinfobot)
+WEBAPP_URL  = "https://dcoinproject.netlify.app"  # адрес сайта с Netlify
 DAILY       = 500
 START_BAL   = 1000
 
