@@ -2,8 +2,11 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>CoinPlay</title>
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+>
+<title>File Studio</title>
 <style>
 *{
     box-sizing:border-box;
@@ -11,1103 +14,1386 @@
     padding:0;
     -webkit-tap-highlight-color:transparent;
 }
+:root{
+    --bg:#070910;
+    --panel:#10131d;
+    --panel2:#151925;
+    --border:#252b3d;
+    --text:#f4f6ff;
+    --muted:#858da3;
+    --accent:#6d72ff;
+    --accent2:#9b54ff;
+    --green:#4de3a4;
+    --red:#ff637b;
+    --blue:#61dfff;
+}
+html{
+    scroll-behavior:smooth;
+}
 body{
-    font-family:Arial,sans-serif;
     min-height:100vh;
-    color:#fff;
+    color:var(--text);
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
     background:
-        radial-gradient(circle at top,#20295c 0%,#0b0e1b 45%,#05060b 100%);
+        radial-gradient(
+            circle at 15% 0%,
+            rgba(100,110,255,.22),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(150,70,255,.15),
+            transparent 28%
+        ),
+        var(--bg);
 }
-button,input{
-    font-family:inherit;
-}
-.hidden{
-    display:none!important;
-}
-/* AUTH */
-.auth{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:20px;
-}
-.auth-box{
+/* ==============================
+   APP
+============================== */
+.app{
     width:100%;
-    max-width:400px;
-    padding:28px;
-    border-radius:25px;
-    background:rgba(255,255,255,.07);
-    border:1px solid rgba(255,255,255,.1);
-    backdrop-filter:blur(20px);
-    box-shadow:0 20px 60px rgba(0,0,0,.35);
-}
-.logo{
-    text-align:center;
-    font-size:30px;
-    font-weight:900;
-    margin-bottom:8px;
-}
-.auth-sub{
-    text-align:center;
-    color:#9298ae;
-    margin-bottom:25px;
-}
-.input{
-    width:100%;
-    padding:15px;
-    margin-bottom:12px;
-    border-radius:14px;
-    border:1px solid #303750;
-    outline:none;
-    background:#101424;
-    color:#fff;
-    font-size:16px;
-}
-.input:focus{
-    border-color:#6873ff;
-}
-.btn{
-    width:100%;
-    padding:15px;
-    border:0;
-    border-radius:14px;
-    color:#fff;
-    background:linear-gradient(135deg,#5967ff,#9c4cff);
-    font-weight:900;
-    font-size:16px;
-    cursor:pointer;
-}
-.btn:active{
-    transform:scale(.98);
-}
-.switch{
-    text-align:center;
-    margin-top:18px;
-    color:#8f96ad;
-    cursor:pointer;
-}
-.switch b{
-    color:#6ce5ff;
-}
-.error{
-    min-height:20px;
-    color:#ff6b81;
-    text-align:center;
-    margin-bottom:10px;
-}
-/* APP */
-.container{
-    max-width:900px;
+    max-width:1200px;
     margin:auto;
     padding:18px;
 }
+/* ==============================
+   HEADER
+============================== */
 .header{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    gap:10px;
-    padding:15px;
-    border-radius:20px;
-    background:rgba(255,255,255,.07);
-    border:1px solid rgba(255,255,255,.08);
-    margin-bottom:15px;
+    gap:15px;
+    padding:18px 20px;
+    margin-bottom:16px;
+    border:1px solid var(--border);
+    border-radius:22px;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.07),
+            rgba(255,255,255,.025)
+        );
+    backdrop-filter:blur(18px);
 }
-.header-logo{
-    font-size:22px;
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+.brand-icon{
+    width:46px;
+    height:46px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:14px;
+    font-size:23px;
+    background:
+        linear-gradient(
+            135deg,
+            var(--accent),
+            var(--accent2)
+        );
+    box-shadow:
+        0 10px 30px rgba(100,90,255,.25);
+}
+.brand-title{
+    font-size:21px;
     font-weight:900;
 }
-.balance{
-    background:rgba(255,255,255,.08);
-    padding:10px 14px;
-    border-radius:14px;
+.brand-subtitle{
+    color:var(--muted);
+    font-size:13px;
+    margin-top:2px;
+}
+.header-status{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:var(--green);
+    font-size:13px;
     font-weight:bold;
 }
-.balance span{
-    color:#63e7ff;
+.status-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 12px var(--green);
 }
-.profile{
-    background:rgba(255,255,255,.07);
-    padding:14px;
-    border-radius:18px;
-    margin-bottom:15px;
+/* ==============================
+   GRID
+============================== */
+.main-grid{
+    display:grid;
+    grid-template-columns:
+        minmax(0, 1fr)
+        350px;
+    gap:16px;
+}
+/* ==============================
+   PANEL
+============================== */
+.panel{
+    border:1px solid var(--border);
+    border-radius:22px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.02)
+        );
+    overflow:hidden;
+}
+.panel-header{
     display:flex;
     justify-content:space-between;
     align-items:center;
+    padding:18px 20px;
+    border-bottom:1px solid var(--border);
 }
-.username{
+.panel-title{
+    font-size:18px;
+    font-weight:900;
+}
+.panel-description{
+    color:var(--muted);
+    font-size:12px;
+    margin-top:3px;
+}
+/* ==============================
+   EDITOR
+============================== */
+.editor-panel{
+    min-width:0;
+}
+.editor-wrap{
+    padding:15px;
+}
+textarea{
+    width:100%;
+    min-height:570px;
+    resize:vertical;
+    padding:18px;
+    border:1px solid var(--border);
+    border-radius:17px;
+    outline:none;
+    background:#090c14;
+    color:#e8ebf7;
+    font-family:
+        "SFMono-Regular",
+        Consolas,
+        "Liberation Mono",
+        monospace;
+    font-size:14px;
+    line-height:1.65;
+    tab-size:4;
+}
+textarea:focus{
+    border-color:#555cff;
+    box-shadow:
+        0 0 0 3px rgba(90,90,255,.08);
+}
+.editor-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:10px;
+    color:var(--muted);
+    font-size:12px;
+}
+.stats{
+    display:flex;
+    gap:15px;
+}
+/* ==============================
+   SIDE
+============================== */
+.side{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+}
+.section{
+    padding:18px;
+}
+.section-title{
+    font-size:16px;
+    font-weight:900;
+    margin-bottom:14px;
+}
+label{
+    display:block;
+    color:#b3b9ca;
+    font-size:12px;
     font-weight:bold;
+    margin-bottom:7px;
 }
-.logout{
-    border:0;
-    padding:8px 12px;
-    border-radius:10px;
-    background:#292d40;
-    color:#fff;
-    cursor:pointer;
+.input,
+select{
+    width:100%;
+    padding:13px 14px;
+    border:1px solid var(--border);
+    border-radius:13px;
+    outline:none;
+    background:#0b0f18;
+    color:white;
+    font-size:15px;
+    margin-bottom:14px;
 }
-.tabs{
+.input:focus,
+select:focus{
+    border-color:#6268ff;
+}
+/* ==============================
+   FORMAT
+============================== */
+.format-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:10px;
-    margin-bottom:15px;
+    gap:8px;
+    margin-bottom:14px;
 }
-.tabs button{
-    padding:16px;
-    border-radius:15px;
-    border:1px solid rgba(255,255,255,.08);
-    background:rgba(255,255,255,.07);
-    color:#fff;
-    font-size:16px;
+.format-btn{
+    padding:12px 8px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:#0c1019;
+    color:#aeb4c7;
+    cursor:pointer;
     font-weight:bold;
 }
-.tabs button.active{
-    background:linear-gradient(135deg,#5967ff,#984dff);
+.format-btn.active{
+    background:
+        linear-gradient(
+            135deg,
+            rgba(105,110,255,.25),
+            rgba(155,80,255,.22)
+        );
+    border-color:#666cff;
+    color:white;
 }
-.game{
-    display:none;
-    padding:18px;
-    border-radius:22px;
-    background:rgba(255,255,255,.055);
-    border:1px solid rgba(255,255,255,.08);
+/* ==============================
+   BUTTONS
+============================== */
+.buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:9px;
 }
-.game.active{
-    display:block;
+.btn{
+    border:0;
+    border-radius:13px;
+    padding:14px 10px;
+    color:white;
+    font-size:14px;
+    font-weight:900;
+    cursor:pointer;
+    transition:.15s;
 }
-.title{
-    font-size:25px;
+.btn:active{
+    transform:scale(.97);
+}
+.btn-primary{
+    background:
+        linear-gradient(
+            135deg,
+            var(--accent),
+            var(--accent2)
+        );
+}
+.btn-secondary{
+    background:#202535;
+}
+.btn-telegram{
+    grid-column:1 / -1;
+    background:
+        linear-gradient(
+            135deg,
+            #229ed9,
+            #167fc0
+        );
+}
+.btn-danger{
+    background:#38202a;
+    color:#ff8797;
+}
+/* ==============================
+   TELEGRAM
+============================== */
+.telegram-box{
+    border:1px solid rgba(50,160,220,.2);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(34,158,217,.07),
+            rgba(34,158,217,.025)
+        );
+}
+.telegram-title{
+    display:flex;
+    align-items:center;
+    gap:8px;
     font-weight:900;
     margin-bottom:5px;
 }
-.desc{
-    color:#9298ae;
-    margin-bottom:18px;
-}
-.bet-area{
-    display:flex;
-    gap:10px;
+.telegram-info{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.5;
     margin-bottom:15px;
 }
-.bet{
-    flex:1;
-    padding:14px;
-    background:#101424;
-    border:1px solid #303750;
-    border-radius:14px;
-    color:#fff;
-    outline:none;
-    font-size:16px;
-}
-.quick{
-    display:flex;
-    gap:7px;
-    margin-bottom:15px;
-}
-.quick button{
-    flex:1;
-    padding:10px 5px;
-    border:0;
-    border-radius:10px;
-    background:#20263a;
-    color:#fff;
-    cursor:pointer;
-}
-.main-btn{
-    width:100%;
-    padding:15px;
-    border:0;
-    border-radius:14px;
-    color:#fff;
-    background:linear-gradient(135deg,#5967ff,#9c4cff);
-    font-size:16px;
-    font-weight:900;
-    cursor:pointer;
-}
-.main-btn:disabled{
-    opacity:.45;
-}
-/* PLINKO */
-canvas{
-    display:block;
-    width:100%;
-    height:auto;
-    border-radius:18px;
-    background:#080b15;
-    border:1px solid rgba(255,255,255,.08);
-    margin-bottom:15px;
-}
-.result{
-    text-align:center;
-    min-height:25px;
-    margin-top:13px;
-    font-weight:bold;
-}
-/* CRASH */
-.crash-box{
-    height:390px;
-    position:relative;
-    overflow:hidden;
-    border-radius:18px;
-    background:linear-gradient(180deg,#111831,#080a12);
-    border:1px solid rgba(255,255,255,.08);
-}
-.grid{
-    position:absolute;
-    inset:0;
-    background-image:
-        linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
-    background-size:45px 45px;
-}
-.crash-number{
-    position:absolute;
-    z-index:3;
-    top:40%;
-    width:100%;
-    text-align:center;
-    font-size:55px;
-    font-weight:900;
-}
-.crash-number span{
-    color:#63e7ff;
-}
-.rocket{
-    position:absolute;
-    z-index:4;
-    left:12%;
-    bottom:13%;
-    font-size:45px;
-    transform:rotate(-25deg);
-    transition:.08s linear;
-}
-.line{
-    position:absolute;
-    z-index:2;
-    left:8%;
-    bottom:19%;
-    height:3px;
-    width:0;
-    background:#63e7ff;
-    box-shadow:0 0 15px #63e7ff;
-}
-.crash-buttons{
+/* ==============================
+   INFO
+============================== */
+.info-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:10px;
-    margin-top:15px;
+    gap:8px;
 }
-.status{
-    text-align:center;
-    color:#9ca3bb;
-    margin-top:12px;
+.info{
+    padding:12px;
+    border-radius:12px;
+    background:rgba(255,255,255,.035);
 }
-.history{
-    margin-top:20px;
+.info-name{
+    color:var(--muted);
+    font-size:11px;
 }
-.history-title{
+.info-value{
+    margin-top:4px;
+    font-size:14px;
     font-weight:bold;
-    margin-bottom:10px;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
-.history-item{
-    padding:11px;
-    border-radius:11px;
-    background:rgba(255,255,255,.05);
-    margin-bottom:7px;
-    color:#c4c8d5;
+/* ==============================
+   NOTIFICATION
+============================== */
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:20px;
+    transform:
+        translate(-50%, 30px);
+    opacity:0;
+    pointer-events:none;
+    min-width:250px;
+    max-width:90%;
+    padding:14px 17px;
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:#171b28;
+    box-shadow:
+        0 15px 50px rgba(0,0,0,.4);
+    text-align:center;
+    font-size:14px;
+    font-weight:bold;
+    transition:.25s;
+    z-index:100;
+}
+.toast.show{
+    transform:
+        translate(-50%, 0);
+    opacity:1;
+}
+.toast.success{
+    border-color:rgba(77,227,164,.4);
+}
+.toast.error{
+    border-color:rgba(255,99,123,.4);
+}
+/* ==============================
+   MODAL
+============================== */
+.modal{
+    position:fixed;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(0,0,0,.65);
+    backdrop-filter:blur(8px);
+    z-index:90;
+}
+.modal.show{
+    display:flex;
+}
+.modal-box{
+    width:100%;
+    max-width:450px;
+    padding:23px;
+    border:1px solid var(--border);
+    border-radius:22px;
+    background:#111521;
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.5);
+}
+.modal-title{
+    font-size:20px;
+    font-weight:900;
+    margin-bottom:8px;
+}
+.modal-text{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.6;
+    margin-bottom:17px;
+}
+.modal-buttons{
+    display:flex;
+    gap:9px;
+}
+/* ==============================
+   MOBILE
+============================== */
+@media(max-width:850px){
+    .main-grid{
+        grid-template-columns:1fr;
+    }
+    textarea{
+        min-height:450px;
+    }
 }
 @media(max-width:600px){
-    .container{
-        padding:12px;
+    .app{
+        padding:10px;
     }
-    .header-logo{
-        font-size:19px;
+    .header{
+        padding:14px;
+        border-radius:18px;
     }
-    .balance{
-        font-size:14px;
+    .brand-icon{
+        width:40px;
+        height:40px;
     }
-    .game{
-        padding:13px;
+    .brand-title{
+        font-size:18px;
     }
-    .crash-box{
-        height:320px;
+    .header-status{
+        font-size:11px;
     }
-    .crash-number{
-        font-size:45px;
+    .panel{
+        border-radius:18px;
     }
-    .rocket{
-        font-size:38px;
+    .panel-header{
+        padding:15px;
     }
-    .bet-area{
-        flex-direction:column;
+    .editor-wrap{
+        padding:10px;
     }
+    textarea{
+        min-height:390px;
+        padding:14px;
+        font-size:13px;
+    }
+    .section{
+        padding:15px;
+    }
+    .buttons{
+        grid-template-columns:1fr;
+    }
+    .btn-telegram{
+        grid-column:auto;
+    }
+}
+/* ==============================
+   SCROLLBAR
+============================== */
+::-webkit-scrollbar{
+    width:8px;
+    height:8px;
+}
+::-webkit-scrollbar-track{
+    background:#080a10;
+}
+::-webkit-scrollbar-thumb{
+    background:#2a3042;
+    border-radius:20px;
+}
+::-webkit-scrollbar-thumb:hover{
+    background:#3a4259;
 }
 </style>
 </head>
 <body>
-<!-- AUTH -->
-<div id="auth" class="auth">
-    <div class="auth-box">
-        <div class="logo">🎮 CoinPlay</div>
-        <div class="auth-sub">
-            Игровая платформа
-        </div>
-        <!-- LOGIN -->
-        <div id="loginForm">
-            <input
-                id="loginUser"
-                class="input"
-                placeholder="Логин"
-                autocomplete="username"
-            >
-            <input
-                id="loginPass"
-                class="input"
-                type="password"
-                placeholder="Пароль"
-                autocomplete="current-password"
-            >
-            <div id="loginError" class="error"></div>
-            <button class="btn" onclick="login()">
-                ВОЙТИ
-            </button>
-            <div class="switch" onclick="showRegister()">
-                Нет аккаунта?
-                <b>Регистрация</b>
-            </div>
-        </div>
-        <!-- REGISTER -->
-        <div id="registerForm" class="hidden">
-            <input
-                id="regUser"
-                class="input"
-                placeholder="Придумай логин"
-            >
-            <input
-                id="regPass"
-                class="input"
-                type="password"
-                placeholder="Придумай пароль"
-            >
-            <input
-                id="regPass2"
-                class="input"
-                type="password"
-                placeholder="Повтори пароль"
-            >
-            <div id="regError" class="error"></div>
-            <button class="btn" onclick="register()">
-                СОЗДАТЬ АККАУНТ
-            </button>
-            <div class="switch" onclick="showLogin()">
-                Уже есть аккаунт?
-                <b>Войти</b>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- APP -->
-<div id="app" class="hidden">
-<div class="container">
+<div class="app">
+    <!-- HEADER -->
     <header class="header">
-        <div class="header-logo">
-            🎮 CoinPlay
+        <div class="brand">
+            <div class="brand-icon">
+                📄
+            </div>
+            <div>
+                <div class="brand-title">
+                    File Studio
+                </div>
+                <div class="brand-subtitle">
+                    Текст → готовый файл
+                </div>
+            </div>
         </div>
-        <div class="balance">
-            🪙 <span id="balance">10000</span>
+        <div class="header-status">
+            <div class="status-dot"></div>
+            Готово
         </div>
     </header>
-    <div class="profile">
-        <div>
-            👤 <span class="username" id="profileName"></span>
-        </div>
-        <button class="logout" onclick="logout()">
-            Выйти
-        </button>
-    </div>
-    <div class="tabs">
-        <button
-            id="tabPlinko"
-            class="active"
-            onclick="openGame('plinko')"
-        >
-            🔵 PLINKO
-        </button>
-        <button
-            id="tabCrash"
-            onclick="openGame('crash')"
-        >
-            🚀 CRASH
-        </button>
-    </div>
-    <!-- PLINKO -->
-    <section id="plinko" class="game active">
-        <div class="title">🔵 Plinko</div>
-        <div class="desc">
-            Запусти шарик и получи очки за результат.
-        </div>
-        <canvas
-            id="plinkoCanvas"
-            width="650"
-            height="570"
-        ></canvas>
-        <div class="bet-area">
-            <input
-                id="plinkoBet"
-                class="bet"
-                type="number"
-                min="1"
-                placeholder="Количество коинов"
-            >
-        </div>
-        <div class="quick">
-            <button onclick="setBet('plinkoBet',100)">
-                100
-            </button>
-            <button onclick="setBet('plinkoBet',500)">
-                500
-            </button>
-            <button onclick="setBet('plinkoBet',1000)">
-                1K
-            </button>
-            <button onclick="setHalf('plinkoBet')">
-                1/2
-            </button>
-            <button onclick="setAll('plinkoBet')">
-                MAX
-            </button>
-        </div>
-        <button
-            id="plinkoStart"
-            class="main-btn"
-            onclick="startPlinko()"
-        >
-            ЗАПУСТИТЬ
-        </button>
-        <div
-            id="plinkoResult"
-            class="result"
-        >
-            Сделай ставку и запусти игру
-        </div>
-    </section>
-    <!-- CRASH -->
-    <section id="crash" class="game">
-        <div class="title">🚀 Crash</div>
-        <div class="desc">
-            Запусти раунд и останови его в нужный момент.
-        </div>
-        <div class="bet-area">
-            <input
-                id="crashBet"
-                class="bet"
-                type="number"
-                min="1"
-                placeholder="Количество коинов"
-            >
-        </div>
-        <div class="quick">
-            <button onclick="setBet('crashBet',100)">
-                100
-            </button>
-            <button onclick="setBet('crashBet',500)">
-                500
-            </button>
-            <button onclick="setBet('crashBet',1000)">
-                1K
-            </button>
-            <button onclick="setHalf('crashBet')">
-                1/2
-            </button>
-            <button onclick="setAll('crashBet')">
-                MAX
-            </button>
-        </div>
-        <div class="crash-box">
-            <div class="grid"></div>
-            <div class="crash-number">
-                <span id="crashMultiplier">1.00x</span>
+    <div class="main-grid">
+        <!-- EDITOR -->
+        <main class="panel editor-panel">
+            <div class="panel-header">
+                <div>
+                    <div class="panel-title">
+                        📝 Редактор
+                    </div>
+                    <div class="panel-description">
+                        Вставь или напиши текст
+                    </div>
+                </div>
+                <button
+                    class="btn btn-secondary"
+                    onclick="clearEditor()"
+                    style="padding:9px 12px"
+                >
+                    Очистить
+                </button>
             </div>
-            <div
-                id="rocket"
-                class="rocket"
-            >
-                🚀
+            <div class="editor-wrap">
+                <textarea
+                    id="editor"
+                    spellcheck="false"
+                    placeholder="Вставь сюда большой текст...
+Например:
+Привет!
+Это мой файл.
+Можно вставлять:
+• обычный текст
+• код
+• JSON
+• HTML
+• Markdown
+После этого выбери формат и скачай файл."
+                ></textarea>
+                <div class="editor-bottom">
+                    <div class="stats">
+                        <span>
+                            Символов:
+                            <b id="chars">0</b>
+                        </span>
+                        <span>
+                            Строк:
+                            <b id="lines">0</b>
+                        </span>
+                    </div>
+                    <span>
+                        Размер:
+                        <b id="size">0 B</b>
+                    </span>
+                </div>
             </div>
-            <div
-                id="crashLine"
-                class="line"
-            ></div>
-        </div>
-        <div class="crash-buttons">
-            <button
-                id="crashStart"
-                class="main-btn"
-                onclick="startCrash()"
-            >
-                🚀 СТАРТ
-            </button>
-            <button
-                id="crashStop"
-                class="main-btn"
-                onclick="stopCrash()"
-                disabled
-            >
-                🛑 ЗАБРАТЬ
-            </button>
-        </div>
-        <div
-            id="crashStatus"
-            class="status"
-        >
-            Сделай ставку и начни раунд
-        </div>
-    </section>
-    <!-- HISTORY -->
-    <div class="history">
-        <div class="history-title">
-            📜 История
-        </div>
-        <div id="historyList"></div>
+        </main>
+        <!-- SIDE -->
+        <aside class="side">
+            <!-- FILE SETTINGS -->
+            <section class="panel">
+                <div class="section">
+                    <div class="section-title">
+                        📁 Настройки файла
+                    </div>
+                    <label>
+                        Название файла
+                    </label>
+                    <input
+                        id="fileName"
+                        class="input"
+                        value="my_file"
+                        placeholder="Название файла"
+                    >
+                    <label>
+                        Формат
+                    </label>
+                    <div class="format-grid">
+                        <button
+                            class="format-btn active"
+                            data-format="txt"
+                            onclick="selectFormat('txt')"
+                        >
+                            TXT
+                        </button>
+                        <button
+                            class="format-btn"
+                            data-format="html"
+                            onclick="selectFormat('html')"
+                        >
+                            HTML
+                        </button>
+                        <button
+                            class="format-btn"
+                            data-format="json"
+                            onclick="selectFormat('json')"
+                        >
+                            JSON
+                        </button>
+                        <button
+                            class="format-btn"
+                            data-format="md"
+                            onclick="selectFormat('md')"
+                        >
+                            MD
+                        </button>
+                    </div>
+                    <div class="info-grid">
+                        <div class="info">
+                            <div class="info-name">
+                                Формат
+                            </div>
+                            <div
+                                class="info-value"
+                                id="formatInfo"
+                            >
+                                .txt
+                            </div>
+                        </div>
+                        <div class="info">
+                            <div class="info-name">
+                                Размер
+                            </div>
+                            <div
+                                class="info-value"
+                                id="sizeInfo"
+                            >
+                                0 B
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- ACTIONS -->
+            <section class="panel">
+                <div class="section">
+                    <div class="section-title">
+                        ⚡ Действия
+                    </div>
+                    <div class="buttons">
+                        <button
+                            class="btn btn-primary"
+                            onclick="downloadFile()"
+                        >
+                            ⬇️ Скачать
+                        </button>
+                        <button
+                            class="btn btn-secondary"
+                            onclick="copyText()"
+                        >
+                            📋 Копировать
+                        </button>
+                        <button
+                            class="btn btn-secondary"
+                            onclick="saveDraft()"
+                        >
+                            💾 Сохранить
+                        </button>
+                        <button
+                            class="btn btn-secondary"
+                            onclick="loadDraft()"
+                        >
+                            📂 Загрузить
+                        </button>
+                    </div>
+                </div>
+            </section>
+            <!-- TELEGRAM -->
+            <section class="panel telegram-box">
+                <div class="section">
+                    <div class="telegram-title">
+                        ✈️ Telegram
+                    </div>
+                    <div class="telegram-info">
+                        Укажи токен бота и ID чата.
+                        Файл будет отправлен как документ.
+                    </div>
+                    <label>
+                        Bot Token
+                    </label>
+                    <input
+                        id="botToken"
+                        class="input"
+                        type="password"
+                        placeholder="123456789:AA..."
+                    >
+                    <label>
+                        Chat ID
+                    </label>
+                    <input
+                        id="chatId"
+                        class="input"
+                        placeholder="-1001234567890"
+                    >
+                    <button
+                        class="btn btn-telegram"
+                        id="telegramBtn"
+                        onclick="sendTelegram()"
+                    >
+                        ✈️ ОТПРАВИТЬ В TELEGRAM
+                    </button>
+                </div>
+            </section>
+            <!-- HELP -->
+            <section class="panel">
+                <div class="section">
+                    <div class="section-title">
+                        ℹ️ Информация
+                    </div>
+                    <div
+                        style="
+                        color:#858da3;
+                        font-size:12px;
+                        line-height:1.65;
+                        "
+                    >
+                        Файл создаётся прямо в браузере.
+                        <br><br>
+                        TXT — обычный текст.
+                        <br>
+                        HTML — веб-страница.
+                        <br>
+                        JSON — данные в формате JSON.
+                        <br>
+                        MD — Markdown.
+                        <br><br>
+                        Данные редактора автоматически
+                        сохраняются локально как черновик.
+                    </div>
+                </div>
+            </section>
+        </aside>
     </div>
 </div>
+<!-- TOAST -->
+<div
+    id="toast"
+    class="toast"
+>
+</div>
+<!-- MODAL -->
+<div
+    id="confirmModal"
+    class="modal"
+>
+    <div class="modal-box">
+        <div class="modal-title">
+            ⚠️ Очистить редактор?
+        </div>
+        <div class="modal-text">
+            Весь текущий текст будет удалён
+            из редактора.
+        </div>
+        <div class="modal-buttons">
+            <button
+                class="btn btn-secondary"
+                onclick="closeModal()"
+                style="flex:1"
+            >
+                Отмена
+            </button>
+            <button
+                class="btn btn-danger"
+                onclick="confirmClear()"
+                style="flex:1"
+            >
+                Очистить
+            </button>
+        </div>
+    </div>
 </div>
 <script>
-/* ==============================
-   USERS / LOCAL DATABASE
-============================== */
-let users =
-    JSON.parse(localStorage.getItem("coinplay_users") || "{}");
-let currentUser =
-    localStorage.getItem("coinplay_current");
-function saveUsers(){
-    localStorage.setItem(
-        "coinplay_users",
-        JSON.stringify(users)
-    );
-}
-function showLogin(){
-    document.getElementById("loginForm")
-        .classList.remove("hidden");
-    document.getElementById("registerForm")
-        .classList.add("hidden");
-}
-function showRegister(){
-    document.getElementById("loginForm")
-        .classList.add("hidden");
-    document.getElementById("registerForm")
-        .classList.remove("hidden");
-}
-function register(){
-    const username =
-        document.getElementById("regUser")
-        .value.trim();
-    const password =
-        document.getElementById("regPass")
-        .value;
-    const password2 =
-        document.getElementById("regPass2")
-        .value;
-    const error =
-        document.getElementById("regError");
-    error.textContent = "";
-    if(username.length < 3){
-        error.textContent =
-            "Логин должен быть минимум 3 символа";
-        return;
-    }
-    if(password.length < 4){
-        error.textContent =
-            "Пароль должен быть минимум 4 символа";
-        return;
-    }
-    if(password !== password2){
-        error.textContent =
-            "Пароли не совпадают";
-        return;
-    }
-    if(users[username]){
-        error.textContent =
-            "Такой пользователь уже существует";
-        return;
-    }
-    users[username] = {
-        password: password,
-        balance: 10000,
-        history: []
-    };
-    saveUsers();
-    currentUser = username;
-    localStorage.setItem(
-        "coinplay_current",
-        currentUser
-    );
-    showApp();
-}
-function login(){
-    const username =
-        document.getElementById("loginUser")
-        .value.trim();
-    const password =
-        document.getElementById("loginPass")
-        .value;
-    const error =
-        document.getElementById("loginError");
-    error.textContent = "";
-    if(!users[username]){
-        error.textContent =
-            "Пользователь не найден";
-        return;
-    }
-    if(users[username].password !== password){
-        error.textContent =
-            "Неверный пароль";
-        return;
-    }
-    currentUser = username;
-    localStorage.setItem(
-        "coinplay_current",
-        currentUser
-    );
-    showApp();
-}
-function logout(){
-    localStorage.removeItem(
-        "coinplay_current"
-    );
-    currentUser = null;
-    document.getElementById("app")
-        .classList.add("hidden");
-    document.getElementById("auth")
-        .classList.remove("hidden");
-}
-/* ==============================
-   USER
-============================== */
-function getUser(){
-    return users[currentUser];
-}
-function saveUser(){
-    saveUsers();
-}
-function updateBalance(){
-    const user = getUser();
-    document.getElementById("balance")
-        .textContent =
-        Math.floor(user.balance)
-        .toLocaleString("ru-RU");
-}
-function showApp(){
-    if(!currentUser || !users[currentUser]){
-        return;
-    }
-    document.getElementById("auth")
-        .classList.add("hidden");
-    document.getElementById("app")
-        .classList.remove("hidden");
-    document.getElementById("profileName")
-        .textContent = currentUser;
-    updateBalance();
-    renderHistory();
-}
-/* ==============================
-   BET
-============================== */
-function getBet(id){
-    let value =
-        Number(document.getElementById(id).value);
-    if(!Number.isFinite(value)){
-        return 0;
-    }
-    value = Math.floor(value);
-    return value;
-}
-function checkBet(amount){
-    const user = getUser();
-    if(amount <= 0){
-        alert("Введите ставку");
-        return false;
-    }
-    if(amount > user.balance){
-        alert("Недостаточно коинов");
-        return false;
-    }
-    return true;
-}
-function takeBet(amount){
-    const user = getUser();
-    user.balance -= amount;
-    saveUser();
-    updateBalance();
-}
-function addCoins(amount){
-    const user = getUser();
-    user.balance += amount;
-    saveUser();
-    updateBalance();
-}
-function setBet(id,value){
-    document.getElementById(id)
-        .value = value;
-}
-function setHalf(id){
-    const user = getUser();
-    document.getElementById(id)
-        .value =
-        Math.floor(user.balance / 2);
-}
-function setAll(id){
-    const user = getUser();
-    document.getElementById(id)
-        .value = user.balance;
-}
-/* ==============================
-   HISTORY
-============================== */
-function addHistory(text){
-    const user = getUser();
-    user.history.unshift(text);
-    user.history =
-        user.history.slice(0,20);
-    saveUser();
-    renderHistory();
-}
-function renderHistory(){
-    const list =
-        document.getElementById("historyList");
-    list.innerHTML = "";
-    const user = getUser();
-    if(!user || !user.history.length){
-        list.innerHTML =
-            '<div class="history-item">История пока пустая</div>';
-        return;
-    }
-    user.history.forEach(item => {
-        const div =
-            document.createElement("div");
-        div.className =
-            "history-item";
-        div.textContent = item;
-        list.appendChild(div);
-    });
-}
-/* ==============================
-   TABS
-============================== */
-function openGame(game){
-    document.querySelectorAll(".game")
-        .forEach(x =>
-            x.classList.remove("active")
-        );
-    document.querySelectorAll(".tabs button")
-        .forEach(x =>
-            x.classList.remove("active")
-        );
-    document.getElementById(game)
-        .classList.add("active");
-    if(game === "plinko"){
-        document.getElementById("tabPlinko")
-            .classList.add("active");
-    }else{
-        document.getElementById("tabCrash")
-            .classList.add("active");
-    }
-}
-/* ==============================
-   PLINKO
-============================== */
-const canvas =
-    document.getElementById("plinkoCanvas");
-const ctx =
-    canvas.getContext("2d");
-let pegs = [];
-let ball = null;
-let plinkoRunning = false;
-function createPegs(){
-    pegs = [];
-    for(let row=0;row<10;row++){
-        for(let i=0;i<10;i++){
-            const offset =
-                row % 2 ? 29 : 0;
-            pegs.push({
-                x:70 + i*58 + offset,
-                y:65 + row*43
-            });
-        }
-    }
-}
-function drawPlinko(){
-    ctx.clearRect(
-        0,0,
-        canvas.width,
-        canvas.height
-    );
-    for(const peg of pegs){
-        ctx.beginPath();
-        ctx.arc(
-            peg.x,
-            peg.y,
-            6,
-            0,
-            Math.PI*2
-        );
-        ctx.fillStyle="#8991ad";
-        ctx.fill();
-    }
-    const zones = 9;
-    const width =
-        canvas.width / zones;
-    const points =
-        [100,200,300,500,1000,500,300,200,100];
-    for(let i=0;i<zones;i++){
-        ctx.fillStyle =
-            "rgba(255,255,255,.035)";
-        ctx.fillRect(
-            i*width,
-            505,
-            width-2,
-            60
-        );
-        ctx.fillStyle="#aab0c4";
-        ctx.font="bold 14px Arial";
-        ctx.textAlign="center";
-        ctx.fillText(
-            points[i],
-            i*width + width/2,
-            540
-        );
-    }
-    if(ball){
-        ctx.beginPath();
-        ctx.arc(
-            ball.x,
-            ball.y,
-            10,
-            0,
-            Math.PI*2
-        );
-        ctx.fillStyle="#63e7ff";
-        ctx.shadowBlur=18;
-        ctx.shadowColor="#63e7ff";
-        ctx.fill();
-        ctx.shadowBlur=0;
-    }
-}
-function startPlinko(){
-    if(plinkoRunning) return;
-    const bet =
-        getBet("plinkoBet");
-    if(!checkBet(bet)) return;
-    takeBet(bet);
-    plinkoRunning=true;
-    document.getElementById("plinkoStart")
-        .disabled=true;
-    document.getElementById("plinkoResult")
-        .textContent =
-        "🔵 Шарик падает...";
-    ball={
-        x:canvas.width/2,
-        y:20,
-        vx:0,
-        vy:0
-    };
-    function animate(){
-        if(!ball) return;
-        ball.vy += .27;
-        ball.x += ball.vx;
-        ball.y += ball.vy;
-        if(ball.x<12){
-            ball.x=12;
-            ball.vx*=-.7;
-        }
-        if(ball.x>canvas.width-12){
-            ball.x=canvas.width-12;
-            ball.vx*=-.7;
-        }
-        for(const peg of pegs){
-            const dx =
-                ball.x-peg.x;
-            const dy =
-                ball.y-peg.y;
-            const dist =
-                Math.sqrt(
-                    dx*dx+dy*dy
-                );
-            if(dist<17){
-                ball.y =
-                    peg.y+17;
-                ball.vy =
-                    -Math.abs(ball.vy)*.55;
-                ball.vx +=
-                    (ball.x<peg.x?-1:1)
-                    *(0.35+Math.random());
-                ball.vx +=
-                    (Math.random()-.5)*.5;
+/* ==========================================
+   STATE
+========================================== */
+let selectedFormat = "txt";
+/* ==========================================
+   ELEMENTS
+========================================== */
+const editor =
+    document.getElementById("editor");
+const fileName =
+    document.getElementById("fileName");
+const chars =
+    document.getElementById("chars");
+const lines =
+    document.getElementById("lines");
+const size =
+    document.getElementById("size");
+const sizeInfo =
+    document.getElementById("sizeInfo");
+const formatInfo =
+    document.getElementById("formatInfo");
+/* ==========================================
+   FORMAT
+========================================== */
+function selectFormat(format){
+    selectedFormat = format;
+    document
+        .querySelectorAll(".format-btn")
+        .forEach(button => {
+            button.classList.remove("active");
+            if(
+                button.dataset.format === format
+            ){
+                button.classList.add("active");
             }
-        }
-        ball.vx*=.995;
-        drawPlinko();
-        if(ball.y>=495){
-            finishPlinko();
-            return;
-        }
-        requestAnimationFrame(animate);
+        });
+    formatInfo.textContent =
+        "." + format;
+    updateStats();
+}
+/* ==========================================
+   STATS
+========================================== */
+function formatBytes(bytes){
+    if(bytes < 1024){
+        return bytes + " B";
     }
-    animate();
-}
-function finishPlinko(){
-    const points =
-        [100,200,300,500,1000,500,300,200,100];
-    let zone =
-        Math.floor(
-            ball.x /
-            (canvas.width/9)
+    if(bytes < 1024 * 1024){
+        return (
+            (bytes / 1024).toFixed(2)
+            + " KB"
         );
-    zone =
-        Math.max(
-            0,
-            Math.min(8,zone)
-        );
-    const multiplier =
-        points[zone] / 100;
-    const bet =
-        getBet("plinkoBet");
-    const win =
-        Math.floor(
-            bet * multiplier
-        );
-    addCoins(win);
-    addHistory(
-        "🔵 Plinko: ставка " +
-        bet.toLocaleString("ru-RU") +
-        " → +" +
-        win.toLocaleString("ru-RU")
+    }
+    return (
+        (bytes / 1024 / 1024).toFixed(2)
+        + " MB"
     );
-    document.getElementById("plinkoResult")
-        .textContent =
-        "🎉 Результат: +" +
-        win.toLocaleString("ru-RU") +
-        " коинов";
-    ball=null;
-    plinkoRunning=false;
-    document.getElementById("plinkoStart")
-        .disabled=false;
-    drawPlinko();
 }
-createPegs();
-drawPlinko();
-/* ==============================
-   CRASH
-============================== */
-let crashRunning=false;
-let crashTimer=null;
-let crashMultiplier=1;
-let crashLimit=0;
-let crashBetAmount=0;
-function startCrash(){
-    if(crashRunning) return;
-    const bet =
-        getBet("crashBet");
-    if(!checkBet(bet)) return;
-    takeBet(bet);
-    crashBetAmount=bet;
-    crashMultiplier=1;
-    crashLimit =
-        1.2 + Math.random()*6;
-    crashRunning=true;
-    document.getElementById("crashStart")
-        .disabled=true;
-    document.getElementById("crashStop")
-        .disabled=false;
-    document.getElementById("crashStatus")
-        .textContent =
-        "🚀 Раунд идёт...";
-    document.getElementById("rocket")
-        .style.left="12%";
-    document.getElementById("rocket")
-        .style.bottom="13%";
-    document.getElementById("crashLine")
-        .style.width="0%";
-    crashTimer=setInterval(()=>{
-        crashMultiplier +=
-            .008 +
-            crashMultiplier*.003;
-        document.getElementById(
-            "crashMultiplier"
-        ).textContent =
-            crashMultiplier.toFixed(2)+"x";
-        const progress =
-            Math.min(
-                85,
-                crashMultiplier /
-                crashLimit * 85
-            );
-        document.getElementById("rocket")
-            .style.left =
-            (12 + progress*.75)+"%";
-        document.getElementById("rocket")
-            .style.bottom =
-            (13 + progress*.45)+"%";
-        document.getElementById("crashLine")
-            .style.width =
-            progress+"%";
-        if(crashMultiplier>=crashLimit){
-            crashEnd();
+function updateStats(){
+    const text = editor.value;
+    const charCount =
+        text.length;
+    const lineCount =
+        text.length === 0
+        ? 0
+        : text.split("\n").length;
+    const bytes =
+        new Blob([text]).size;
+    chars.textContent =
+        charCount.toLocaleString("ru-RU");
+    lines.textContent =
+        lineCount.toLocaleString("ru-RU");
+    size.textContent =
+        formatBytes(bytes);
+    sizeInfo.textContent =
+        formatBytes(bytes);
+}
+editor.addEventListener(
+    "input",
+    updateStats
+);
+/* ==========================================
+   FILE NAME
+========================================== */
+function cleanFileName(name){
+    name = name.trim();
+    if(!name){
+        name = "my_file";
+    }
+    /*
+       Убираем опасные символы
+    */
+    name = name.replace(
+        /[<>:"/\\|?*\x00-\x1F]/g,
+        "_"
+    );
+    /*
+       Если пользователь написал
+       .txt — убираем расширение,
+       чтобы не получилось file.txt.txt
+    */
+    name = name.replace(
+        /\.(txt|html|json|md)$/i,
+        ""
+    );
+    return name;
+}
+/* ==========================================
+   CONTENT
+========================================== */
+function getFileContent(){
+    let text =
+        editor.value;
+    /*
+       Для JSON можно проверить,
+       является ли текст JSON.
+    */
+    if(selectedFormat === "json"){
+        if(!text.trim()){
+            return "";
         }
-    },50);
+        try{
+            const parsed =
+                JSON.parse(text);
+            return JSON.stringify(
+                parsed,
+                null,
+                2
+            );
+        }catch(error){
+            /*
+               Не блокируем скачивание:
+               пользователь может хотеть
+               сохранить незавершённый JSON.
+            */
+            return text;
+        }
+    }
+    return text;
 }
-function stopCrash(){
-    if(!crashRunning) return;
-    clearInterval(crashTimer);
-    crashRunning=false;
-    const win =
-        Math.floor(
-            crashBetAmount *
-            crashMultiplier
+/* ==========================================
+   MIME
+========================================== */
+function getMime(){
+    switch(selectedFormat){
+        case "html":
+            return "text/html;charset=utf-8";
+        case "json":
+            return "application/json;charset=utf-8";
+        case "md":
+            return "text/markdown;charset=utf-8";
+        default:
+            return "text/plain;charset=utf-8";
+    }
+}
+/* ==========================================
+   DOWNLOAD
+========================================== */
+function downloadFile(){
+    const content =
+        getFileContent();
+    if(!content){
+        showToast(
+            "Сначала введи текст",
+            "error"
         );
-    addCoins(win);
-    addHistory(
-        "🚀 Crash: ставка " +
-        crashBetAmount.toLocaleString("ru-RU") +
-        " → " +
-        crashMultiplier.toFixed(2) +
-        "x → +" +
-        win.toLocaleString("ru-RU")
+        return;
+    }
+    const name =
+        cleanFileName(fileName.value);
+    const fullName =
+        name + "." + selectedFormat;
+    const blob =
+        new Blob(
+            [content],
+            {type:getMime()}
+        );
+    const url =
+        URL.createObjectURL(blob);
+    const a =
+        document.createElement("a");
+    a.href = url;
+    a.download =
+        fullName;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(
+        () => URL.revokeObjectURL(url),
+        1000
     );
-    document.getElementById("crashStatus")
-        .textContent =
-        "🛑 Забрано +" +
-        win.toLocaleString("ru-RU") +
-        " коинов";
-    document.getElementById("crashStart")
-        .disabled=false;
-    document.getElementById("crashStop")
-        .disabled=true;
+    showToast(
+        "Файл скачан: " + fullName,
+        "success"
+    );
 }
-function crashEnd(){
-    clearInterval(crashTimer);
-    crashRunning=false;
-    document.getElementById("crashStatus")
-        .textContent =
-        "💥 Раунд закончился на " +
-        crashMultiplier.toFixed(2) +
-        "x";
-    document.getElementById("crashStart")
-        .disabled=false;
-    document.getElementById("crashStop")
-        .disabled=true;
+/* ==========================================
+   COPY
+========================================== */
+async function copyText(){
+    if(!editor.value){
+        showToast(
+            "Редактор пуст",
+            "error"
+        );
+        return;
+    }
+    try{
+        await navigator.clipboard.writeText(
+            editor.value
+        );
+        showToast(
+            "Текст скопирован",
+            "success"
+        );
+    }catch(error){
+        /*
+           Fallback для некоторых браузеров
+        */
+        editor.select();
+        document.execCommand("copy");
+        showToast(
+            "Текст скопирован",
+            "success"
+        );
+    }
 }
-/* ==============================
-   AUTO LOGIN
-============================== */
-if(
-    currentUser &&
-    users[currentUser]
+/* ==========================================
+   DRAFT
+========================================== */
+function saveDraft(){
+    const draft = {
+        text:editor.value,
+        fileName:fileName.value,
+        format:selectedFormat,
+        savedAt:Date.now()
+    };
+    localStorage.setItem(
+        "file_studio_draft",
+        JSON.stringify(draft)
+    );
+    showToast(
+        "Черновик сохранён",
+        "success"
+    );
+}
+function loadDraft(){
+    const raw =
+        localStorage.getItem(
+            "file_studio_draft"
+        );
+    if(!raw){
+        showToast(
+            "Сохранённых данных нет",
+            "error"
+        );
+        return;
+    }
+    try{
+        const draft =
+            JSON.parse(raw);
+        editor.value =
+            draft.text || "";
+        fileName.value =
+            draft.fileName || "my_file";
+        selectFormat(
+            draft.format || "txt"
+        );
+        updateStats();
+        showToast(
+            "Черновик загружен",
+            "success"
+        );
+    }catch(error){
+        showToast(
+            "Ошибка загрузки черновика",
+            "error"
+        );
+    }
+}
+/* ==========================================
+   CLEAR
+========================================== */
+function clearEditor(){
+    document
+        .getElementById("confirmModal")
+        .classList.add("show");
+}
+function closeModal(){
+    document
+        .getElementById("confirmModal")
+        .classList.remove("show");
+}
+function confirmClear(){
+    editor.value = "";
+    updateStats();
+    closeModal();
+    showToast(
+        "Редактор очищен",
+        "success"
+    );
+}
+/* ==========================================
+   TELEGRAM
+========================================== */
+function getTelegramToken(){
+    return document
+        .getElementById("botToken")
+        .value
+        .trim();
+}
+function getChatId(){
+    return document
+        .getElementById("chatId")
+        .value
+        .trim();
+}
+async function sendTelegram(){
+    const token =
+        getTelegramToken();
+    const chatId =
+        getChatId();
+    const content =
+        getFileContent();
+    if(!token){
+        showToast(
+            "Введи токен Telegram-бота",
+            "error"
+        );
+        return;
+    }
+    if(!chatId){
+        showToast(
+            "Введи Chat ID",
+            "error"
+        );
+        return;
+    }
+    if(!content){
+        showToast(
+            "Сначала введи текст",
+            "error"
+        );
+        return;
+    }
+    const button =
+        document.getElementById(
+            "telegramBtn"
+        );
+    button.disabled = true;
+    button.textContent =
+        "⏳ ОТПРАВКА...";
+    try{
+        const name =
+            cleanFileName(
+                fileName.value
+            );
+        const fullName =
+            name + "." + selectedFormat;
+        /*
+           Создаём файл прямо в памяти
+        */
+        const blob =
+            new Blob(
+                [content],
+                {type:getMime()}
+            );
+        /*
+           FormData нужен для multipart/form-data.
+        */
+        const form =
+            new FormData();
+        form.append(
+            "chat_id",
+            chatId
+        );
+        form.append(
+            "document",
+            blob,
+            fullName
+        );
+        form.append(
+            "caption",
+            "📄 " + fullName
+        );
+        /*
+           Telegram Bot API:
+           sendDocument
+        */
+        const response =
+            await fetch(
+                "https://api.telegram.org/bot"
+                + encodeURIComponent(token)
+                + "/sendDocument",
+                {
+                    method:"POST",
+                    body:form
+                }
+            );
+        const result =
+            await response.json();
+        if(result.ok){
+            showToast(
+                "✅ Файл отправлен в Telegram",
+                "success"
+            );
+        }else{
+            let message =
+                result.description ||
+                "Telegram вернул ошибку";
+            showToast(
+                "❌ " + message,
+                "error"
+            );
+        }
+    }catch(error){
+        console.error(error);
+        showToast(
+            "❌ Не удалось отправить файл. Проверь токен, Chat ID и подключение.",
+            "error"
+        );
+    }finally{
+        button.disabled = false;
+        button.textContent =
+            "✈️ ОТПРАВИТЬ В TELEGRAM";
+    }
+}
+/* ==========================================
+   TOAST
+========================================== */
+let toastTimer = null;
+function showToast(
+    message,
+    type="success"
 ){
-    showApp();
-}else{
-    document.getElementById("auth")
-        .classList.remove("hidden");
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+    toast.textContent =
+        message;
+    toast.className =
+        "toast show " + type;
+    clearTimeout(
+        toastTimer
+    );
+    toastTimer =
+        setTimeout(() => {
+            toast.classList.remove(
+                "show"
+            );
+        },3500);
 }
+/* ==========================================
+   AUTOSAVE
+========================================== */
+let autoSaveTimer = null;
+editor.addEventListener(
+    "input",
+    () => {
+        clearTimeout(
+            autoSaveTimer
+        );
+        autoSaveTimer =
+            setTimeout(
+                () => {
+                    const draft = {
+                        text:editor.value,
+                        fileName:fileName.value,
+                        format:selectedFormat,
+                        savedAt:Date.now()
+                    };
+                    localStorage.setItem(
+                        "file_studio_draft",
+                        JSON.stringify(draft)
+                    );
+                },
+                800
+            );
+    }
+);
+/* ==========================================
+   KEYBOARD
+========================================== */
+editor.addEventListener(
+    "keydown",
+    function(event){
+        /*
+           Tab вставляет 4 пробела
+           вместо выхода из textarea.
+        */
+        if(event.key === "Tab"){
+            event.preventDefault();
+            const start =
+                this.selectionStart;
+            const end =
+                this.selectionEnd;
+            this.value =
+                this.value.substring(
+                    0,start
+                )
+                +
+                "    "
+                +
+                this.value.substring(
+                    end
+                );
+            this.selectionStart =
+                this.selectionEnd =
+                    start + 4;
+            updateStats();
+        }
+    }
+);
+/* ==========================================
+   ESCAPE
+========================================== */
+document.addEventListener(
+    "keydown",
+    event => {
+        if(event.key === "Escape"){
+            closeModal();
+        }
+    }
+);
+/* ==========================================
+   INIT
+========================================== */
+(function init(){
+    /*
+       Сначала пытаемся загрузить
+       последний черновик.
+    */
+    const raw =
+        localStorage.getItem(
+            "file_studio_draft"
+        );
+    if(raw){
+        try{
+            const draft =
+                JSON.parse(raw);
+            if(draft.text){
+                editor.value =
+                    draft.text;
+            }
+            if(draft.fileName){
+                fileName.value =
+                    draft.fileName;
+            }
+            if(draft.format){
+                selectedFormat =
+                    draft.format;
+                document
+                    .querySelectorAll(
+                        ".format-btn"
+                    )
+                    .forEach(button => {
+                        button.classList.toggle(
+                            "active",
+                            button.dataset.format
+                            === selectedFormat
+                        );
+                    });
+                formatInfo.textContent =
+                    "." + selectedFormat;
+            }
+        }catch(error){
+            console.log(
+                "Draft load error",
+                error
+            );
+        }
+    }
+    /*
+       Токен намеренно НЕ сохраняем.
+       Это безопаснее.
+    */
+    updateStats();
+})();
 </script>
 </body>
 </html>
