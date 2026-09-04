@@ -6,8 +6,15 @@
     name="viewport"
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
 >
+<meta
+    name="theme-color"
+    content="#080a12"
+>
 <title>File Studio</title>
 <style>
+/* =========================================
+   RESET
+========================================= */
 *{
     box-sizing:border-box;
     margin:0;
@@ -18,14 +25,14 @@
     --bg:#070910;
     --panel:#10131d;
     --panel2:#151925;
-    --border:#252b3d;
+    --border:#262c3e;
     --text:#f4f6ff;
     --muted:#858da3;
     --accent:#6d72ff;
     --accent2:#9b54ff;
     --green:#4de3a4;
     --red:#ff637b;
-    --blue:#61dfff;
+    --blue:#4dbfff;
 }
 html{
     scroll-behavior:smooth;
@@ -53,18 +60,18 @@ body{
         ),
         var(--bg);
 }
-/* ==============================
+/* =========================================
    APP
-============================== */
+========================================= */
 .app{
     width:100%;
     max-width:1200px;
     margin:auto;
     padding:18px;
 }
-/* ==============================
+/* =========================================
    HEADER
-============================== */
+========================================= */
 .header{
     display:flex;
     justify-content:space-between;
@@ -91,8 +98,8 @@ body{
     width:46px;
     height:46px;
     display:flex;
-    justify-content:center;
     align-items:center;
+    justify-content:center;
     border-radius:14px;
     font-size:23px;
     background:
@@ -126,21 +133,22 @@ body{
     height:8px;
     border-radius:50%;
     background:var(--green);
-    box-shadow:0 0 12px var(--green);
+    box-shadow:
+        0 0 12px var(--green);
 }
-/* ==============================
-   GRID
-============================== */
+/* =========================================
+   MAIN GRID
+========================================= */
 .main-grid{
     display:grid;
     grid-template-columns:
-        minmax(0, 1fr)
+        minmax(0,1fr)
         350px;
     gap:16px;
 }
-/* ==============================
+/* =========================================
    PANEL
-============================== */
+========================================= */
 .panel{
     border:1px solid var(--border);
     border-radius:22px;
@@ -168,9 +176,9 @@ body{
     font-size:12px;
     margin-top:3px;
 }
-/* ==============================
+/* =========================================
    EDITOR
-============================== */
+========================================= */
 .editor-panel{
     min-width:0;
 }
@@ -178,6 +186,7 @@ body{
     padding:15px;
 }
 textarea{
+    display:block;
     width:100%;
     min-height:570px;
     resize:vertical;
@@ -197,7 +206,7 @@ textarea{
     tab-size:4;
 }
 textarea:focus{
-    border-color:#555cff;
+    border-color:#5e65ff;
     box-shadow:
         0 0 0 3px rgba(90,90,255,.08);
 }
@@ -213,9 +222,9 @@ textarea:focus{
     display:flex;
     gap:15px;
 }
-/* ==============================
+/* =========================================
    SIDE
-============================== */
+========================================= */
 .side{
     display:flex;
     flex-direction:column;
@@ -252,12 +261,13 @@ select{
 select:focus{
     border-color:#6268ff;
 }
-/* ==============================
-   FORMAT
-============================== */
+/* =========================================
+   FORMAT BUTTONS
+========================================= */
 .format-grid{
     display:grid;
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:
+        repeat(2,1fr);
     gap:8px;
     margin-bottom:14px;
 }
@@ -269,6 +279,10 @@ select:focus{
     color:#aeb4c7;
     cursor:pointer;
     font-weight:bold;
+    transition:.15s;
+}
+.format-btn:active{
+    transform:scale(.97);
 }
 .format-btn.active{
     background:
@@ -280,12 +294,13 @@ select:focus{
     border-color:#666cff;
     color:white;
 }
-/* ==============================
+/* =========================================
    BUTTONS
-============================== */
+========================================= */
 .buttons{
     display:grid;
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:
+        1fr 1fr;
     gap:9px;
 }
 .btn{
@@ -301,6 +316,10 @@ select:focus{
 .btn:active{
     transform:scale(.97);
 }
+.btn:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
 .btn-primary{
     background:
         linear-gradient(
@@ -313,7 +332,7 @@ select:focus{
     background:#202535;
 }
 .btn-telegram{
-    grid-column:1 / -1;
+    grid-column:1/-1;
     background:
         linear-gradient(
             135deg,
@@ -325,11 +344,12 @@ select:focus{
     background:#38202a;
     color:#ff8797;
 }
-/* ==============================
+/* =========================================
    TELEGRAM
-============================== */
+========================================= */
 .telegram-box{
-    border:1px solid rgba(50,160,220,.2);
+    border-color:
+        rgba(50,160,220,.2);
     background:
         linear-gradient(
             145deg,
@@ -342,20 +362,21 @@ select:focus{
     align-items:center;
     gap:8px;
     font-weight:900;
-    margin-bottom:5px;
+    margin-bottom:6px;
 }
 .telegram-info{
     color:var(--muted);
     font-size:12px;
-    line-height:1.5;
+    line-height:1.55;
     margin-bottom:15px;
 }
-/* ==============================
+/* =========================================
    INFO
-============================== */
+========================================= */
 .info-grid{
     display:grid;
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:
+        1fr 1fr;
     gap:8px;
 }
 .info{
@@ -373,16 +394,17 @@ select:focus{
     font-weight:bold;
     overflow:hidden;
     text-overflow:ellipsis;
+    white-space:nowrap;
 }
-/* ==============================
-   NOTIFICATION
-============================== */
+/* =========================================
+   TOAST
+========================================= */
 .toast{
     position:fixed;
     left:50%;
     bottom:20px;
     transform:
-        translate(-50%, 30px);
+        translate(-50%,30px);
     opacity:0;
     pointer-events:none;
     min-width:250px;
@@ -401,18 +423,20 @@ select:focus{
 }
 .toast.show{
     transform:
-        translate(-50%, 0);
+        translate(-50%,0);
     opacity:1;
 }
 .toast.success{
-    border-color:rgba(77,227,164,.4);
+    border-color:
+        rgba(77,227,164,.4);
 }
 .toast.error{
-    border-color:rgba(255,99,123,.4);
+    border-color:
+        rgba(255,99,123,.4);
 }
-/* ==============================
+/* =========================================
    MODAL
-============================== */
+========================================= */
 .modal{
     position:fixed;
     inset:0;
@@ -452,9 +476,23 @@ select:focus{
     display:flex;
     gap:9px;
 }
-/* ==============================
-   MOBILE
-============================== */
+/* =========================================
+   SCROLLBAR
+========================================= */
+::-webkit-scrollbar{
+    width:8px;
+    height:8px;
+}
+::-webkit-scrollbar-track{
+    background:#080a10;
+}
+::-webkit-scrollbar-thumb{
+    background:#2a3042;
+    border-radius:20px;
+}
+/* =========================================
+   TABLET
+========================================= */
 @media(max-width:850px){
     .main-grid{
         grid-template-columns:1fr;
@@ -463,6 +501,9 @@ select:focus{
         min-height:450px;
     }
 }
+/* =========================================
+   MOBILE
+========================================= */
 @media(max-width:600px){
     .app{
         padding:10px;
@@ -474,12 +515,16 @@ select:focus{
     .brand-icon{
         width:40px;
         height:40px;
+        font-size:20px;
     }
     .brand-title{
         font-size:18px;
     }
-    .header-status{
+    .brand-subtitle{
         font-size:11px;
+    }
+    .header-status{
+        font-size:10px;
     }
     .panel{
         border-radius:18px;
@@ -504,286 +549,311 @@ select:focus{
     .btn-telegram{
         grid-column:auto;
     }
+    .stats{
+        gap:8px;
+        flex-direction:column;
+    }
 }
-/* ==============================
-   SCROLLBAR
-============================== */
-::-webkit-scrollbar{
-    width:8px;
-    height:8px;
-}
-::-webkit-scrollbar-track{
-    background:#080a10;
-}
-::-webkit-scrollbar-thumb{
-    background:#2a3042;
-    border-radius:20px;
-}
-::-webkit-scrollbar-thumb:hover{
-    background:#3a4259;
+/* =========================================
+   VERY SMALL
+========================================= */
+@media(max-width:360px){
+    .header-status{
+        display:none;
+    }
+    .format-grid{
+        grid-template-columns:1fr 1fr;
+    }
 }
 </style>
 </head>
 <body>
 <div class="app">
-    <!-- HEADER -->
-    <header class="header">
-        <div class="brand">
-            <div class="brand-icon">
-                📄
+<!-- =====================================
+     HEADER
+===================================== -->
+<header class="header">
+    <div class="brand">
+        <div class="brand-icon">
+            📄
+        </div>
+        <div>
+            <div class="brand-title">
+                File Studio
             </div>
-            <div>
-                <div class="brand-title">
-                    File Studio
-                </div>
-                <div class="brand-subtitle">
-                    Текст → готовый файл
-                </div>
+            <div class="brand-subtitle">
+                Текст → готовый файл
             </div>
         </div>
-        <div class="header-status">
-            <div class="status-dot"></div>
-            Готово
-        </div>
-    </header>
-    <div class="main-grid">
-        <!-- EDITOR -->
-        <main class="panel editor-panel">
-            <div class="panel-header">
-                <div>
-                    <div class="panel-title">
-                        📝 Редактор
-                    </div>
-                    <div class="panel-description">
-                        Вставь или напиши текст
-                    </div>
-                </div>
-                <button
-                    class="btn btn-secondary"
-                    onclick="clearEditor()"
-                    style="padding:9px 12px"
-                >
-                    Очистить
-                </button>
-            </div>
-            <div class="editor-wrap">
-                <textarea
-                    id="editor"
-                    spellcheck="false"
-                    placeholder="Вставь сюда большой текст...
-Например:
-Привет!
-Это мой файл.
-Можно вставлять:
-• обычный текст
-• код
-• JSON
-• HTML
-• Markdown
-После этого выбери формат и скачай файл."
-                ></textarea>
-                <div class="editor-bottom">
-                    <div class="stats">
-                        <span>
-                            Символов:
-                            <b id="chars">0</b>
-                        </span>
-                        <span>
-                            Строк:
-                            <b id="lines">0</b>
-                        </span>
-                    </div>
-                    <span>
-                        Размер:
-                        <b id="size">0 B</b>
-                    </span>
-                </div>
-            </div>
-        </main>
-        <!-- SIDE -->
-        <aside class="side">
-            <!-- FILE SETTINGS -->
-            <section class="panel">
-                <div class="section">
-                    <div class="section-title">
-                        📁 Настройки файла
-                    </div>
-                    <label>
-                        Название файла
-                    </label>
-                    <input
-                        id="fileName"
-                        class="input"
-                        value="my_file"
-                        placeholder="Название файла"
-                    >
-                    <label>
-                        Формат
-                    </label>
-                    <div class="format-grid">
-                        <button
-                            class="format-btn active"
-                            data-format="txt"
-                            onclick="selectFormat('txt')"
-                        >
-                            TXT
-                        </button>
-                        <button
-                            class="format-btn"
-                            data-format="html"
-                            onclick="selectFormat('html')"
-                        >
-                            HTML
-                        </button>
-                        <button
-                            class="format-btn"
-                            data-format="json"
-                            onclick="selectFormat('json')"
-                        >
-                            JSON
-                        </button>
-                        <button
-                            class="format-btn"
-                            data-format="md"
-                            onclick="selectFormat('md')"
-                        >
-                            MD
-                        </button>
-                    </div>
-                    <div class="info-grid">
-                        <div class="info">
-                            <div class="info-name">
-                                Формат
-                            </div>
-                            <div
-                                class="info-value"
-                                id="formatInfo"
-                            >
-                                .txt
-                            </div>
-                        </div>
-                        <div class="info">
-                            <div class="info-name">
-                                Размер
-                            </div>
-                            <div
-                                class="info-value"
-                                id="sizeInfo"
-                            >
-                                0 B
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- ACTIONS -->
-            <section class="panel">
-                <div class="section">
-                    <div class="section-title">
-                        ⚡ Действия
-                    </div>
-                    <div class="buttons">
-                        <button
-                            class="btn btn-primary"
-                            onclick="downloadFile()"
-                        >
-                            ⬇️ Скачать
-                        </button>
-                        <button
-                            class="btn btn-secondary"
-                            onclick="copyText()"
-                        >
-                            📋 Копировать
-                        </button>
-                        <button
-                            class="btn btn-secondary"
-                            onclick="saveDraft()"
-                        >
-                            💾 Сохранить
-                        </button>
-                        <button
-                            class="btn btn-secondary"
-                            onclick="loadDraft()"
-                        >
-                            📂 Загрузить
-                        </button>
-                    </div>
-                </div>
-            </section>
-            <!-- TELEGRAM -->
-            <section class="panel telegram-box">
-                <div class="section">
-                    <div class="telegram-title">
-                        ✈️ Telegram
-                    </div>
-                    <div class="telegram-info">
-                        Укажи токен бота и ID чата.
-                        Файл будет отправлен как документ.
-                    </div>
-                    <label>
-                        Bot Token
-                    </label>
-                    <input
-                        id="botToken"
-                        class="input"
-                        type="password"
-                        placeholder="123456789:AA..."
-                    >
-                    <label>
-                        Chat ID
-                    </label>
-                    <input
-                        id="chatId"
-                        class="input"
-                        placeholder="-1001234567890"
-                    >
-                    <button
-                        class="btn btn-telegram"
-                        id="telegramBtn"
-                        onclick="sendTelegram()"
-                    >
-                        ✈️ ОТПРАВИТЬ В TELEGRAM
-                    </button>
-                </div>
-            </section>
-            <!-- HELP -->
-            <section class="panel">
-                <div class="section">
-                    <div class="section-title">
-                        ℹ️ Информация
-                    </div>
-                    <div
-                        style="
-                        color:#858da3;
-                        font-size:12px;
-                        line-height:1.65;
-                        "
-                    >
-                        Файл создаётся прямо в браузере.
-                        <br><br>
-                        TXT — обычный текст.
-                        <br>
-                        HTML — веб-страница.
-                        <br>
-                        JSON — данные в формате JSON.
-                        <br>
-                        MD — Markdown.
-                        <br><br>
-                        Данные редактора автоматически
-                        сохраняются локально как черновик.
-                    </div>
-                </div>
-            </section>
-        </aside>
     </div>
+    <div class="header-status">
+        <div class="status-dot"></div>
+        Готово
+    </div>
+</header>
+<div class="main-grid">
+<!-- =====================================
+     EDITOR
+===================================== -->
+<main class="panel editor-panel">
+    <div class="panel-header">
+        <div>
+            <div class="panel-title">
+                📝 Редактор
+            </div>
+            <div class="panel-description">
+                Вставь или напиши текст
+            </div>
+        </div>
+        <button
+            class="btn btn-secondary"
+            onclick="clearEditor()"
+            style="padding:9px 12px"
+        >
+            Очистить
+        </button>
+    </div>
+    <div class="editor-wrap">
+        <textarea
+            id="editor"
+            spellcheck="false"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            placeholder="Вставь сюда текст или код...
+Например Python:
+print('Hello World')
+Можно писать или вставлять:
+• Python
+• HTML
+• JSON
+• Markdown
+• обычный текст
+После этого выбери формат и скачай файл."
+        ></textarea>
+        <div class="editor-bottom">
+            <div class="stats">
+                <span>
+                    Символов:
+                    <b id="chars">0</b>
+                </span>
+                <span>
+                    Строк:
+                    <b id="lines">0</b>
+                </span>
+            </div>
+            <span>
+                Размер:
+                <b id="size">0 B</b>
+            </span>
+        </div>
+    </div>
+</main>
+<!-- =====================================
+     SIDE
+===================================== -->
+<aside class="side">
+<!-- FILE SETTINGS -->
+<section class="panel">
+    <div class="section">
+        <div class="section-title">
+            📁 Настройки файла
+        </div>
+        <label>
+            Название файла
+        </label>
+        <input
+            id="fileName"
+            class="input"
+            value="my_file"
+            placeholder="Название файла"
+            autocomplete="off"
+        >
+        <label>
+            Формат файла
+        </label>
+        <div class="format-grid">
+            <button
+                class="format-btn active"
+                data-format="txt"
+                onclick="selectFormat('txt')"
+            >
+                📄 TXT
+            </button>
+            <button
+                class="format-btn"
+                data-format="py"
+                onclick="selectFormat('py')"
+            >
+                🐍 PY
+            </button>
+            <button
+                class="format-btn"
+                data-format="html"
+                onclick="selectFormat('html')"
+            >
+                🌐 HTML
+            </button>
+            <button
+                class="format-btn"
+                data-format="json"
+                onclick="selectFormat('json')"
+            >
+                {} JSON
+            </button>
+            <button
+                class="format-btn"
+                data-format="md"
+                onclick="selectFormat('md')"
+            >
+                📝 MD
+            </button>
+        </div>
+        <div class="info-grid">
+            <div class="info">
+                <div class="info-name">
+                    Расширение
+                </div>
+                <div
+                    class="info-value"
+                    id="formatInfo"
+                >
+                    .txt
+                </div>
+            </div>
+            <div class="info">
+                <div class="info-name">
+                    Размер
+                </div>
+                <div
+                    class="info-value"
+                    id="sizeInfo"
+                >
+                    0 B
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ACTIONS -->
+<section class="panel">
+    <div class="section">
+        <div class="section-title">
+            ⚡ Действия
+        </div>
+        <div class="buttons">
+            <button
+                class="btn btn-primary"
+                onclick="downloadFile()"
+            >
+                ⬇️ Скачать
+            </button>
+            <button
+                class="btn btn-secondary"
+                onclick="copyText()"
+            >
+                📋 Копировать
+            </button>
+            <button
+                class="btn btn-secondary"
+                onclick="saveDraft()"
+            >
+                💾 Сохранить
+            </button>
+            <button
+                class="btn btn-secondary"
+                onclick="loadDraft()"
+            >
+                📂 Загрузить
+            </button>
+        </div>
+    </div>
+</section>
+<!-- TELEGRAM -->
+<section class="panel telegram-box">
+    <div class="section">
+        <div class="telegram-title">
+            ✈️ Telegram
+        </div>
+        <div class="telegram-info">
+            Введи токен Telegram-бота и Chat ID.
+            После этого файл отправится
+            в выбранный чат как документ.
+        </div>
+        <label>
+            Bot Token
+        </label>
+        <input
+            id="botToken"
+            class="input"
+            type="password"
+            placeholder="123456789:AA..."
+            autocomplete="off"
+        >
+        <label>
+            Chat ID
+        </label>
+        <input
+            id="chatId"
+            class="input"
+            placeholder="-1001234567890"
+            autocomplete="off"
+        >
+        <button
+            class="btn btn-telegram"
+            id="telegramBtn"
+            onclick="sendTelegram()"
+        >
+            ✈️ ОТПРАВИТЬ В TELEGRAM
+        </button>
+    </div>
+</section>
+<!-- INFO -->
+<section class="panel">
+    <div class="section">
+        <div class="section-title">
+            ℹ️ Форматы
+        </div>
+        <div
+            style="
+            color:#858da3;
+            font-size:12px;
+            line-height:1.7;
+            "
+        >
+            <b style="color:white">TXT</b>
+            — обычный текстовый файл.
+            <br>
+            <b style="color:white">PY</b>
+            — файл Python.
+            <br>
+            <b style="color:white">HTML</b>
+            — HTML-документ.
+            <br>
+            <b style="color:white">JSON</b>
+            — JSON-данные.
+            <br>
+            <b style="color:white">MD</b>
+            — Markdown-файл.
+            <br><br>
+            Все файлы создаются прямо
+            в браузере.
+        </div>
+    </div>
+</section>
+</aside>
 </div>
-<!-- TOAST -->
+</div>
+<!-- =====================================
+     TOAST
+===================================== -->
 <div
     id="toast"
     class="toast"
->
-</div>
-<!-- MODAL -->
+></div>
+<!-- =====================================
+     MODAL
+===================================== -->
 <div
     id="confirmModal"
     class="modal"
@@ -793,7 +863,7 @@ select:focus{
             ⚠️ Очистить редактор?
         </div>
         <div class="modal-text">
-            Весь текущий текст будет удалён
+            Текущий текст будет удалён
             из редактора.
         </div>
         <div class="modal-buttons">
@@ -815,13 +885,13 @@ select:focus{
     </div>
 </div>
 <script>
-/* ==========================================
+/* =========================================
    STATE
-========================================== */
+========================================= */
 let selectedFormat = "txt";
-/* ==========================================
+/* =========================================
    ELEMENTS
-========================================== */
+========================================= */
 const editor =
     document.getElementById("editor");
 const fileName =
@@ -836,28 +906,26 @@ const sizeInfo =
     document.getElementById("sizeInfo");
 const formatInfo =
     document.getElementById("formatInfo");
-/* ==========================================
+/* =========================================
    FORMAT
-========================================== */
+========================================= */
 function selectFormat(format){
     selectedFormat = format;
     document
         .querySelectorAll(".format-btn")
         .forEach(button => {
-            button.classList.remove("active");
-            if(
+            button.classList.toggle(
+                "active",
                 button.dataset.format === format
-            ){
-                button.classList.add("active");
-            }
+            );
         });
     formatInfo.textContent =
         "." + format;
     updateStats();
 }
-/* ==========================================
+/* =========================================
    STATS
-========================================== */
+========================================= */
 function formatBytes(bytes){
     if(bytes < 1024){
         return bytes + " B";
@@ -874,105 +942,116 @@ function formatBytes(bytes){
     );
 }
 function updateStats(){
-    const text = editor.value;
-    const charCount =
+    const text =
+        editor.value;
+    const characterCount =
         text.length;
     const lineCount =
         text.length === 0
         ? 0
         : text.split("\n").length;
-    const bytes =
+    const byteCount =
         new Blob([text]).size;
     chars.textContent =
-        charCount.toLocaleString("ru-RU");
+        characterCount.toLocaleString("ru-RU");
     lines.textContent =
         lineCount.toLocaleString("ru-RU");
     size.textContent =
-        formatBytes(bytes);
+        formatBytes(byteCount);
     sizeInfo.textContent =
-        formatBytes(bytes);
+        formatBytes(byteCount);
 }
 editor.addEventListener(
     "input",
     updateStats
 );
-/* ==========================================
+/* =========================================
    FILE NAME
-========================================== */
+========================================= */
 function cleanFileName(name){
-    name = name.trim();
+    name =
+        name.trim();
     if(!name){
-        name = "my_file";
+        name =
+            "my_file";
     }
     /*
-       Убираем опасные символы
+       Удаляем потенциально опасные
+       символы имени файла.
     */
-    name = name.replace(
-        /[<>:"/\\|?*\x00-\x1F]/g,
-        "_"
-    );
+    name =
+        name.replace(
+            /[<>:"/\\|?*\x00-\x1F]/g,
+            "_"
+        );
     /*
-       Если пользователь написал
-       .txt — убираем расширение,
-       чтобы не получилось file.txt.txt
+       Убираем уже существующее
+       расширение.
     */
-    name = name.replace(
-        /\.(txt|html|json|md)$/i,
-        ""
-    );
+    name =
+        name.replace(
+            /\.(txt|py|html|json|md)$/i,
+            ""
+        );
+    if(!name){
+        name =
+            "my_file";
+    }
     return name;
 }
-/* ==========================================
+/* =========================================
    CONTENT
-========================================== */
+========================================= */
 function getFileContent(){
-    let text =
+    const text =
         editor.value;
     /*
-       Для JSON можно проверить,
-       является ли текст JSON.
+       Для JSON форматируем,
+       если JSON корректный.
     */
     if(selectedFormat === "json"){
         if(!text.trim()){
             return "";
         }
         try{
-            const parsed =
+            const data =
                 JSON.parse(text);
             return JSON.stringify(
-                parsed,
+                data,
                 null,
                 2
             );
         }catch(error){
             /*
-               Не блокируем скачивание:
-               пользователь может хотеть
-               сохранить незавершённый JSON.
+               Если JSON пока незавершён,
+               сохраняем исходный текст.
             */
             return text;
         }
     }
     return text;
 }
-/* ==========================================
-   MIME
-========================================== */
+/* =========================================
+   MIME TYPE
+========================================= */
 function getMime(){
     switch(selectedFormat){
+        case "py":
+            return "text/x-python;charset=utf-8";
         case "html":
             return "text/html;charset=utf-8";
         case "json":
             return "application/json;charset=utf-8";
         case "md":
             return "text/markdown;charset=utf-8";
+        case "txt":
         default:
             return "text/plain;charset=utf-8";
     }
 }
-/* ==========================================
+/* =========================================
    DOWNLOAD
-========================================== */
+========================================= */
 function downloadFile(){
     const content =
         getFileContent();
@@ -984,26 +1063,35 @@ function downloadFile(){
         return;
     }
     const name =
-        cleanFileName(fileName.value);
+        cleanFileName(
+            fileName.value
+        );
     const fullName =
         name + "." + selectedFormat;
     const blob =
         new Blob(
             [content],
-            {type:getMime()}
+            {
+                type:getMime()
+            }
         );
     const url =
         URL.createObjectURL(blob);
-    const a =
+    const link =
         document.createElement("a");
-    a.href = url;
-    a.download =
+    link.href =
+        url;
+    link.download =
         fullName;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
+    document.body.appendChild(
+        link
+    );
+    link.click();
+    link.remove();
     setTimeout(
-        () => URL.revokeObjectURL(url),
+        () => {
+            URL.revokeObjectURL(url);
+        },
         1000
     );
     showToast(
@@ -1011,9 +1099,9 @@ function downloadFile(){
         "success"
     );
 }
-/* ==========================================
+/* =========================================
    COPY
-========================================== */
+========================================= */
 async function copyText(){
     if(!editor.value){
         showToast(
@@ -1031,26 +1119,29 @@ async function copyText(){
             "success"
         );
     }catch(error){
-        /*
-           Fallback для некоторых браузеров
-        */
         editor.select();
-        document.execCommand("copy");
+        document.execCommand(
+            "copy"
+        );
         showToast(
             "Текст скопирован",
             "success"
         );
     }
 }
-/* ==========================================
-   DRAFT
-========================================== */
+/* =========================================
+   SAVE DRAFT
+========================================= */
 function saveDraft(){
     const draft = {
-        text:editor.value,
-        fileName:fileName.value,
-        format:selectedFormat,
-        savedAt:Date.now()
+        text:
+            editor.value,
+        fileName:
+            fileName.value,
+        format:
+            selectedFormat,
+        savedAt:
+            Date.now()
     };
     localStorage.setItem(
         "file_studio_draft",
@@ -1061,6 +1152,9 @@ function saveDraft(){
         "success"
     );
 }
+/* =========================================
+   LOAD DRAFT
+========================================= */
 function loadDraft(){
     const raw =
         localStorage.getItem(
@@ -1095,9 +1189,9 @@ function loadDraft(){
         );
     }
 }
-/* ==========================================
+/* =========================================
    CLEAR
-========================================== */
+========================================= */
 function clearEditor(){
     document
         .getElementById("confirmModal")
@@ -1117,9 +1211,9 @@ function confirmClear(){
         "success"
     );
 }
-/* ==========================================
+/* =========================================
    TELEGRAM
-========================================== */
+========================================= */
 function getTelegramToken(){
     return document
         .getElementById("botToken")
@@ -1141,7 +1235,7 @@ async function sendTelegram(){
         getFileContent();
     if(!token){
         showToast(
-            "Введи токен Telegram-бота",
+            "Введи Bot Token",
             "error"
         );
         return;
@@ -1175,15 +1269,18 @@ async function sendTelegram(){
         const fullName =
             name + "." + selectedFormat;
         /*
-           Создаём файл прямо в памяти
+           Создаём файл
+           непосредственно в браузере.
         */
         const blob =
             new Blob(
                 [content],
-                {type:getMime()}
+                {
+                    type:getMime()
+                }
             );
         /*
-           FormData нужен для multipart/form-data.
+           Формируем multipart/form-data.
         */
         const form =
             new FormData();
@@ -1201,14 +1298,16 @@ async function sendTelegram(){
             "📄 " + fullName
         );
         /*
-           Telegram Bot API:
+           Telegram Bot API
            sendDocument
         */
         const response =
             await fetch(
                 "https://api.telegram.org/bot"
-                + encodeURIComponent(token)
-                + "/sendDocument",
+                +
+                encodeURIComponent(token)
+                +
+                "/sendDocument",
                 {
                     method:"POST",
                     body:form
@@ -1222,18 +1321,23 @@ async function sendTelegram(){
                 "success"
             );
         }else{
-            let message =
-                result.description ||
-                "Telegram вернул ошибку";
             showToast(
-                "❌ " + message,
+                "❌ "
+                +
+                (
+                    result.description
+                    ||
+                    "Telegram вернул ошибку"
+                ),
                 "error"
             );
         }
     }catch(error){
-        console.error(error);
+        console.error(
+            error
+        );
         showToast(
-            "❌ Не удалось отправить файл. Проверь токен, Chat ID и подключение.",
+            "❌ Ошибка отправки. Проверь токен, Chat ID и подключение.",
             "error"
         );
     }finally{
@@ -1242,10 +1346,11 @@ async function sendTelegram(){
             "✈️ ОТПРАВИТЬ В TELEGRAM";
     }
 }
-/* ==========================================
+/* =========================================
    TOAST
-========================================== */
-let toastTimer = null;
+========================================= */
+let toastTimer =
+    null;
 function showToast(
     message,
     type="success"
@@ -1262,16 +1367,20 @@ function showToast(
         toastTimer
     );
     toastTimer =
-        setTimeout(() => {
-            toast.classList.remove(
-                "show"
-            );
-        },3500);
+        setTimeout(
+            () => {
+                toast.classList.remove(
+                    "show"
+                );
+            },
+            3500
+        );
 }
-/* ==========================================
+/* =========================================
    AUTOSAVE
-========================================== */
-let autoSaveTimer = null;
+========================================= */
+let autoSaveTimer =
+    null;
 editor.addEventListener(
     "input",
     () => {
@@ -1282,10 +1391,14 @@ editor.addEventListener(
             setTimeout(
                 () => {
                     const draft = {
-                        text:editor.value,
-                        fileName:fileName.value,
-                        format:selectedFormat,
-                        savedAt:Date.now()
+                        text:
+                            editor.value,
+                        fileName:
+                            fileName.value,
+                        format:
+                            selectedFormat,
+                        savedAt:
+                            Date.now()
                     };
                     localStorage.setItem(
                         "file_studio_draft",
@@ -1296,16 +1409,12 @@ editor.addEventListener(
             );
     }
 );
-/* ==========================================
-   KEYBOARD
-========================================== */
+/* =========================================
+   TAB SUPPORT
+========================================= */
 editor.addEventListener(
     "keydown",
     function(event){
-        /*
-           Tab вставляет 4 пробела
-           вместо выхода из textarea.
-        */
         if(event.key === "Tab"){
             event.preventDefault();
             const start =
@@ -1314,7 +1423,8 @@ editor.addEventListener(
                 this.selectionEnd;
             this.value =
                 this.value.substring(
-                    0,start
+                    0,
+                    start
                 )
                 +
                 "    "
@@ -1329,9 +1439,9 @@ editor.addEventListener(
         }
     }
 );
-/* ==========================================
+/* =========================================
    ESCAPE
-========================================== */
+========================================= */
 document.addEventListener(
     "keydown",
     event => {
@@ -1340,14 +1450,10 @@ document.addEventListener(
         }
     }
 );
-/* ==========================================
-   INIT
-========================================== */
+/* =========================================
+   LOAD DRAFT ON START
+========================================= */
 (function init(){
-    /*
-       Сначала пытаемся загрузить
-       последний черновик.
-    */
     const raw =
         localStorage.getItem(
             "file_studio_draft"
@@ -1356,42 +1462,49 @@ document.addEventListener(
         try{
             const draft =
                 JSON.parse(raw);
-            if(draft.text){
+            if(
+                typeof draft.text ===
+                "string"
+            ){
                 editor.value =
                     draft.text;
             }
-            if(draft.fileName){
+            if(
+                typeof draft.fileName ===
+                "string"
+            ){
                 fileName.value =
                     draft.fileName;
             }
-            if(draft.format){
+            if(
+                ["txt","py","html","json","md"]
+                .includes(draft.format)
+            ){
                 selectedFormat =
                     draft.format;
-                document
-                    .querySelectorAll(
-                        ".format-btn"
-                    )
-                    .forEach(button => {
-                        button.classList.toggle(
-                            "active",
-                            button.dataset.format
-                            === selectedFormat
-                        );
-                    });
-                formatInfo.textContent =
-                    "." + selectedFormat;
             }
         }catch(error){
             console.log(
-                "Draft load error",
+                "Draft load error:",
                 error
             );
         }
     }
     /*
-       Токен намеренно НЕ сохраняем.
-       Это безопаснее.
+       Обновляем визуальное состояние
+       кнопки формата.
     */
+    document
+        .querySelectorAll(".format-btn")
+        .forEach(button => {
+            button.classList.toggle(
+                "active",
+                button.dataset.format
+                === selectedFormat
+            );
+        });
+    formatInfo.textContent =
+        "." + selectedFormat;
     updateStats();
 })();
 </script>
