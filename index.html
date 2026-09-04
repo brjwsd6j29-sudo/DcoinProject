@@ -2,779 +2,1112 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GameZone</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CoinPlay</title>
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    -webkit-tap-highlight-color: transparent;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
 }
-
-body {
-    font-family: Arial, sans-serif;
+body{
+    font-family:Arial,sans-serif;
+    min-height:100vh;
+    color:#fff;
     background:
-        radial-gradient(circle at top, #1c2450 0%, #0b0d18 45%, #06070d 100%);
-    color: white;
-    min-height: 100vh;
+        radial-gradient(circle at top,#20295c 0%,#0b0e1b 45%,#05060b 100%);
 }
-
-.container {
-    width: 100%;
-    max-width: 900px;
-    margin: auto;
-    padding: 18px;
+button,input{
+    font-family:inherit;
 }
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(255,255,255,.07);
-    border: 1px solid rgba(255,255,255,.08);
-    padding: 16px;
-    border-radius: 20px;
-    backdrop-filter: blur(15px);
-    margin-bottom: 18px;
+.hidden{
+    display:none!important;
 }
-
-.logo {
-    font-size: 24px;
-    font-weight: 900;
+/* AUTH */
+.auth{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
 }
-
-.balance {
-    background: rgba(255,255,255,.08);
-    padding: 10px 15px;
-    border-radius: 14px;
-    font-weight: bold;
+.auth-box{
+    width:100%;
+    max-width:400px;
+    padding:28px;
+    border-radius:25px;
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.1);
+    backdrop-filter:blur(20px);
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
 }
-
-.balance span {
-    color: #61e7ff;
+.logo{
+    text-align:center;
+    font-size:30px;
+    font-weight:900;
+    margin-bottom:8px;
 }
-
-.menu {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 18px;
+.auth-sub{
+    text-align:center;
+    color:#9298ae;
+    margin-bottom:25px;
 }
-
-.menu button {
-    border: none;
-    color: white;
-    padding: 17px;
-    border-radius: 17px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    background: rgba(255,255,255,.08);
-    border: 1px solid rgba(255,255,255,.08);
+.input{
+    width:100%;
+    padding:15px;
+    margin-bottom:12px;
+    border-radius:14px;
+    border:1px solid #303750;
+    outline:none;
+    background:#101424;
+    color:#fff;
+    font-size:16px;
 }
-
-.menu button.active {
-    background: linear-gradient(135deg,#5965ff,#9c4dff);
+.input:focus{
+    border-color:#6873ff;
 }
-
-.game {
-    display: none;
-    background: rgba(255,255,255,.055);
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 24px;
-    padding: 18px;
+.btn{
+    width:100%;
+    padding:15px;
+    border:0;
+    border-radius:14px;
+    color:#fff;
+    background:linear-gradient(135deg,#5967ff,#9c4cff);
+    font-weight:900;
+    font-size:16px;
+    cursor:pointer;
 }
-
-.game.active {
-    display: block;
+.btn:active{
+    transform:scale(.98);
 }
-
-.title {
-    font-size: 25px;
-    font-weight: 900;
-    margin-bottom: 5px;
+.switch{
+    text-align:center;
+    margin-top:18px;
+    color:#8f96ad;
+    cursor:pointer;
 }
-
-.subtitle {
-    color: #9298ad;
-    margin-bottom: 15px;
+.switch b{
+    color:#6ce5ff;
 }
-
+.error{
+    min-height:20px;
+    color:#ff6b81;
+    text-align:center;
+    margin-bottom:10px;
+}
+/* APP */
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:18px;
+}
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    padding:15px;
+    border-radius:20px;
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.08);
+    margin-bottom:15px;
+}
+.header-logo{
+    font-size:22px;
+    font-weight:900;
+}
+.balance{
+    background:rgba(255,255,255,.08);
+    padding:10px 14px;
+    border-radius:14px;
+    font-weight:bold;
+}
+.balance span{
+    color:#63e7ff;
+}
+.profile{
+    background:rgba(255,255,255,.07);
+    padding:14px;
+    border-radius:18px;
+    margin-bottom:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.username{
+    font-weight:bold;
+}
+.logout{
+    border:0;
+    padding:8px 12px;
+    border-radius:10px;
+    background:#292d40;
+    color:#fff;
+    cursor:pointer;
+}
+.tabs{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:15px;
+}
+.tabs button{
+    padding:16px;
+    border-radius:15px;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.07);
+    color:#fff;
+    font-size:16px;
+    font-weight:bold;
+}
+.tabs button.active{
+    background:linear-gradient(135deg,#5967ff,#984dff);
+}
+.game{
+    display:none;
+    padding:18px;
+    border-radius:22px;
+    background:rgba(255,255,255,.055);
+    border:1px solid rgba(255,255,255,.08);
+}
+.game.active{
+    display:block;
+}
+.title{
+    font-size:25px;
+    font-weight:900;
+    margin-bottom:5px;
+}
+.desc{
+    color:#9298ae;
+    margin-bottom:18px;
+}
+.bet-area{
+    display:flex;
+    gap:10px;
+    margin-bottom:15px;
+}
+.bet{
+    flex:1;
+    padding:14px;
+    background:#101424;
+    border:1px solid #303750;
+    border-radius:14px;
+    color:#fff;
+    outline:none;
+    font-size:16px;
+}
+.quick{
+    display:flex;
+    gap:7px;
+    margin-bottom:15px;
+}
+.quick button{
+    flex:1;
+    padding:10px 5px;
+    border:0;
+    border-radius:10px;
+    background:#20263a;
+    color:#fff;
+    cursor:pointer;
+}
+.main-btn{
+    width:100%;
+    padding:15px;
+    border:0;
+    border-radius:14px;
+    color:#fff;
+    background:linear-gradient(135deg,#5967ff,#9c4cff);
+    font-size:16px;
+    font-weight:900;
+    cursor:pointer;
+}
+.main-btn:disabled{
+    opacity:.45;
+}
 /* PLINKO */
-
-.plinko-wrap {
-    display: flex;
-    justify-content: center;
+canvas{
+    display:block;
+    width:100%;
+    height:auto;
+    border-radius:18px;
+    background:#080b15;
+    border:1px solid rgba(255,255,255,.08);
+    margin-bottom:15px;
 }
-
-canvas {
-    display: block;
-    width: 100%;
-    max-width: 650px;
-    height: auto;
-    background:
-        radial-gradient(circle at center, #151b39, #090b14);
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,.08);
+.result{
+    text-align:center;
+    min-height:25px;
+    margin-top:13px;
+    font-weight:bold;
 }
-
-.plinko-controls {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.select {
-    flex: 1;
-    background: #111525;
-    color: white;
-    border: 1px solid #2a3150;
-    border-radius: 14px;
-    padding: 14px;
-    font-size: 16px;
-}
-
-.main-btn {
-    flex: 1;
-    border: none;
-    border-radius: 14px;
-    background: linear-gradient(135deg,#5b63ff,#a348ff);
-    color: white;
-    font-size: 16px;
-    font-weight: 900;
-    cursor: pointer;
-    padding: 14px;
-}
-
-.main-btn:disabled {
-    opacity: .5;
-}
-
-.result {
-    text-align: center;
-    margin-top: 15px;
-    min-height: 25px;
-    font-weight: bold;
-}
-
 /* CRASH */
-
-.crash-box {
-    position: relative;
-    height: 390px;
-    overflow: hidden;
-    border-radius: 20px;
-    background:
-        linear-gradient(180deg,#121934,#090b14);
-    border: 1px solid rgba(255,255,255,.08);
+.crash-box{
+    height:390px;
+    position:relative;
+    overflow:hidden;
+    border-radius:18px;
+    background:linear-gradient(180deg,#111831,#080a12);
+    border:1px solid rgba(255,255,255,.08);
 }
-
-.grid {
-    position: absolute;
-    inset: 0;
+.grid{
+    position:absolute;
+    inset:0;
     background-image:
-        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
-    background-size: 45px 45px;
+        linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+    background-size:45px 45px;
 }
-
-.crash-value {
-    position: absolute;
-    width: 100%;
-    top: 40%;
-    text-align: center;
-    font-size: 58px;
-    font-weight: 900;
-    z-index: 3;
+.crash-number{
+    position:absolute;
+    z-index:3;
+    top:40%;
+    width:100%;
+    text-align:center;
+    font-size:55px;
+    font-weight:900;
 }
-
-.crash-value span {
-    color: #62eaff;
+.crash-number span{
+    color:#63e7ff;
 }
-
-.rocket {
-    position: absolute;
-    font-size: 48px;
-    left: 15%;
-    bottom: 15%;
-    z-index: 4;
-    transform: rotate(-25deg);
-    transition: .15s linear;
+.rocket{
+    position:absolute;
+    z-index:4;
+    left:12%;
+    bottom:13%;
+    font-size:45px;
+    transform:rotate(-25deg);
+    transition:.08s linear;
 }
-
-.crash-line {
-    position: absolute;
-    height: 3px;
-    width: 0;
-    left: 10%;
-    bottom: 20%;
-    background: #61e7ff;
-    box-shadow: 0 0 15px #61e7ff;
+.line{
+    position:absolute;
+    z-index:2;
+    left:8%;
+    bottom:19%;
+    height:3px;
+    width:0;
+    background:#63e7ff;
+    box-shadow:0 0 15px #63e7ff;
 }
-
-.crash-controls {
-    margin-top: 15px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+.crash-buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:15px;
 }
-
-.crash-status {
-    text-align: center;
-    margin-top: 12px;
-    color: #9da4ba;
+.status{
+    text-align:center;
+    color:#9ca3bb;
+    margin-top:12px;
 }
-
-@media(max-width:600px) {
-    .menu {
-        grid-template-columns: 1fr 1fr;
+.history{
+    margin-top:20px;
+}
+.history-title{
+    font-weight:bold;
+    margin-bottom:10px;
+}
+.history-item{
+    padding:11px;
+    border-radius:11px;
+    background:rgba(255,255,255,.05);
+    margin-bottom:7px;
+    color:#c4c8d5;
+}
+@media(max-width:600px){
+    .container{
+        padding:12px;
     }
-
-    .header {
-        padding: 13px;
+    .header-logo{
+        font-size:19px;
     }
-
-    .logo {
-        font-size: 20px;
+    .balance{
+        font-size:14px;
     }
-
-    .balance {
-        font-size: 14px;
+    .game{
+        padding:13px;
     }
-
-    .crash-box {
-        height: 330px;
+    .crash-box{
+        height:320px;
     }
-
-    .crash-value {
-        font-size: 45px;
+    .crash-number{
+        font-size:45px;
     }
-
-    .rocket {
-        font-size: 40px;
+    .rocket{
+        font-size:38px;
     }
-
-    .plinko-controls {
-        flex-direction: column;
+    .bet-area{
+        flex-direction:column;
     }
 }
 </style>
 </head>
-
 <body>
-
+<!-- AUTH -->
+<div id="auth" class="auth">
+    <div class="auth-box">
+        <div class="logo">🎮 CoinPlay</div>
+        <div class="auth-sub">
+            Игровая платформа
+        </div>
+        <!-- LOGIN -->
+        <div id="loginForm">
+            <input
+                id="loginUser"
+                class="input"
+                placeholder="Логин"
+                autocomplete="username"
+            >
+            <input
+                id="loginPass"
+                class="input"
+                type="password"
+                placeholder="Пароль"
+                autocomplete="current-password"
+            >
+            <div id="loginError" class="error"></div>
+            <button class="btn" onclick="login()">
+                ВОЙТИ
+            </button>
+            <div class="switch" onclick="showRegister()">
+                Нет аккаунта?
+                <b>Регистрация</b>
+            </div>
+        </div>
+        <!-- REGISTER -->
+        <div id="registerForm" class="hidden">
+            <input
+                id="regUser"
+                class="input"
+                placeholder="Придумай логин"
+            >
+            <input
+                id="regPass"
+                class="input"
+                type="password"
+                placeholder="Придумай пароль"
+            >
+            <input
+                id="regPass2"
+                class="input"
+                type="password"
+                placeholder="Повтори пароль"
+            >
+            <div id="regError" class="error"></div>
+            <button class="btn" onclick="register()">
+                СОЗДАТЬ АККАУНТ
+            </button>
+            <div class="switch" onclick="showLogin()">
+                Уже есть аккаунт?
+                <b>Войти</b>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- APP -->
+<div id="app" class="hidden">
 <div class="container">
-
     <header class="header">
-        <div class="logo">🎮 GameZone</div>
-
+        <div class="header-logo">
+            🎮 CoinPlay
+        </div>
         <div class="balance">
-            ⭐ <span id="balance">10000</span>
+            🪙 <span id="balance">10000</span>
         </div>
     </header>
-
-    <div class="menu">
-        <button id="plinkoTab" class="active" onclick="openGame('plinko')">
-            🔵 Plinko
-        </button>
-
-        <button id="crashTab" onclick="openGame('crash')">
-            🚀 Crash
+    <div class="profile">
+        <div>
+            👤 <span class="username" id="profileName"></span>
+        </div>
+        <button class="logout" onclick="logout()">
+            Выйти
         </button>
     </div>
-
+    <div class="tabs">
+        <button
+            id="tabPlinko"
+            class="active"
+            onclick="openGame('plinko')"
+        >
+            🔵 PLINKO
+        </button>
+        <button
+            id="tabCrash"
+            onclick="openGame('crash')"
+        >
+            🚀 CRASH
+        </button>
+    </div>
     <!-- PLINKO -->
-
     <section id="plinko" class="game active">
-
         <div class="title">🔵 Plinko</div>
-        <div class="subtitle">
-            Запусти шарик и попробуй набрать как можно больше очков
+        <div class="desc">
+            Запусти шарик и получи очки за результат.
         </div>
-
-        <div class="plinko-wrap">
-            <canvas id="plinkoCanvas" width="650" height="600"></canvas>
+        <canvas
+            id="plinkoCanvas"
+            width="650"
+            height="570"
+        ></canvas>
+        <div class="bet-area">
+            <input
+                id="plinkoBet"
+                class="bet"
+                type="number"
+                min="1"
+                placeholder="Количество коинов"
+            >
         </div>
-
-        <div class="plinko-controls">
-
-            <select id="plinkoDifficulty" class="select">
-                <option value="easy">Легко</option>
-                <option value="normal" selected>Нормально</option>
-                <option value="hard">Сложно</option>
-            </select>
-
-            <button class="main-btn" id="plinkoBtn" onclick="startPlinko()">
-                ЗАПУСТИТЬ
+        <div class="quick">
+            <button onclick="setBet('plinkoBet',100)">
+                100
             </button>
-
+            <button onclick="setBet('plinkoBet',500)">
+                500
+            </button>
+            <button onclick="setBet('plinkoBet',1000)">
+                1K
+            </button>
+            <button onclick="setHalf('plinkoBet')">
+                1/2
+            </button>
+            <button onclick="setAll('plinkoBet')">
+                MAX
+            </button>
         </div>
-
-        <div class="result" id="plinkoResult">
-            Готово к запуску
+        <button
+            id="plinkoStart"
+            class="main-btn"
+            onclick="startPlinko()"
+        >
+            ЗАПУСТИТЬ
+        </button>
+        <div
+            id="plinkoResult"
+            class="result"
+        >
+            Сделай ставку и запусти игру
         </div>
-
     </section>
-
-
     <!-- CRASH -->
-
     <section id="crash" class="game">
-
         <div class="title">🚀 Crash</div>
-        <div class="subtitle">
-            Следи за множителем и останови игру до окончания раунда
+        <div class="desc">
+            Запусти раунд и останови его в нужный момент.
         </div>
-
+        <div class="bet-area">
+            <input
+                id="crashBet"
+                class="bet"
+                type="number"
+                min="1"
+                placeholder="Количество коинов"
+            >
+        </div>
+        <div class="quick">
+            <button onclick="setBet('crashBet',100)">
+                100
+            </button>
+            <button onclick="setBet('crashBet',500)">
+                500
+            </button>
+            <button onclick="setBet('crashBet',1000)">
+                1K
+            </button>
+            <button onclick="setHalf('crashBet')">
+                1/2
+            </button>
+            <button onclick="setAll('crashBet')">
+                MAX
+            </button>
+        </div>
         <div class="crash-box">
-
             <div class="grid"></div>
-
-            <div class="crash-value">
+            <div class="crash-number">
                 <span id="crashMultiplier">1.00x</span>
             </div>
-
-            <div class="rocket" id="rocket">
+            <div
+                id="rocket"
+                class="rocket"
+            >
                 🚀
             </div>
-
-            <div class="crash-line" id="crashLine"></div>
-
+            <div
+                id="crashLine"
+                class="line"
+            ></div>
         </div>
-
-        <div class="crash-controls">
-
-            <button class="main-btn" id="crashStartBtn" onclick="startCrash()">
+        <div class="crash-buttons">
+            <button
+                id="crashStart"
+                class="main-btn"
+                onclick="startCrash()"
+            >
                 🚀 СТАРТ
             </button>
-
-            <button class="main-btn" id="crashStopBtn"
-                    onclick="stopCrash()" disabled>
-                🛑 СТОП
+            <button
+                id="crashStop"
+                class="main-btn"
+                onclick="stopCrash()"
+                disabled
+            >
+                🛑 ЗАБРАТЬ
             </button>
-
         </div>
-
-        <div class="crash-status" id="crashStatus">
-            Нажми «Старт»
+        <div
+            id="crashStatus"
+            class="status"
+        >
+            Сделай ставку и начни раунд
         </div>
-
     </section>
-
+    <!-- HISTORY -->
+    <div class="history">
+        <div class="history-title">
+            📜 История
+        </div>
+        <div id="historyList"></div>
+    </div>
 </div>
-
-
+</div>
 <script>
-
-/* =========================
-   BALANCE
-========================= */
-
-let balance = Number(localStorage.getItem("gameBalance"));
-
-if (!balance || balance < 0) {
-    balance = 10000;
-    saveBalance();
+/* ==============================
+   USERS / LOCAL DATABASE
+============================== */
+let users =
+    JSON.parse(localStorage.getItem("coinplay_users") || "{}");
+let currentUser =
+    localStorage.getItem("coinplay_current");
+function saveUsers(){
+    localStorage.setItem(
+        "coinplay_users",
+        JSON.stringify(users)
+    );
 }
-
-function saveBalance() {
-    localStorage.setItem("gameBalance", balance);
-    document.getElementById("balance").textContent =
-        Math.floor(balance).toLocaleString("ru-RU");
+function showLogin(){
+    document.getElementById("loginForm")
+        .classList.remove("hidden");
+    document.getElementById("registerForm")
+        .classList.add("hidden");
 }
-
-saveBalance();
-
-
-/* =========================
-   MENU
-========================= */
-
-function openGame(game) {
-
+function showRegister(){
+    document.getElementById("loginForm")
+        .classList.add("hidden");
+    document.getElementById("registerForm")
+        .classList.remove("hidden");
+}
+function register(){
+    const username =
+        document.getElementById("regUser")
+        .value.trim();
+    const password =
+        document.getElementById("regPass")
+        .value;
+    const password2 =
+        document.getElementById("regPass2")
+        .value;
+    const error =
+        document.getElementById("regError");
+    error.textContent = "";
+    if(username.length < 3){
+        error.textContent =
+            "Логин должен быть минимум 3 символа";
+        return;
+    }
+    if(password.length < 4){
+        error.textContent =
+            "Пароль должен быть минимум 4 символа";
+        return;
+    }
+    if(password !== password2){
+        error.textContent =
+            "Пароли не совпадают";
+        return;
+    }
+    if(users[username]){
+        error.textContent =
+            "Такой пользователь уже существует";
+        return;
+    }
+    users[username] = {
+        password: password,
+        balance: 10000,
+        history: []
+    };
+    saveUsers();
+    currentUser = username;
+    localStorage.setItem(
+        "coinplay_current",
+        currentUser
+    );
+    showApp();
+}
+function login(){
+    const username =
+        document.getElementById("loginUser")
+        .value.trim();
+    const password =
+        document.getElementById("loginPass")
+        .value;
+    const error =
+        document.getElementById("loginError");
+    error.textContent = "";
+    if(!users[username]){
+        error.textContent =
+            "Пользователь не найден";
+        return;
+    }
+    if(users[username].password !== password){
+        error.textContent =
+            "Неверный пароль";
+        return;
+    }
+    currentUser = username;
+    localStorage.setItem(
+        "coinplay_current",
+        currentUser
+    );
+    showApp();
+}
+function logout(){
+    localStorage.removeItem(
+        "coinplay_current"
+    );
+    currentUser = null;
+    document.getElementById("app")
+        .classList.add("hidden");
+    document.getElementById("auth")
+        .classList.remove("hidden");
+}
+/* ==============================
+   USER
+============================== */
+function getUser(){
+    return users[currentUser];
+}
+function saveUser(){
+    saveUsers();
+}
+function updateBalance(){
+    const user = getUser();
+    document.getElementById("balance")
+        .textContent =
+        Math.floor(user.balance)
+        .toLocaleString("ru-RU");
+}
+function showApp(){
+    if(!currentUser || !users[currentUser]){
+        return;
+    }
+    document.getElementById("auth")
+        .classList.add("hidden");
+    document.getElementById("app")
+        .classList.remove("hidden");
+    document.getElementById("profileName")
+        .textContent = currentUser;
+    updateBalance();
+    renderHistory();
+}
+/* ==============================
+   BET
+============================== */
+function getBet(id){
+    let value =
+        Number(document.getElementById(id).value);
+    if(!Number.isFinite(value)){
+        return 0;
+    }
+    value = Math.floor(value);
+    return value;
+}
+function checkBet(amount){
+    const user = getUser();
+    if(amount <= 0){
+        alert("Введите ставку");
+        return false;
+    }
+    if(amount > user.balance){
+        alert("Недостаточно коинов");
+        return false;
+    }
+    return true;
+}
+function takeBet(amount){
+    const user = getUser();
+    user.balance -= amount;
+    saveUser();
+    updateBalance();
+}
+function addCoins(amount){
+    const user = getUser();
+    user.balance += amount;
+    saveUser();
+    updateBalance();
+}
+function setBet(id,value){
+    document.getElementById(id)
+        .value = value;
+}
+function setHalf(id){
+    const user = getUser();
+    document.getElementById(id)
+        .value =
+        Math.floor(user.balance / 2);
+}
+function setAll(id){
+    const user = getUser();
+    document.getElementById(id)
+        .value = user.balance;
+}
+/* ==============================
+   HISTORY
+============================== */
+function addHistory(text){
+    const user = getUser();
+    user.history.unshift(text);
+    user.history =
+        user.history.slice(0,20);
+    saveUser();
+    renderHistory();
+}
+function renderHistory(){
+    const list =
+        document.getElementById("historyList");
+    list.innerHTML = "";
+    const user = getUser();
+    if(!user || !user.history.length){
+        list.innerHTML =
+            '<div class="history-item">История пока пустая</div>';
+        return;
+    }
+    user.history.forEach(item => {
+        const div =
+            document.createElement("div");
+        div.className =
+            "history-item";
+        div.textContent = item;
+        list.appendChild(div);
+    });
+}
+/* ==============================
+   TABS
+============================== */
+function openGame(game){
     document.querySelectorAll(".game")
-        .forEach(x => x.classList.remove("active"));
-
-    document.querySelectorAll(".menu button")
-        .forEach(x => x.classList.remove("active"));
-
+        .forEach(x =>
+            x.classList.remove("active")
+        );
+    document.querySelectorAll(".tabs button")
+        .forEach(x =>
+            x.classList.remove("active")
+        );
     document.getElementById(game)
         .classList.add("active");
-
-    if (game === "plinko") {
-        document.getElementById("plinkoTab")
+    if(game === "plinko"){
+        document.getElementById("tabPlinko")
             .classList.add("active");
-    }
-
-    if (game === "crash") {
-        document.getElementById("crashTab")
+    }else{
+        document.getElementById("tabCrash")
             .classList.add("active");
     }
 }
-
-
-/* =========================
+/* ==============================
    PLINKO
-========================= */
-
-const canvas = document.getElementById("plinkoCanvas");
-const ctx = canvas.getContext("2d");
-
+============================== */
+const canvas =
+    document.getElementById("plinkoCanvas");
+const ctx =
+    canvas.getContext("2d");
 let pegs = [];
 let ball = null;
 let plinkoRunning = false;
-
-function createPegs() {
-
+function createPegs(){
     pegs = [];
-
-    const rows = 11;
-
-    for (let row = 0; row < rows; row++) {
-
-        const count = 10;
-
-        for (let i = 0; i < count; i++) {
-
-            const offset = row % 2 ? 32 : 0;
-
+    for(let row=0;row<10;row++){
+        for(let i=0;i<10;i++){
+            const offset =
+                row % 2 ? 29 : 0;
             pegs.push({
-                x: 70 + i * 58 + offset,
-                y: 70 + row * 43
+                x:70 + i*58 + offset,
+                y:65 + row*43
             });
-
         }
     }
 }
-
-createPegs();
-
-
-function drawPlinko() {
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Пеги
-
-    for (const peg of pegs) {
-
+function drawPlinko(){
+    ctx.clearRect(
+        0,0,
+        canvas.width,
+        canvas.height
+    );
+    for(const peg of pegs){
         ctx.beginPath();
-        ctx.arc(peg.x, peg.y, 6, 0, Math.PI * 2);
-
-        ctx.fillStyle = "#8c91ad";
+        ctx.arc(
+            peg.x,
+            peg.y,
+            6,
+            0,
+            Math.PI*2
+        );
+        ctx.fillStyle="#8991ad";
         ctx.fill();
-
     }
-
-    // Нижние зоны
-
     const zones = 9;
-    const zoneWidth = canvas.width / zones;
-
-    for (let i = 0; i < zones; i++) {
-
-        ctx.fillStyle = "rgba(255,255,255,.025)";
-
+    const width =
+        canvas.width / zones;
+    const points =
+        [100,200,300,500,1000,500,300,200,100];
+    for(let i=0;i<zones;i++){
+        ctx.fillStyle =
+            "rgba(255,255,255,.035)";
         ctx.fillRect(
-            i * zoneWidth,
-            545,
-            zoneWidth - 2,
-            50
+            i*width,
+            505,
+            width-2,
+            60
         );
-
-        ctx.fillStyle = "#8990a9";
-        ctx.font = "bold 15px Arial";
-        ctx.textAlign = "center";
-
+        ctx.fillStyle="#aab0c4";
+        ctx.font="bold 14px Arial";
+        ctx.textAlign="center";
         ctx.fillText(
-            (i + 1) + "x",
-            i * zoneWidth + zoneWidth / 2,
-            575
+            points[i],
+            i*width + width/2,
+            540
         );
     }
-
-    // Шар
-
-    if (ball) {
-
+    if(ball){
         ctx.beginPath();
-        ctx.arc(ball.x, ball.y, 10, 0, Math.PI * 2);
-
-        ctx.fillStyle = "#61e7ff";
-        ctx.shadowBlur = 18;
-        ctx.shadowColor = "#61e7ff";
-
+        ctx.arc(
+            ball.x,
+            ball.y,
+            10,
+            0,
+            Math.PI*2
+        );
+        ctx.fillStyle="#63e7ff";
+        ctx.shadowBlur=18;
+        ctx.shadowColor="#63e7ff";
         ctx.fill();
-
-        ctx.shadowBlur = 0;
+        ctx.shadowBlur=0;
     }
 }
-
-
-function startPlinko() {
-
-    if (plinkoRunning) return;
-
-    plinkoRunning = true;
-
-    document.getElementById("plinkoBtn").disabled = true;
-
-    document.getElementById("plinkoResult").textContent =
+function startPlinko(){
+    if(plinkoRunning) return;
+    const bet =
+        getBet("plinkoBet");
+    if(!checkBet(bet)) return;
+    takeBet(bet);
+    plinkoRunning=true;
+    document.getElementById("plinkoStart")
+        .disabled=true;
+    document.getElementById("plinkoResult")
+        .textContent =
         "🔵 Шарик падает...";
-
-    const difficulty =
-        document.getElementById("plinkoDifficulty").value;
-
-    ball = {
-        x: canvas.width / 2,
-        y: 25,
-        vx: 0,
-        vy: 0
+    ball={
+        x:canvas.width/2,
+        y:20,
+        vx:0,
+        vy:0
     };
-
-    let gravity = 0.28;
-
-    if (difficulty === "easy") gravity = 0.23;
-    if (difficulty === "hard") gravity = 0.34;
-
-    function animate() {
-
-        if (!ball) return;
-
-        ball.vy += gravity;
-
+    function animate(){
+        if(!ball) return;
+        ball.vy += .27;
         ball.x += ball.vx;
         ball.y += ball.vy;
-
-        // стены
-
-        if (ball.x < 15) {
-            ball.x = 15;
-            ball.vx *= -0.7;
+        if(ball.x<12){
+            ball.x=12;
+            ball.vx*=-.7;
         }
-
-        if (ball.x > canvas.width - 15) {
-            ball.x = canvas.width - 15;
-            ball.vx *= -0.7;
+        if(ball.x>canvas.width-12){
+            ball.x=canvas.width-12;
+            ball.vx*=-.7;
         }
-
-        // столкновение с пегами
-
-        for (const peg of pegs) {
-
-            const dx = ball.x - peg.x;
-            const dy = ball.y - peg.y;
-
-            const distance =
-                Math.sqrt(dx * dx + dy * dy);
-
-            if (distance < 17) {
-
-                ball.y = peg.y + 17;
-
-                ball.vy = -Math.abs(ball.vy) * 0.55;
-
-                const direction =
-                    ball.x < peg.x ? -1 : 1;
-
+        for(const peg of pegs){
+            const dx =
+                ball.x-peg.x;
+            const dy =
+                ball.y-peg.y;
+            const dist =
+                Math.sqrt(
+                    dx*dx+dy*dy
+                );
+            if(dist<17){
+                ball.y =
+                    peg.y+17;
+                ball.vy =
+                    -Math.abs(ball.vy)*.55;
                 ball.vx +=
-                    direction * (0.35 + Math.random() * 0.8);
-
+                    (ball.x<peg.x?-1:1)
+                    *(0.35+Math.random());
                 ball.vx +=
-                    (Math.random() - 0.5) * 0.5;
+                    (Math.random()-.5)*.5;
             }
         }
-
-        // сопротивление
-
-        ball.vx *= 0.995;
-
+        ball.vx*=.995;
         drawPlinko();
-
-        if (ball.y >= 525) {
-
+        if(ball.y>=495){
             finishPlinko();
-
             return;
         }
-
         requestAnimationFrame(animate);
     }
-
     animate();
 }
-
-
-function finishPlinko() {
-
-    const zones = 9;
-
-    let zone = Math.floor(
-        ball.x / (canvas.width / zones)
+function finishPlinko(){
+    const points =
+        [100,200,300,500,1000,500,300,200,100];
+    let zone =
+        Math.floor(
+            ball.x /
+            (canvas.width/9)
+        );
+    zone =
+        Math.max(
+            0,
+            Math.min(8,zone)
+        );
+    const multiplier =
+        points[zone] / 100;
+    const bet =
+        getBet("plinkoBet");
+    const win =
+        Math.floor(
+            bet * multiplier
+        );
+    addCoins(win);
+    addHistory(
+        "🔵 Plinko: ставка " +
+        bet.toLocaleString("ru-RU") +
+        " → +" +
+        win.toLocaleString("ru-RU")
     );
-
-    zone = Math.max(
-        0,
-        Math.min(zones - 1, zone)
-    );
-
-    const points = [
-        100,
-        200,
-        300,
-        500,
-        1000,
-        500,
-        300,
-        200,
-        100
-    ];
-
-    const earned = points[zone];
-
-    balance += earned;
-    saveBalance();
-
-    document.getElementById("plinkoResult").textContent =
-        "🎉 Получено +" +
-        earned.toLocaleString("ru-RU") +
-        " очков!";
-
-    plinkoRunning = false;
-
-    document.getElementById("plinkoBtn").disabled = false;
-
-    ball = null;
-
+    document.getElementById("plinkoResult")
+        .textContent =
+        "🎉 Результат: +" +
+        win.toLocaleString("ru-RU") +
+        " коинов";
+    ball=null;
+    plinkoRunning=false;
+    document.getElementById("plinkoStart")
+        .disabled=false;
     drawPlinko();
 }
-
-
+createPegs();
 drawPlinko();
-
-
-/* =========================
+/* ==============================
    CRASH
-========================= */
-
-let crashRunning = false;
-let crashTimer = null;
-let crashMultiplier = 1;
-let crashLimit = 0;
-
-function startCrash() {
-
-    if (crashRunning) return;
-
-    crashRunning = true;
-
-    crashMultiplier = 1;
-
-    // случайная продолжительность раунда
+============================== */
+let crashRunning=false;
+let crashTimer=null;
+let crashMultiplier=1;
+let crashLimit=0;
+let crashBetAmount=0;
+function startCrash(){
+    if(crashRunning) return;
+    const bet =
+        getBet("crashBet");
+    if(!checkBet(bet)) return;
+    takeBet(bet);
+    crashBetAmount=bet;
+    crashMultiplier=1;
     crashLimit =
-        1.4 + Math.random() * 6;
-
-    document.getElementById("crashStartBtn")
-        .disabled = true;
-
-    document.getElementById("crashStopBtn")
-        .disabled = false;
-
+        1.2 + Math.random()*6;
+    crashRunning=true;
+    document.getElementById("crashStart")
+        .disabled=true;
+    document.getElementById("crashStop")
+        .disabled=false;
     document.getElementById("crashStatus")
-        .textContent = "🚀 Раунд идёт...";
-
-    const rocket =
-        document.getElementById("rocket");
-
-    const line =
-        document.getElementById("crashLine");
-
-    rocket.style.left = "15%";
-    rocket.style.bottom = "15%";
-
-    line.style.width = "0%";
-
-    crashTimer = setInterval(() => {
-
-        crashMultiplier += 0.01 +
-            crashMultiplier * 0.004;
-
-        document.getElementById("crashMultiplier")
-            .textContent =
-            crashMultiplier.toFixed(2) + "x";
-
-        let progress =
+        .textContent =
+        "🚀 Раунд идёт...";
+    document.getElementById("rocket")
+        .style.left="12%";
+    document.getElementById("rocket")
+        .style.bottom="13%";
+    document.getElementById("crashLine")
+        .style.width="0%";
+    crashTimer=setInterval(()=>{
+        crashMultiplier +=
+            .008 +
+            crashMultiplier*.003;
+        document.getElementById(
+            "crashMultiplier"
+        ).textContent =
+            crashMultiplier.toFixed(2)+"x";
+        const progress =
             Math.min(
                 85,
-                (crashMultiplier / crashLimit) * 85
+                crashMultiplier /
+                crashLimit * 85
             );
-
-        rocket.style.left =
-            (15 + progress * 0.7) + "%";
-
-        rocket.style.bottom =
-            (15 + progress * 0.45) + "%";
-
-        line.style.width =
-            progress + "%";
-
-        if (crashMultiplier >= crashLimit) {
-
+        document.getElementById("rocket")
+            .style.left =
+            (12 + progress*.75)+"%";
+        document.getElementById("rocket")
+            .style.bottom =
+            (13 + progress*.45)+"%";
+        document.getElementById("crashLine")
+            .style.width =
+            progress+"%";
+        if(crashMultiplier>=crashLimit){
             crashEnd();
-
         }
-
-    }, 50);
+    },50);
 }
-
-
-function stopCrash() {
-
-    if (!crashRunning) return;
-
-    crashRunning = false;
-
+function stopCrash(){
+    if(!crashRunning) return;
     clearInterval(crashTimer);
-
+    crashRunning=false;
+    const win =
+        Math.floor(
+            crashBetAmount *
+            crashMultiplier
+        );
+    addCoins(win);
+    addHistory(
+        "🚀 Crash: ставка " +
+        crashBetAmount.toLocaleString("ru-RU") +
+        " → " +
+        crashMultiplier.toFixed(2) +
+        "x → +" +
+        win.toLocaleString("ru-RU")
+    );
     document.getElementById("crashStatus")
         .textContent =
-        "🛑 Ты остановился на " +
+        "🛑 Забрано +" +
+        win.toLocaleString("ru-RU") +
+        " коинов";
+    document.getElementById("crashStart")
+        .disabled=false;
+    document.getElementById("crashStop")
+        .disabled=true;
+}
+function crashEnd(){
+    clearInterval(crashTimer);
+    crashRunning=false;
+    document.getElementById("crashStatus")
+        .textContent =
+        "💥 Раунд закончился на " +
         crashMultiplier.toFixed(2) +
         "x";
-
-    document.getElementById("crashStartBtn")
-        .disabled = false;
-
-    document.getElementById("crashStopBtn")
-        .disabled = true;
+    document.getElementById("crashStart")
+        .disabled=false;
+    document.getElementById("crashStop")
+        .disabled=true;
 }
-
-
-function crashEnd() {
-
-    crashRunning = false;
-
-    clearInterval(crashTimer);
-
-    document.getElementById("crashMultiplier")
-        .textContent =
-        crashMultiplier.toFixed(2) + "x";
-
-    document.getElementById("crashStatus")
-        .textContent =
-        "💥 Раунд закончился! Множитель: " +
-        crashMultiplier.toFixed(2) + "x";
-
-    document.getElementById("crashStartBtn")
-        .disabled = false;
-
-    document.getElementById("crashStopBtn")
-        .disabled = true;
+/* ==============================
+   AUTO LOGIN
+============================== */
+if(
+    currentUser &&
+    users[currentUser]
+){
+    showApp();
+}else{
+    document.getElementById("auth")
+        .classList.remove("hidden");
 }
-
 </script>
-
 </body>
 </html>
