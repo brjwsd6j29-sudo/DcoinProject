@@ -1,1512 +1,191 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
->
-<meta
-    name="theme-color"
-    content="#080a12"
->
-<title>File Studio</title>
-<style>
-/* =========================================
-   RESET
-========================================= */
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    -webkit-tap-highlight-color:transparent;
-}
-:root{
-    --bg:#070910;
-    --panel:#10131d;
-    --panel2:#151925;
-    --border:#262c3e;
-    --text:#f4f6ff;
-    --muted:#858da3;
-    --accent:#6d72ff;
-    --accent2:#9b54ff;
-    --green:#4de3a4;
-    --red:#ff637b;
-    --blue:#4dbfff;
-}
-html{
-    scroll-behavior:smooth;
-}
-body{
-    min-height:100vh;
-    color:var(--text);
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Arial,
-        sans-serif;
-    background:
-        radial-gradient(
-            circle at 15% 0%,
-            rgba(100,110,255,.22),
-            transparent 32%
-        ),
-        radial-gradient(
-            circle at 90% 20%,
-            rgba(150,70,255,.15),
-            transparent 28%
-        ),
-        var(--bg);
-}
-/* =========================================
-   APP
-========================================= */
-.app{
-    width:100%;
-    max-width:1200px;
-    margin:auto;
-    padding:18px;
-}
-/* =========================================
-   HEADER
-========================================= */
-.header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-    padding:18px 20px;
-    margin-bottom:16px;
-    border:1px solid var(--border);
-    border-radius:22px;
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.07),
-            rgba(255,255,255,.025)
-        );
-    backdrop-filter:blur(18px);
-}
-.brand{
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
-.brand-icon{
-    width:46px;
-    height:46px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:14px;
-    font-size:23px;
-    background:
-        linear-gradient(
-            135deg,
-            var(--accent),
-            var(--accent2)
-        );
-    box-shadow:
-        0 10px 30px rgba(100,90,255,.25);
-}
-.brand-title{
-    font-size:21px;
-    font-weight:900;
-}
-.brand-subtitle{
-    color:var(--muted);
-    font-size:13px;
-    margin-top:2px;
-}
-.header-status{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    color:var(--green);
-    font-size:13px;
-    font-weight:bold;
-}
-.status-dot{
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    background:var(--green);
-    box-shadow:
-        0 0 12px var(--green);
-}
-/* =========================================
-   MAIN GRID
-========================================= */
-.main-grid{
-    display:grid;
-    grid-template-columns:
-        minmax(0,1fr)
-        350px;
-    gap:16px;
-}
-/* =========================================
-   PANEL
-========================================= */
-.panel{
-    border:1px solid var(--border);
-    border-radius:22px;
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.055),
-            rgba(255,255,255,.02)
-        );
-    overflow:hidden;
-}
-.panel-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:18px 20px;
-    border-bottom:1px solid var(--border);
-}
-.panel-title{
-    font-size:18px;
-    font-weight:900;
-}
-.panel-description{
-    color:var(--muted);
-    font-size:12px;
-    margin-top:3px;
-}
-/* =========================================
-   EDITOR
-========================================= */
-.editor-panel{
-    min-width:0;
-}
-.editor-wrap{
-    padding:15px;
-}
-textarea{
-    display:block;
-    width:100%;
-    min-height:570px;
-    resize:vertical;
-    padding:18px;
-    border:1px solid var(--border);
-    border-radius:17px;
-    outline:none;
-    background:#090c14;
-    color:#e8ebf7;
-    font-family:
-        "SFMono-Regular",
-        Consolas,
-        "Liberation Mono",
-        monospace;
-    font-size:14px;
-    line-height:1.65;
-    tab-size:4;
-}
-textarea:focus{
-    border-color:#5e65ff;
-    box-shadow:
-        0 0 0 3px rgba(90,90,255,.08);
-}
-.editor-bottom{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-top:10px;
-    color:var(--muted);
-    font-size:12px;
-}
-.stats{
-    display:flex;
-    gap:15px;
-}
-/* =========================================
-   SIDE
-========================================= */
-.side{
-    display:flex;
-    flex-direction:column;
-    gap:16px;
-}
-.section{
-    padding:18px;
-}
-.section-title{
-    font-size:16px;
-    font-weight:900;
-    margin-bottom:14px;
-}
-label{
-    display:block;
-    color:#b3b9ca;
-    font-size:12px;
-    font-weight:bold;
-    margin-bottom:7px;
-}
-.input,
-select{
-    width:100%;
-    padding:13px 14px;
-    border:1px solid var(--border);
-    border-radius:13px;
-    outline:none;
-    background:#0b0f18;
-    color:white;
-    font-size:15px;
-    margin-bottom:14px;
-}
-.input:focus,
-select:focus{
-    border-color:#6268ff;
-}
-/* =========================================
-   FORMAT BUTTONS
-========================================= */
-.format-grid{
-    display:grid;
-    grid-template-columns:
-        repeat(2,1fr);
-    gap:8px;
-    margin-bottom:14px;
-}
-.format-btn{
-    padding:12px 8px;
-    border:1px solid var(--border);
-    border-radius:12px;
-    background:#0c1019;
-    color:#aeb4c7;
-    cursor:pointer;
-    font-weight:bold;
-    transition:.15s;
-}
-.format-btn:active{
-    transform:scale(.97);
-}
-.format-btn.active{
-    background:
-        linear-gradient(
-            135deg,
-            rgba(105,110,255,.25),
-            rgba(155,80,255,.22)
-        );
-    border-color:#666cff;
-    color:white;
-}
-/* =========================================
-   BUTTONS
-========================================= */
-.buttons{
-    display:grid;
-    grid-template-columns:
-        1fr 1fr;
-    gap:9px;
-}
-.btn{
-    border:0;
-    border-radius:13px;
-    padding:14px 10px;
-    color:white;
-    font-size:14px;
-    font-weight:900;
-    cursor:pointer;
-    transition:.15s;
-}
-.btn:active{
-    transform:scale(.97);
-}
-.btn:disabled{
-    opacity:.5;
-    cursor:not-allowed;
-}
-.btn-primary{
-    background:
-        linear-gradient(
-            135deg,
-            var(--accent),
-            var(--accent2)
-        );
-}
-.btn-secondary{
-    background:#202535;
-}
-.btn-telegram{
-    grid-column:1/-1;
-    background:
-        linear-gradient(
-            135deg,
-            #229ed9,
-            #167fc0
-        );
-}
-.btn-danger{
-    background:#38202a;
-    color:#ff8797;
-}
-/* =========================================
-   TELEGRAM
-========================================= */
-.telegram-box{
-    border-color:
-        rgba(50,160,220,.2);
-    background:
-        linear-gradient(
-            145deg,
-            rgba(34,158,217,.07),
-            rgba(34,158,217,.025)
-        );
-}
-.telegram-title{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    font-weight:900;
-    margin-bottom:6px;
-}
-.telegram-info{
-    color:var(--muted);
-    font-size:12px;
-    line-height:1.55;
-    margin-bottom:15px;
-}
-/* =========================================
-   INFO
-========================================= */
-.info-grid{
-    display:grid;
-    grid-template-columns:
-        1fr 1fr;
-    gap:8px;
-}
-.info{
-    padding:12px;
-    border-radius:12px;
-    background:rgba(255,255,255,.035);
-}
-.info-name{
-    color:var(--muted);
-    font-size:11px;
-}
-.info-value{
-    margin-top:4px;
-    font-size:14px;
-    font-weight:bold;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-}
-/* =========================================
-   TOAST
-========================================= */
-.toast{
-    position:fixed;
-    left:50%;
-    bottom:20px;
-    transform:
-        translate(-50%,30px);
-    opacity:0;
-    pointer-events:none;
-    min-width:250px;
-    max-width:90%;
-    padding:14px 17px;
-    border:1px solid var(--border);
-    border-radius:14px;
-    background:#171b28;
-    box-shadow:
-        0 15px 50px rgba(0,0,0,.4);
-    text-align:center;
-    font-size:14px;
-    font-weight:bold;
-    transition:.25s;
-    z-index:100;
-}
-.toast.show{
-    transform:
-        translate(-50%,0);
-    opacity:1;
-}
-.toast.success{
-    border-color:
-        rgba(77,227,164,.4);
-}
-.toast.error{
-    border-color:
-        rgba(255,99,123,.4);
-}
-/* =========================================
-   MODAL
-========================================= */
-.modal{
-    position:fixed;
-    inset:0;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    background:rgba(0,0,0,.65);
-    backdrop-filter:blur(8px);
-    z-index:90;
-}
-.modal.show{
-    display:flex;
-}
-.modal-box{
-    width:100%;
-    max-width:450px;
-    padding:23px;
-    border:1px solid var(--border);
-    border-radius:22px;
-    background:#111521;
-    box-shadow:
-        0 30px 100px rgba(0,0,0,.5);
-}
-.modal-title{
-    font-size:20px;
-    font-weight:900;
-    margin-bottom:8px;
-}
-.modal-text{
-    color:var(--muted);
-    font-size:13px;
-    line-height:1.6;
-    margin-bottom:17px;
-}
-.modal-buttons{
-    display:flex;
-    gap:9px;
-}
-/* =========================================
-   SCROLLBAR
-========================================= */
-::-webkit-scrollbar{
-    width:8px;
-    height:8px;
-}
-::-webkit-scrollbar-track{
-    background:#080a10;
-}
-::-webkit-scrollbar-thumb{
-    background:#2a3042;
-    border-radius:20px;
-}
-/* =========================================
-   TABLET
-========================================= */
-@media(max-width:850px){
-    .main-grid{
-        grid-template-columns:1fr;
-    }
-    textarea{
-        min-height:450px;
-    }
-}
-/* =========================================
-   MOBILE
-========================================= */
-@media(max-width:600px){
-    .app{
-        padding:10px;
-    }
-    .header{
-        padding:14px;
-        border-radius:18px;
-    }
-    .brand-icon{
-        width:40px;
-        height:40px;
-        font-size:20px;
-    }
-    .brand-title{
-        font-size:18px;
-    }
-    .brand-subtitle{
-        font-size:11px;
-    }
-    .header-status{
-        font-size:10px;
-    }
-    .panel{
-        border-radius:18px;
-    }
-    .panel-header{
-        padding:15px;
-    }
-    .editor-wrap{
-        padding:10px;
-    }
-    textarea{
-        min-height:390px;
-        padding:14px;
-        font-size:13px;
-    }
-    .section{
-        padding:15px;
-    }
-    .buttons{
-        grid-template-columns:1fr;
-    }
-    .btn-telegram{
-        grid-column:auto;
-    }
-    .stats{
-        gap:8px;
-        flex-direction:column;
-    }
-}
-/* =========================================
-   VERY SMALL
-========================================= */
-@media(max-width:360px){
-    .header-status{
-        display:none;
-    }
-    .format-grid{
-        grid-template-columns:1fr 1fr;
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Донат в Telegram Stars</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 40px 30px;
+            max-width: 440px;
+            width: 100%;
+            box-shadow: 0 25px 50px -8px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: transform 0.2s;
+        }
+        .card:hover { transform: scale(1.01); }
+        .icon { text-align: center; font-size: 56px; margin-bottom: 12px; }
+        h1 { color: #f1f5f9; font-size: 26px; font-weight: 600; text-align: center; }
+        .subtitle { color: #94a3b8; text-align: center; font-size: 15px; margin: 8px 0 28px; line-height: 1.5; }
+        .input-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 24px; }
+        .input-group label { color: #cbd5e1; font-size: 14px; font-weight: 500; margin-left: 4px; }
+        .input-group input {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 16px;
+            padding: 16px 18px;
+            font-size: 20px;
+            font-weight: 500;
+            color: #f8fafc;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            width: 100%;
+        }
+        .input-group input:focus {
+            border-color: #fbbf24;
+            box-shadow: 0 0 0 3px rgba(251,191,36,0.2);
+        }
+        .input-group input::placeholder { color: #64748b; font-weight: 400; }
+        .input-group input::-webkit-inner-spin-button { -webkit-appearance: none; }
+        .input-group input[type="number"] { -moz-appearance: textfield; }
+        .quick-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 8px 0 24px;
+        }
+        .quick-btn {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 40px;
+            padding: 8px 18px;
+            color: #e2e8f0;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .quick-btn:hover {
+            background: rgba(251,191,36,0.15);
+            border-color: #fbbf24;
+            color: #fbbf24;
+            transform: translateY(-2px);
+        }
+        .quick-btn:active { transform: scale(0.96); }
+        .donate-btn {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border: none;
+            border-radius: 40px;
+            padding: 18px 20px;
+            width: 100%;
+            font-size: 20px;
+            font-weight: 700;
+            color: #0f172a;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 8px 18px -6px rgba(251,191,36,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .donate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 28px -8px rgba(251,191,36,0.4);
+            background: linear-gradient(135deg, #fcd34d, #f59e0b);
+        }
+        .donate-btn:active { transform: scale(0.97); }
+        .footer { margin-top: 24px; text-align: center; color: #64748b; font-size: 13px; }
+        .footer a { color: #94a3b8; text-decoration: none; border-bottom: 1px dashed #475569; }
+        .footer a:hover { color: #fbbf24; border-bottom-color: #fbbf24; }
+        .star-icon { display: inline-block; font-size: 24px; line-height: 1; }
+        @media (max-width: 480px) {
+            .card { padding: 30px 20px; }
+            h1 { font-size: 22px; }
+            .input-group input { font-size: 18px; padding: 14px 16px; }
+            .donate-btn { font-size: 18px; padding: 16px; }
+        }
+    </style>
 </head>
 <body>
-<div class="app">
-<!-- =====================================
-     HEADER
-===================================== -->
-<header class="header">
-    <div class="brand">
-        <div class="brand-icon">
-            📄
-        </div>
-        <div>
-            <div class="brand-title">
-                File Studio
-            </div>
-            <div class="brand-subtitle">
-                Текст → готовый файл
-            </div>
-        </div>
+<div class="card">
+    <div class="icon">⭐</div>
+    <h1>Поддержать в Stars</h1>
+    <p class="subtitle">
+        Введите количество звёзд, которые хотите отправить.<br>
+        После нажатия вы перейдёте в бота для оплаты.
+    </p>
+    <div class="input-group">
+        <label for="starsInput">Количество звёзд</label>
+        <input type="number" id="starsInput" min="1" step="1" placeholder="Например, 100" value="100">
     </div>
-    <div class="header-status">
-        <div class="status-dot"></div>
-        Готово
+    <div class="quick-buttons">
+        <button class="quick-btn" data-amount="50">50 ⭐</button>
+        <button class="quick-btn" data-amount="100">100 ⭐</button>
+        <button class="quick-btn" data-amount="250">250 ⭐</button>
+        <button class="quick-btn" data-amount="500">500 ⭐</button>
+        <button class="quick-btn" data-amount="1000">1000 ⭐</button>
     </div>
-</header>
-<div class="main-grid">
-<!-- =====================================
-     EDITOR
-===================================== -->
-<main class="panel editor-panel">
-    <div class="panel-header">
-        <div>
-            <div class="panel-title">
-                📝 Редактор
-            </div>
-            <div class="panel-description">
-                Вставь или напиши текст
-            </div>
-        </div>
-        <button
-            class="btn btn-secondary"
-            onclick="clearEditor()"
-            style="padding:9px 12px"
-        >
-            Очистить
-        </button>
-    </div>
-    <div class="editor-wrap">
-        <textarea
-            id="editor"
-            spellcheck="false"
-            autocomplete="off"
-            autocorrect="off"
-            autocapitalize="off"
-            placeholder="Вставь сюда текст или код...
-Например Python:
-print('Hello World')
-Можно писать или вставлять:
-• Python
-• HTML
-• JSON
-• Markdown
-• обычный текст
-После этого выбери формат и скачай файл."
-        ></textarea>
-        <div class="editor-bottom">
-            <div class="stats">
-                <span>
-                    Символов:
-                    <b id="chars">0</b>
-                </span>
-                <span>
-                    Строк:
-                    <b id="lines">0</b>
-                </span>
-            </div>
-            <span>
-                Размер:
-                <b id="size">0 B</b>
-            </span>
-        </div>
-    </div>
-</main>
-<!-- =====================================
-     SIDE
-===================================== -->
-<aside class="side">
-<!-- FILE SETTINGS -->
-<section class="panel">
-    <div class="section">
-        <div class="section-title">
-            📁 Настройки файла
-        </div>
-        <label>
-            Название файла
-        </label>
-        <input
-            id="fileName"
-            class="input"
-            value="my_file"
-            placeholder="Название файла"
-            autocomplete="off"
-        >
-        <label>
-            Формат файла
-        </label>
-        <div class="format-grid">
-            <button
-                class="format-btn active"
-                data-format="txt"
-                onclick="selectFormat('txt')"
-            >
-                📄 TXT
-            </button>
-            <button
-                class="format-btn"
-                data-format="py"
-                onclick="selectFormat('py')"
-            >
-                🐍 PY
-            </button>
-            <button
-                class="format-btn"
-                data-format="html"
-                onclick="selectFormat('html')"
-            >
-                🌐 HTML
-            </button>
-            <button
-                class="format-btn"
-                data-format="json"
-                onclick="selectFormat('json')"
-            >
-                {} JSON
-            </button>
-            <button
-                class="format-btn"
-                data-format="md"
-                onclick="selectFormat('md')"
-            >
-                📝 MD
-            </button>
-        </div>
-        <div class="info-grid">
-            <div class="info">
-                <div class="info-name">
-                    Расширение
-                </div>
-                <div
-                    class="info-value"
-                    id="formatInfo"
-                >
-                    .txt
-                </div>
-            </div>
-            <div class="info">
-                <div class="info-name">
-                    Размер
-                </div>
-                <div
-                    class="info-value"
-                    id="sizeInfo"
-                >
-                    0 B
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- ACTIONS -->
-<section class="panel">
-    <div class="section">
-        <div class="section-title">
-            ⚡ Действия
-        </div>
-        <div class="buttons">
-            <button
-                class="btn btn-primary"
-                onclick="downloadFile()"
-            >
-                ⬇️ Скачать
-            </button>
-            <button
-                class="btn btn-secondary"
-                onclick="copyText()"
-            >
-                📋 Копировать
-            </button>
-            <button
-                class="btn btn-secondary"
-                onclick="saveDraft()"
-            >
-                💾 Сохранить
-            </button>
-            <button
-                class="btn btn-secondary"
-                onclick="loadDraft()"
-            >
-                📂 Загрузить
-            </button>
-        </div>
-    </div>
-</section>
-<!-- TELEGRAM -->
-<section class="panel telegram-box">
-    <div class="section">
-        <div class="telegram-title">
-            ✈️ Telegram
-        </div>
-        <div class="telegram-info">
-            Введи токен Telegram-бота и Chat ID.
-            После этого файл отправится
-            в выбранный чат как документ.
-        </div>
-        <label>
-            Bot Token
-        </label>
-        <input
-            id="botToken"
-            class="input"
-            type="password"
-            placeholder="123456789:AA..."
-            autocomplete="off"
-        >
-        <label>
-            Chat ID
-        </label>
-        <input
-            id="chatId"
-            class="input"
-            placeholder="-1001234567890"
-            autocomplete="off"
-        >
-        <button
-            class="btn btn-telegram"
-            id="telegramBtn"
-            onclick="sendTelegram()"
-        >
-            ✈️ ОТПРАВИТЬ В TELEGRAM
-        </button>
-    </div>
-</section>
-<!-- INFO -->
-<section class="panel">
-    <div class="section">
-        <div class="section-title">
-            ℹ️ Форматы
-        </div>
-        <div
-            style="
-            color:#858da3;
-            font-size:12px;
-            line-height:1.7;
-            "
-        >
-            <b style="color:white">TXT</b>
-            — обычный текстовый файл.
-            <br>
-            <b style="color:white">PY</b>
-            — файл Python.
-            <br>
-            <b style="color:white">HTML</b>
-            — HTML-документ.
-            <br>
-            <b style="color:white">JSON</b>
-            — JSON-данные.
-            <br>
-            <b style="color:white">MD</b>
-            — Markdown-файл.
-            <br><br>
-            Все файлы создаются прямо
-            в браузере.
-        </div>
-    </div>
-</section>
-</aside>
-</div>
-</div>
-<!-- =====================================
-     TOAST
-===================================== -->
-<div
-    id="toast"
-    class="toast"
-></div>
-<!-- =====================================
-     MODAL
-===================================== -->
-<div
-    id="confirmModal"
-    class="modal"
->
-    <div class="modal-box">
-        <div class="modal-title">
-            ⚠️ Очистить редактор?
-        </div>
-        <div class="modal-text">
-            Текущий текст будет удалён
-            из редактора.
-        </div>
-        <div class="modal-buttons">
-            <button
-                class="btn btn-secondary"
-                onclick="closeModal()"
-                style="flex:1"
-            >
-                Отмена
-            </button>
-            <button
-                class="btn btn-danger"
-                onclick="confirmClear()"
-                style="flex:1"
-            >
-                Очистить
-            </button>
-        </div>
+    <button class="donate-btn" id="donateBtn">
+        <span class="star-icon">⭐</span> Отправить донат
+    </button>
+    <div class="footer">
+        <p>🔹 Ваш бот должен принимать команду <br><code style="background:rgba(255,255,255,0.06);padding:2px 8px;border-radius:6px;">/start donate_сумма</code></p>
+        <p style="margin-top:6px;">Измените <strong>BOT_USERNAME</strong> в коде ниже</p>
     </div>
 </div>
 <script>
-/* =========================================
-   STATE
-========================================= */
-let selectedFormat = "txt";
-/* =========================================
-   ELEMENTS
-========================================= */
-const editor =
-    document.getElementById("editor");
-const fileName =
-    document.getElementById("fileName");
-const chars =
-    document.getElementById("chars");
-const lines =
-    document.getElementById("lines");
-const size =
-    document.getElementById("size");
-const sizeInfo =
-    document.getElementById("sizeInfo");
-const formatInfo =
-    document.getElementById("formatInfo");
-/* =========================================
-   FORMAT
-========================================= */
-function selectFormat(format){
-    selectedFormat = format;
-    document
-        .querySelectorAll(".format-btn")
-        .forEach(button => {
-            button.classList.toggle(
-                "active",
-                button.dataset.format === format
-            );
+    (function() {
+        // ⚠️ ЗАМЕНИТЕ НА ИМЯ ВАШЕГО БОТА (без @)
+        const BOT_USERNAME = 'LiraGame_Bot'; 
+
+        const starsInput = document.getElementById('starsInput');
+        const quickBtns = document.querySelectorAll('.quick-btn');
+        const donateBtn = document.getElementById('donateBtn');
+
+        quickBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const amount = this.getAttribute('data-amount');
+                starsInput.value = amount;
+                starsInput.style.borderColor = '#fbbf24';
+                setTimeout(() => starsInput.style.borderColor = '', 600);
+            });
         });
-    formatInfo.textContent =
-        "." + format;
-    updateStats();
-}
-/* =========================================
-   STATS
-========================================= */
-function formatBytes(bytes){
-    if(bytes < 1024){
-        return bytes + " B";
-    }
-    if(bytes < 1024 * 1024){
-        return (
-            (bytes / 1024).toFixed(2)
-            + " KB"
-        );
-    }
-    return (
-        (bytes / 1024 / 1024).toFixed(2)
-        + " MB"
-    );
-}
-function updateStats(){
-    const text =
-        editor.value;
-    const characterCount =
-        text.length;
-    const lineCount =
-        text.length === 0
-        ? 0
-        : text.split("\n").length;
-    const byteCount =
-        new Blob([text]).size;
-    chars.textContent =
-        characterCount.toLocaleString("ru-RU");
-    lines.textContent =
-        lineCount.toLocaleString("ru-RU");
-    size.textContent =
-        formatBytes(byteCount);
-    sizeInfo.textContent =
-        formatBytes(byteCount);
-}
-editor.addEventListener(
-    "input",
-    updateStats
-);
-/* =========================================
-   FILE NAME
-========================================= */
-function cleanFileName(name){
-    name =
-        name.trim();
-    if(!name){
-        name =
-            "my_file";
-    }
-    /*
-       Удаляем потенциально опасные
-       символы имени файла.
-    */
-    name =
-        name.replace(
-            /[<>:"/\\|?*\x00-\x1F]/g,
-            "_"
-        );
-    /*
-       Убираем уже существующее
-       расширение.
-    */
-    name =
-        name.replace(
-            /\.(txt|py|html|json|md)$/i,
-            ""
-        );
-    if(!name){
-        name =
-            "my_file";
-    }
-    return name;
-}
-/* =========================================
-   CONTENT
-========================================= */
-function getFileContent(){
-    const text =
-        editor.value;
-    /*
-       Для JSON форматируем,
-       если JSON корректный.
-    */
-    if(selectedFormat === "json"){
-        if(!text.trim()){
-            return "";
-        }
-        try{
-            const data =
-                JSON.parse(text);
-            return JSON.stringify(
-                data,
-                null,
-                2
-            );
-        }catch(error){
-            /*
-               Если JSON пока незавершён,
-               сохраняем исходный текст.
-            */
-            return text;
-        }
-    }
-    return text;
-}
-/* =========================================
-   MIME TYPE
-========================================= */
-function getMime(){
-    switch(selectedFormat){
-        case "py":
-            return "text/x-python;charset=utf-8";
-        case "html":
-            return "text/html;charset=utf-8";
-        case "json":
-            return "application/json;charset=utf-8";
-        case "md":
-            return "text/markdown;charset=utf-8";
-        case "txt":
-        default:
-            return "text/plain;charset=utf-8";
-    }
-}
-/* =========================================
-   DOWNLOAD
-========================================= */
-function downloadFile(){
-    const content =
-        getFileContent();
-    if(!content){
-        showToast(
-            "Сначала введи текст",
-            "error"
-        );
-        return;
-    }
-    const name =
-        cleanFileName(
-            fileName.value
-        );
-    const fullName =
-        name + "." + selectedFormat;
-    const blob =
-        new Blob(
-            [content],
-            {
-                type:getMime()
+
+        function openDonateLink(amount) {
+            if (!amount || amount < 1) {
+                alert('Пожалуйста, введите количество звёзд (минимум 1).');
+                starsInput.focus();
+                return;
             }
-        );
-    const url =
-        URL.createObjectURL(blob);
-    const link =
-        document.createElement("a");
-    link.href =
-        url;
-    link.download =
-        fullName;
-    document.body.appendChild(
-        link
-    );
-    link.click();
-    link.remove();
-    setTimeout(
-        () => {
-            URL.revokeObjectURL(url);
-        },
-        1000
-    );
-    showToast(
-        "Файл скачан: " + fullName,
-        "success"
-    );
-}
-/* =========================================
-   COPY
-========================================= */
-async function copyText(){
-    if(!editor.value){
-        showToast(
-            "Редактор пуст",
-            "error"
-        );
-        return;
-    }
-    try{
-        await navigator.clipboard.writeText(
-            editor.value
-        );
-        showToast(
-            "Текст скопирован",
-            "success"
-        );
-    }catch(error){
-        editor.select();
-        document.execCommand(
-            "copy"
-        );
-        showToast(
-            "Текст скопирован",
-            "success"
-        );
-    }
-}
-/* =========================================
-   SAVE DRAFT
-========================================= */
-function saveDraft(){
-    const draft = {
-        text:
-            editor.value,
-        fileName:
-            fileName.value,
-        format:
-            selectedFormat,
-        savedAt:
-            Date.now()
-    };
-    localStorage.setItem(
-        "file_studio_draft",
-        JSON.stringify(draft)
-    );
-    showToast(
-        "Черновик сохранён",
-        "success"
-    );
-}
-/* =========================================
-   LOAD DRAFT
-========================================= */
-function loadDraft(){
-    const raw =
-        localStorage.getItem(
-            "file_studio_draft"
-        );
-    if(!raw){
-        showToast(
-            "Сохранённых данных нет",
-            "error"
-        );
-        return;
-    }
-    try{
-        const draft =
-            JSON.parse(raw);
-        editor.value =
-            draft.text || "";
-        fileName.value =
-            draft.fileName || "my_file";
-        selectFormat(
-            draft.format || "txt"
-        );
-        updateStats();
-        showToast(
-            "Черновик загружен",
-            "success"
-        );
-    }catch(error){
-        showToast(
-            "Ошибка загрузки черновика",
-            "error"
-        );
-    }
-}
-/* =========================================
-   CLEAR
-========================================= */
-function clearEditor(){
-    document
-        .getElementById("confirmModal")
-        .classList.add("show");
-}
-function closeModal(){
-    document
-        .getElementById("confirmModal")
-        .classList.remove("show");
-}
-function confirmClear(){
-    editor.value = "";
-    updateStats();
-    closeModal();
-    showToast(
-        "Редактор очищен",
-        "success"
-    );
-}
-/* =========================================
-   TELEGRAM
-========================================= */
-function getTelegramToken(){
-    return document
-        .getElementById("botToken")
-        .value
-        .trim();
-}
-function getChatId(){
-    return document
-        .getElementById("chatId")
-        .value
-        .trim();
-}
-async function sendTelegram(){
-    const token =
-        getTelegramToken();
-    const chatId =
-        getChatId();
-    const content =
-        getFileContent();
-    if(!token){
-        showToast(
-            "Введи Bot Token",
-            "error"
-        );
-        return;
-    }
-    if(!chatId){
-        showToast(
-            "Введи Chat ID",
-            "error"
-        );
-        return;
-    }
-    if(!content){
-        showToast(
-            "Сначала введи текст",
-            "error"
-        );
-        return;
-    }
-    const button =
-        document.getElementById(
-            "telegramBtn"
-        );
-    button.disabled = true;
-    button.textContent =
-        "⏳ ОТПРАВКА...";
-    try{
-        const name =
-            cleanFileName(
-                fileName.value
-            );
-        const fullName =
-            name + "." + selectedFormat;
-        /*
-           Создаём файл
-           непосредственно в браузере.
-        */
-        const blob =
-            new Blob(
-                [content],
-                {
-                    type:getMime()
-                }
-            );
-        /*
-           Формируем multipart/form-data.
-        */
-        const form =
-            new FormData();
-        form.append(
-            "chat_id",
-            chatId
-        );
-        form.append(
-            "document",
-            blob,
-            fullName
-        );
-        form.append(
-            "caption",
-            "📄 " + fullName
-        );
-        /*
-           Telegram Bot API
-           sendDocument
-        */
-        const response =
-            await fetch(
-                "https://api.telegram.org/bot"
-                +
-                encodeURIComponent(token)
-                +
-                "/sendDocument",
-                {
-                    method:"POST",
-                    body:form
-                }
-            );
-        const result =
-            await response.json();
-        if(result.ok){
-            showToast(
-                "✅ Файл отправлен в Telegram",
-                "success"
-            );
-        }else{
-            showToast(
-                "❌ "
-                +
-                (
-                    result.description
-                    ||
-                    "Telegram вернул ошибку"
-                ),
-                "error"
-            );
-        }
-    }catch(error){
-        console.error(
-            error
-        );
-        showToast(
-            "❌ Ошибка отправки. Проверь токен, Chat ID и подключение.",
-            "error"
-        );
-    }finally{
-        button.disabled = false;
-        button.textContent =
-            "✈️ ОТПРАВИТЬ В TELEGRAM";
-    }
-}
-/* =========================================
-   TOAST
-========================================= */
-let toastTimer =
-    null;
-function showToast(
-    message,
-    type="success"
-){
-    const toast =
-        document.getElementById(
-            "toast"
-        );
-    toast.textContent =
-        message;
-    toast.className =
-        "toast show " + type;
-    clearTimeout(
-        toastTimer
-    );
-    toastTimer =
-        setTimeout(
-            () => {
-                toast.classList.remove(
-                    "show"
-                );
-            },
-            3500
-        );
-}
-/* =========================================
-   AUTOSAVE
-========================================= */
-let autoSaveTimer =
-    null;
-editor.addEventListener(
-    "input",
-    () => {
-        clearTimeout(
-            autoSaveTimer
-        );
-        autoSaveTimer =
-            setTimeout(
-                () => {
-                    const draft = {
-                        text:
-                            editor.value,
-                        fileName:
-                            fileName.value,
-                        format:
-                            selectedFormat,
-                        savedAt:
-                            Date.now()
-                    };
-                    localStorage.setItem(
-                        "file_studio_draft",
-                        JSON.stringify(draft)
-                    );
-                },
-                800
-            );
-    }
-);
-/* =========================================
-   TAB SUPPORT
-========================================= */
-editor.addEventListener(
-    "keydown",
-    function(event){
-        if(event.key === "Tab"){
-            event.preventDefault();
-            const start =
-                this.selectionStart;
-            const end =
-                this.selectionEnd;
-            this.value =
-                this.value.substring(
-                    0,
-                    start
-                )
-                +
-                "    "
-                +
-                this.value.substring(
-                    end
-                );
-            this.selectionStart =
-                this.selectionEnd =
-                    start + 4;
-            updateStats();
-        }
-    }
-);
-/* =========================================
-   ESCAPE
-========================================= */
-document.addEventListener(
-    "keydown",
-    event => {
-        if(event.key === "Escape"){
-            closeModal();
-        }
-    }
-);
-/* =========================================
-   LOAD DRAFT ON START
-========================================= */
-(function init(){
-    const raw =
-        localStorage.getItem(
-            "file_studio_draft"
-        );
-    if(raw){
-        try{
-            const draft =
-                JSON.parse(raw);
-            if(
-                typeof draft.text ===
-                "string"
-            ){
-                editor.value =
-                    draft.text;
+            const stars = Math.floor(Number(amount));
+            if (isNaN(stars) || stars < 1) {
+                alert('Введите корректное число.');
+                return;
             }
-            if(
-                typeof draft.fileName ===
-                "string"
-            ){
-                fileName.value =
-                    draft.fileName;
-            }
-            if(
-                ["txt","py","html","json","md"]
-                .includes(draft.format)
-            ){
-                selectedFormat =
-                    draft.format;
-            }
-        }catch(error){
-            console.log(
-                "Draft load error:",
-                error
-            );
+            const link = `https://t.me/${BOT_USERNAME}?start=donate_${stars}`;
+            window.open(link, '_blank');
         }
-    }
-    /*
-       Обновляем визуальное состояние
-       кнопки формата.
-    */
-    document
-        .querySelectorAll(".format-btn")
-        .forEach(button => {
-            button.classList.toggle(
-                "active",
-                button.dataset.format
-                === selectedFormat
-            );
+
+        donateBtn.addEventListener('click', function() {
+            const val = starsInput.value.trim();
+            openDonateLink(val);
         });
-    formatInfo.textContent =
-        "." + selectedFormat;
-    updateStats();
-})();
+
+        starsInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                donateBtn.click();
+            }
+        });
+
+        if (BOT_USERNAME === 'LiraGame_Bot') {
+            console.log('✅ Имя бота установлено: LiraGame_Bot');
+        }
+    })();
 </script>
 </body>
 </html>
