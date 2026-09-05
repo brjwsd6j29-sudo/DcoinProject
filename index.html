@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Пополнение Lira</title>
+    <title>LIRA — игровой бот</title>
     <style>
+        /* ================= ОБЩИЕ СТИЛИ ================= */
         * {
             margin: 0;
             padding: 0;
@@ -14,38 +15,33 @@
 
         body {
             background: #0f0f0f;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 420px;
-            width: 100%;
-            background: #1c1c1e;
-            border-radius: 28px;
-            padding: 30px 24px 24px;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8);
             color: #ffffff;
-            position: relative;
+            min-height: 100vh;
+            padding: 0 0 80px 0;
         }
 
-        /* Шапка */
+        /* ================= КОНТЕЙНЕР ================= */
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 20px 16px 30px;
+        }
+
+        /* ================= ШАПКА ================= */
         .header {
             display: flex;
             align-items: center;
-            gap: 12px;
+            justify-content: space-between;
             margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #2c2c2e;
         }
 
-        .header .logo {
-            font-size: 32px;
-        }
-
-        .header .title {
-            font-size: 24px;
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 28px;
             font-weight: 700;
             letter-spacing: -0.5px;
             background: linear-gradient(135deg, #f5b042, #f7d94a);
@@ -54,45 +50,165 @@
             background-clip: text;
         }
 
-        .header .badge {
-            margin-left: auto;
+        .logo span {
+            font-size: 32px;
+            -webkit-text-fill-color: initial;
+        }
+
+        .header-badge {
             background: #2c2c2e;
-            padding: 4px 12px;
+            padding: 4px 14px;
             border-radius: 30px;
             font-size: 12px;
             color: #aeaeb2;
             font-weight: 500;
         }
 
-        /* Блок курса */
-        .rate-info {
-            background: #2c2c2e;
-            border-radius: 16px;
-            padding: 14px 16px;
-            margin-bottom: 24px;
+        /* ================= НАВИГАЦИЯ ================= */
+        .nav {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 14px;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
         }
 
-        .rate-info .label {
+        .nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-btn {
+            flex: 0 0 auto;
+            padding: 8px 16px;
+            background: #1c1c1e;
+            border: 1px solid #2c2c2e;
+            border-radius: 30px;
+            color: #aeaeb2;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover {
+            background: #2c2c2e;
+            color: #ffffff;
+        }
+
+        .nav-btn.active {
+            background: #f5b042;
+            color: #0f0f0f;
+            border-color: #f5b042;
+        }
+
+        /* ================= СТРАНИЦЫ ================= */
+        .page {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ================= КАРТОЧКИ ================= */
+        .card {
+            background: #1c1c1e;
+            border-radius: 20px;
+            padding: 20px 18px;
+            margin-bottom: 16px;
+            border: 1px solid #2c2c2e;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title .emoji {
+            font-size: 22px;
+        }
+
+        /* ================= КНОПКИ ================= */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 24px;
+            background: #2c2c2e;
+            border: none;
+            border-radius: 40px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f5b042, #f7d94a);
+            color: #0f0f0f;
+            box-shadow: 0 4px 16px rgba(245, 176, 66, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(245, 176, 66, 0.35);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #3a3a3c;
             color: #aeaeb2;
         }
 
-        .rate-info .value {
+        .btn-outline:hover {
+            background: #2c2c2e;
             color: #ffffff;
-            font-weight: 600;
         }
 
-        /* Поле ввода */
+        .btn-success {
+            background: #34c759;
+            color: #ffffff;
+        }
+
+        .btn-success:hover {
+            background: #2db84e;
+        }
+
+        .btn-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* ================= ПОЛЯ ВВОДА ================= */
         .input-group {
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .input-group label {
             display: block;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 500;
             color: #aeaeb2;
             margin-bottom: 6px;
@@ -141,12 +257,12 @@
             -moz-appearance: textfield;
         }
 
-        /* Быстрые кнопки */
+        /* ================= БЫСТРЫЕ СУММЫ ================= */
         .quick-buttons {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             justify-content: center;
         }
 
@@ -154,9 +270,9 @@
             background: #2c2c2e;
             border: 1px solid #3a3a3c;
             border-radius: 30px;
-            padding: 8px 18px;
+            padding: 8px 16px;
             color: #ffffff;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.15s;
@@ -173,59 +289,50 @@
             transform: scale(0.95);
         }
 
-        /* Главная кнопка */
-        .main-btn {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #f5b042, #f7d94a);
-            border: none;
-            border-radius: 40px;
-            font-size: 18px;
-            font-weight: 700;
-            color: #0f0f0f;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 6px 20px rgba(245, 176, 66, 0.25);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-
-        .main-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 28px rgba(245, 176, 66, 0.35);
-        }
-
-        .main-btn:active {
-            transform: scale(0.97);
-        }
-
-        .main-btn .star {
-            font-size: 22px;
-        }
-
-        /* Ссылка помощи */
-        .help-link {
-            text-align: center;
-            margin-top: 8px;
-        }
-
-        .help-link a {
-            color: #5a9bff;
-            text-decoration: none;
+        /* ================= ТЕКСТ ================= */
+        .text-muted {
+            color: #aeaeb2;
             font-size: 14px;
-            font-weight: 500;
-            border-bottom: 1px dashed rgba(90, 155, 255, 0.3);
-            padding-bottom: 2px;
+            line-height: 1.6;
         }
 
-        .help-link a:hover {
-            border-bottom-color: #5a9bff;
+        .text-center {
+            text-align: center;
         }
 
-        /* ======= МОДАЛЬНОЕ ОКНО ======= */
+        .mt-12 { margin-top: 12px; }
+        .mb-12 { margin-bottom: 12px; }
+        .gap-8 { gap: 8px; }
+
+        .list-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #2c2c2e;
+            font-size: 14px;
+            color: #d1d1d6;
+        }
+
+        .list-item:last-child {
+            border-bottom: none;
+        }
+
+        .list-item .icon {
+            font-size: 18px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .list-item .text {
+            line-height: 1.5;
+        }
+
+        .list-item .text strong {
+            color: #ffffff;
+        }
+
+        /* ================= МОДАЛЬНОЕ ОКНО ================= */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -251,7 +358,7 @@
             border-radius: 28px;
             max-width: 380px;
             width: 100%;
-            padding: 28px 24px 24px;
+            padding: 24px 20px 20px;
             box-shadow: 0 24px 48px rgba(0, 0, 0, 0.9);
             animation: modalIn 0.25s ease-out;
         }
@@ -408,160 +515,382 @@
             color: #ffffff;
         }
 
-        /* ======= ПОМОЩЬ (встроенный блок) ======= */
-        .help-section {
-            display: none;
-            margin-top: 24px;
-            background: #2c2c2e;
+        /* ================= СПЕЦИАЛЬНЫЕ БЛОКИ ================= */
+        .support-block {
+            background: #1c1c1e;
             border-radius: 16px;
-            padding: 18px 16px;
+            padding: 18px;
+            text-align: center;
+            border: 1px solid #2c2c2e;
         }
 
-        .help-section.active {
-            display: block;
+        .support-block .support-icon {
+            font-size: 48px;
+            margin-bottom: 8px;
         }
 
-        .help-section h3 {
-            color: #ffffff;
+        .support-block .support-text {
             font-size: 16px;
-            margin-bottom: 8px;
-        }
-
-        .help-section p {
             color: #aeaeb2;
+            margin-bottom: 12px;
+        }
+
+        .rules-text {
             font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 10px;
+            line-height: 1.8;
+            color: #d1d1d6;
         }
 
-        .help-section .step {
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-            margin-bottom: 8px;
+        .rules-text strong {
+            color: #ffffff;
         }
 
-        .help-section .step .num {
-            background: #3a3a3c;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
+        .rules-text ul {
+            padding-left: 20px;
+            margin: 8px 0;
+        }
+
+        .rules-text ul li {
+            margin-bottom: 4px;
+        }
+
+        .footer-links {
             display: flex;
             justify-content: center;
-            align-items: center;
-            font-size: 13px;
-            font-weight: 700;
-            color: #f5b042;
-            flex-shrink: 0;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
         }
 
-        .help-section .step .text {
-            color: #d1d1d6;
-            font-size: 14px;
-        }
-
-        .help-section .close-help {
-            margin-top: 12px;
-            background: transparent;
-            border: none;
+        .footer-links a {
             color: #5a9bff;
-            font-weight: 500;
-            cursor: pointer;
+            text-decoration: none;
             font-size: 14px;
+            font-weight: 500;
         }
 
-        /* Адаптив */
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* ================= АДАПТИВ ================= */
         @media (max-width: 480px) {
-            .container {
-                padding: 20px 16px;
-            }
-            .header .title {
-                font-size: 20px;
-            }
-            .rate-info {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 4px;
-            }
-            .quick-btn {
-                padding: 6px 14px;
-                font-size: 13px;
-            }
+            .container { padding: 16px 12px; }
+            .logo { font-size: 24px; }
+            .nav-btn { font-size: 13px; padding: 6px 14px; }
+            .card { padding: 16px; }
+            .btn { padding: 12px 20px; font-size: 15px; }
+        }
+
+        /* ================= СКРОЛЛБАР ================= */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1c1c1e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3a3a3c;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5a5a5e;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Шапка -->
+        <!-- ШАПКА -->
         <div class="header">
-            <span class="logo">⭐</span>
-            <span class="title">Lira</span>
-            <span class="badge">бот</span>
+            <div class="logo">
+                <span>⭐</span> LIRA
+            </div>
+            <div class="header-badge">бот</div>
         </div>
 
-        <!-- Курс -->
-        <div class="rate-info">
-            <span class="label">Курс обмена</span>
-            <span class="value">1 ★ = 1,000,000 лир</span>
-        </div>
+        <!-- НАВИГАЦИЯ -->
+        <nav class="nav" id="mainNav">
+            <button class="nav-btn active" data-page="home">Главная</button>
+            <button class="nav-btn" data-page="donate">Донат</button>
+            <button class="nav-btn" data-page="help">Помощь</button>
+            <button class="nav-btn" data-page="rules">Правила</button>
+            <button class="nav-btn" data-page="support">Поддержка</button>
+        </nav>
 
-        <!-- Ввод суммы -->
-        <div class="input-group">
-            <label for="starsInput">Введите количество звёзд</label>
-            <div class="input-wrapper">
-                <span>★</span>
-                <input type="number" id="starsInput" min="1" step="1" placeholder="Например, 100" value="50">
+        <!-- ========== СТРАНИЦА: ГЛАВНАЯ ========== -->
+        <div class="page active" id="page-home">
+            <div class="card">
+                <div class="card-title">
+                    <span class="emoji">🎮</span> Добро пожаловать в LIRA!
+                </div>
+                <p class="text-muted">
+                    Игровой бот с виртуальной валютой — лирами. Играй, рискуй, выигрывай!
+                    В LIRA ты найдёшь множество игр, турниры, розыгрыши и многое другое.
+                </p>
+                <div class="btn-grid mt-12">
+                    <a href="#" class="btn btn-primary" id="goDonateBtn">⭐ Пополнить баланс</a>
+                    <a href="#" class="btn btn-outline" id="goHelpBtn">📖 Как играть?</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <span class="emoji">🔥</span> Популярные игры
+                </div>
+                <div class="list-item">
+                    <span class="icon">🎡</span>
+                    <span class="text"><strong>Х50</strong> — угадай цвет, множитель до 50x</span>
+                </div>
+                <div class="list-item">
+                    <span class="icon">🃏</span>
+                    <span class="text"><strong>Хило</strong> — карточная игра, угадай выше/ниже</span>
+                </div>
+                <div class="list-item">
+                    <span class="icon">🗼</span>
+                    <span class="text"><strong>Башня</strong> — проходи этажи, избегая мин</span>
+                </div>
+                <div class="list-item">
+                    <span class="icon">🎰</span>
+                    <span class="text"><strong>Слоты</strong> — классические слоты с множителями</span>
+                </div>
+                <div class="list-item">
+                    <span class="icon">⚽️</span>
+                    <span class="text"><strong>Спортивные</strong> — Дартс, Футбол, Баскетбол, Боулинг</span>
+                </div>
+                <div class="text-center mt-12">
+                    <span class="text-muted">Всего более 15 игр! Переходи в раздел «Помощь» для полного списка.</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <span class="emoji">👥</span> Сообщество
+                </div>
+                <div class="btn-grid">
+                    <a href="https://t.me/LiraUltimateChat" target="_blank" class="btn btn-outline">💬 Основной чат</a>
+                    <a href="https://t.me/LiraGameNews" target="_blank" class="btn btn-outline">📢 Новости</a>
+                </div>
             </div>
         </div>
 
-        <!-- Быстрые кнопки -->
-        <div class="quick-buttons">
-            <button class="quick-btn" data-amount="10">10 ★</button>
-            <button class="quick-btn" data-amount="25">25 ★</button>
-            <button class="quick-btn" data-amount="50">50 ★</button>
-            <button class="quick-btn" data-amount="100">100 ★</button>
-            <button class="quick-btn" data-amount="250">250 ★</button>
-            <button class="quick-btn" data-amount="500">500 ★</button>
+        <!-- ========== СТРАНИЦА: ДОНАТ ========== -->
+        <div class="page" id="page-donate">
+            <div class="card">
+                <div class="card-title">
+                    <span class="emoji">⭐</span> Пополнение баланса
+                </div>
+                <div class="rate-info" style="background:#2c2c2e; border-radius:12px; padding:12px 16px; margin-bottom:16px; display:flex; justify-content:space-between; font-size:14px;">
+                    <span class="text-muted">Курс обмена</span>
+                    <span style="font-weight:600;">1 ★ = 1,000,000 лир</span>
+                </div>
+
+                <div class="input-group">
+                    <label for="starsInput">Введите количество звёзд</label>
+                    <div class="input-wrapper">
+                        <span>★</span>
+                        <input type="number" id="starsInput" min="1" step="1" placeholder="Например, 100" value="50">
+                    </div>
+                </div>
+
+                <div class="quick-buttons">
+                    <button class="quick-btn" data-amount="10">10 ★</button>
+                    <button class="quick-btn" data-amount="25">25 ★</button>
+                    <button class="quick-btn" data-amount="50">50 ★</button>
+                    <button class="quick-btn" data-amount="100">100 ★</button>
+                    <button class="quick-btn" data-amount="250">250 ★</button>
+                    <button class="quick-btn" data-amount="500">500 ★</button>
+                </div>
+
+                <button class="btn btn-primary" id="donateBtn">
+                    <span>⭐</span> Пополнить баланс
+                </button>
+                <p class="text-muted text-center mt-12" style="font-size:13px;">
+                    Минимальная сумма — 10 звёзд. Оплата через Telegram Stars.
+                </p>
+            </div>
         </div>
 
-        <!-- Главная кнопка -->
-        <button class="main-btn" id="donateBtn">
-            <span class="star">⭐</span> Пополнить баланс
-        </button>
-
-        <!-- Ссылка помощи -->
-        <div class="help-link">
-            <a href="#" id="helpToggle">❓ Как это работает?</a>
+        <!-- ========== СТРАНИЦА: ПОМОЩЬ ========== -->
+        <div class="page" id="page-help">
+            <div class="card">
+                <div class="card-title">
+                    <span class="emoji">📖</span> Список игр и команд
+                </div>
+                <div class="text-muted" style="margin-bottom:12px;">
+                    <strong>💎 Премиум игры (в VIP-чатах):</strong>
+                </div>
+                <div class="list-item">
+                    <span class="icon">🎡</span>
+                    <span class="text"><strong>Х50</strong> [ставка] [цвет] — ч/ф/к/з</span>
+                </div>
+                <div class="list-item">
+                    <span class="icon">🎡</span>
+                    <span class="text"><strong>Мегавил</strong> [ставка] [сектор] — 1,2,5,8,10,15,20,40</span>
+                </div>
+                <div class="list-item">
+                    <span class="icon">🎟️</span>
+                    <span class="text"><strong>Джекпот</strong> [ставка]</span>
+                </div>
+                <div class="list-item">
+                    <span class="icon">🫟</span>
+                    <span class="text"><strong>Колесо</strong> [ставка]</span>
+                </div>
+                <div style="margin: 12px 0;">
+                    <span class="text-muted"><strong>🃏 Карточные игры:</strong></span>
+                </div>
+                <div class="list-item">
+                    <span class="icon">🧮</span>
+                    <span class="text"><strong>Хило</strong> [ставка]</span>
+                </div>
+                <div class="list-item">
+                    <span class="icon">🎴</span>
+                    <span class="text"><strong>Бж</strong> [ставка] — блэкджек</span>
+                </div>
+                <div style="margin: 12px 0;">
+                    <span class="text-muted"><strong>🔮 Игры с минами:</strong></span>
+                </div>
+                <div class="list-item">
+                    <span class="icon">🗼</span>
+                    <span class="text"><strong>Башня</strong> [ставка] [мины 1-4]</span>
+                </div>
+                <div class="list-item">
+                    <span class="icon">💣</span>
+                    <span class="text"><strong>Мины</strong> [ставка] [мины 2-24]</span>
+                </div>
+                <div class="list-item">
+                    <span class="icon">🌉</span>
+                    <span class="text"><strong>Мосты</strong> [ставка]</span>
+                </div>
+                <div class="list-item">
+                    <span class="icon">🏴‍☠️</span>
+                    <span class="text"><strong>Пират</strong> [ставка] [мины 1-2]</span>
+                </div>
+                <div style="margin: 12px 0;">
+                    <span class="text-muted"><strong>🧩 Эмодзи игры (dice):</strong></span>
+                </div>
+                <div class="list-item"><span class="icon">🎯</span><span class="text"><strong>Дартс</strong> [ставка]</span></div>
+                <div class="list-item"><span class="icon">🎳</span><span class="text"><strong>Боулинг</strong> [ставка]</span></div>
+                <div class="list-item"><span class="icon">🎰</span><span class="text"><strong>Спин</strong> [ставка]</span></div>
+                <div class="list-item"><span class="icon">🎲</span><span class="text"><strong>Кубик</strong> [ставка]</span></div>
+                <div class="list-item"><span class="icon">🏀</span><span class="text"><strong>Баскетбол</strong> [ставка]</span></div>
+                <div class="list-item"><span class="icon">⚽️</span><span class="text"><strong>Футбол</strong> [ставка]</span></div>
+                <div style="margin: 12px 0;">
+                    <span class="text-muted"><strong>💠 Риск-игры:</strong></span>
+                </div>
+                <div class="list-item"><span class="icon">⚠️</span><span class="text"><strong>Вилин</strong> — всё или ничего</span></div>
+                <div class="list-item"><span class="icon">🚀</span><span class="text"><strong>Оверго</strong> [ставка] [коэф]</span></div>
+                <div class="list-item"><span class="icon">🪙</span><span class="text"><strong>Флип</strong> [ставка]</span></div>
+                <div style="margin: 12px 0;">
+                    <span class="text-muted"><strong>👥 Групповые:</strong></span>
+                </div>
+                <div class="list-item"><span class="icon">🔫</span><span class="text"><strong>Рул</strong> [ставка] [исход]</span></div>
+                <div style="margin: 12px 0;">
+                    <span class="text-muted"><strong>⛩️ Обычные:</strong></span>
+                </div>
+                <div class="list-item"><span class="icon">🏹</span><span class="text"><strong>Охота</strong> [ставка]</span></div>
+                <div class="list-item"><span class="icon">🍬</span><span class="text"><strong>Слоты</strong> [ставка]</span></div>
+                <div style="margin-top:12px; padding-top:12px; border-top:1px solid #2c2c2e;">
+                    <span class="text-muted"><strong>📋 Базовые команды:</strong></span>
+                    <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:6px;">
+                        <span style="background:#2c2c2e; padding:2px 10px; border-radius:30px; font-size:13px;">б</span>
+                        <span style="background:#2c2c2e; padding:2px 10px; border-radius:30px; font-size:13px;">банк</span>
+                        <span style="background:#2c2c2e; padding:2px 10px; border-radius:30px; font-size:13px;">дать [сумма]</span>
+                        <span style="background:#2c2c2e; padding:2px 10px; border-radius:30px; font-size:13px;">профиль</span>
+                        <span style="background:#2c2c2e; padding:2px 10px; border-radius:30px; font-size:13px;">чд</span>
+                        <span style="background:#2c2c2e; padding:2px 10px; border-radius:30px; font-size:13px;">ласт</span>
+                        <span style="background:#2c2c2e; padding:2px 10px; border-radius:30px; font-size:13px;">донат [сумма]</span>
+                        <span style="background:#2c2c2e; padding:2px 10px; border-radius:30px; font-size:13px;">промо [код]</span>
+                        <span style="background:#2c2c2e; padding:2px 10px; border-radius:30px; font-size:13px;">+ник [текст]</span>
+                        <span style="background:#2c2c2e; padding:2px 10px; border-radius:30px; font-size:13px;">куровень</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- Блок помощи (скрыт) -->
-        <div class="help-section" id="helpSection">
-            <h3>📖 Как пополнить баланс?</h3>
-            <div class="step">
-                <span class="num">1</span>
-                <span class="text">Введите количество звёзд или выберите сумму из быстрых кнопок.</span>
+        <!-- ========== СТРАНИЦА: ПРАВИЛА ========== -->
+        <div class="page" id="page-rules">
+            <div class="card">
+                <div class="card-title">
+                    <span class="emoji">📜</span> Пользовательское соглашение
+                </div>
+                <div class="rules-text">
+                    <p><strong>🎮 Добро пожаловать в игровой бот LIRA.</strong></p>
+                    <p>Используя данного бота, вы подтверждаете, что ознакомились с условиями настоящего пользовательского соглашения и принимаете их в полном объёме.</p>
+                    <p>LIRA является развлекательным проектом и не предоставляет услуг, связанных с реальными денежными средствами.</p>
+
+                    <br><strong>2. Игровая валюта</strong>
+                    <p>В боте используется внутренняя виртуальная валюта — <strong>лиры</strong>.</p>
+                    <ul>
+                        <li>Лиры не являются реальными деньгами</li>
+                        <li>Не подлежат обмену на реальные ценности</li>
+                        <li>Используются исключительно внутри бота</li>
+                    </ul>
+                    <p>Администрация вправе изменять баланс, начисления и игровые механики без предварительного уведомления.</p>
+
+                    <br><strong>3. Игровой процесс</strong>
+                    <p>Игровые режимы в боте основаны на случайных алгоритмах.</p>
+                    <p>Администрация не гарантирует выигрыш, стабильный доход или сохранность игрового баланса.</p>
+                    <p>Любые попытки злоупотребления ошибками, обхода ограничений, вмешательства в работу бота могут привести к ограничению или блокировке доступа без объяснения причин.</p>
+
+                    <br><strong>4. Ответственность сторон</strong>
+                    <p>Администрация не несёт ответственности за:</p>
+                    <ul>
+                        <li>временные сбои в работе бота,</li>
+                        <li>потерю виртуальной валюты,</li>
+                        <li>последствия использования бота третьими лицами.</li>
+                    </ul>
+                    <p>Пользователь несёт полную ответственность за свои действия.</p>
+
+                    <br><strong>5. Изменения соглашения</strong>
+                    <p>Администрация оставляет за собой право изменять условия данного соглашения в любое время без уведомления пользователей.</p>
+                    <p>Продолжение использования бота означает автоматическое согласие с обновлённой версией соглашения.</p>
+
+                    <br><strong>6. Заключительные положения</strong>
+                    <p>Используя бота LIRA, вы подтверждаете, что делаете это добровольно и исключительно в развлекательных целях.</p>
+                    <p>Если вы не согласны с условиями соглашения — прекратите использование бота.</p>
+
+                    <br><p style="text-align:center; color:#aeaeb2;">🖤 Спасибо, что выбрали LIRA. Удачной игры!</p>
+                </div>
             </div>
-            <div class="step">
-                <span class="num">2</span>
-                <span class="text">Нажмите <strong>«Пополнить баланс»</strong> — откроется окно подтверждения.</span>
+        </div>
+
+        <!-- ========== СТРАНИЦА: ПОДДЕРЖКА ========== -->
+        <div class="page" id="page-support">
+            <div class="card">
+                <div class="support-block">
+                    <div class="support-icon">💬</div>
+                    <div class="support-text">
+                        <strong>Нужна помощь?</strong><br>
+                        Свяжитесь с разработчиком или напишите в поддержку.
+                    </div>
+                    <div class="btn-grid">
+                        <a href="https://t.me/azvaren" target="_blank" class="btn btn-primary">👨‍💻 Написать разработчику</a>
+                        <a href="https://t.me/LiraUltimateChat" target="_blank" class="btn btn-outline">💬 Игровой чат</a>
+                    </div>
+                    <p class="text-muted" style="margin-top:12px; font-size:13px;">
+                        Также вы можете использовать команду <strong>/q</strong> в ЛС бота для обращения к админам.
+                    </p>
+                </div>
             </div>
-            <div class="step">
-                <span class="num">3</span>
-                <span class="text">Проверьте сумму и нажмите <strong>«Подтвердить и заплатить ★ N»</strong>.</span>
+            <div class="card">
+                <div class="card-title">
+                    <span class="emoji">ℹ️</span> О боте
+                </div>
+                <p class="text-muted">
+                    <strong>LIRA</strong> — игровой бот на платформе Telegram. Версия 9.0.<br>
+                    Все права защищены. 2025.
+                </p>
+                <div class="footer-links">
+                    <a href="https://t.me/LiraGameNews">Новости</a>
+                    <a href="https://t.me/LiraUltimateChat">Чат</a>
+                    <a href="https://t.me/LiraGame_Bot">Бот</a>
+                </div>
             </div>
-            <div class="step">
-                <span class="num">4</span>
-                <span class="text">Вы перейдёте в бота <strong>@LiraGame_Bot</strong> для оплаты звёздами.</span>
-            </div>
-            <p style="margin-top: 12px; color: #5a5a5e; font-size: 13px;">
-                ⚠️ Минимальная сумма — <strong>1 звезда</strong>.<br>
-                После оплаты лиры зачисляются автоматически.
-            </p>
-            <button class="close-help" id="closeHelp">✕ Свернуть</button>
         </div>
     </div>
 
-    <!-- ======= МОДАЛЬНОЕ ОКНО ======= -->
+    <!-- ======= МОДАЛЬНОЕ ОКНО ПОДТВЕРЖДЕНИЯ ======= -->
     <div class="modal-overlay" id="confirmModal">
         <div class="modal">
             <div class="modal-header">
@@ -570,17 +899,17 @@
             </div>
             <div class="modal-body">
                 <div class="bot-name">
-                    Lira <span class="badge">бот</span>
+                    LIRA <span class="badge">бот</span>
                 </div>
                 <div class="description">
-                    Вы точно хотите приобрести <strong>пополнение баланса</strong> у Lira за <strong id="modalStarsText">50</strong> звёзд?
+                    Вы точно хотите приобрести <strong>пополнение баланса</strong> у LIRA за <strong id="modalStarsText">50</strong> звёзд?
                 </div>
                 <div class="amount-highlight">
                     <span class="label">Сумма звёзд</span>
                     <span class="value" id="modalStarsValue">★ 50</span>
                 </div>
                 <div class="terms">
-                    Совершая покупку, Вы принимаете <a href="https://telegra.ph/LiraGame-Bot-01-15" target="_blank">условия Telegram</a>.
+                    Совершая покупку, Вы принимаете <a href="#" id="termsLink" onclick="event.preventDefault(); switchPage('rules'); closeModal();">условия пользовательского соглашения</a>.
                 </div>
             </div>
             <div class="modal-footer">
@@ -593,142 +922,151 @@
     </div>
 
     <script>
-        (function() {
-            // Имя бота (без @)
-            const BOT_USERNAME = 'LiraGame_Bot';
+        // ================= НАВИГАЦИЯ =================
+        const navBtns = document.querySelectorAll('.nav-btn');
+        const pages = {
+            home: document.getElementById('page-home'),
+            donate: document.getElementById('page-donate'),
+            help: document.getElementById('page-help'),
+            rules: document.getElementById('page-rules'),
+            support: document.getElementById('page-support')
+        };
 
-            const starsInput = document.getElementById('starsInput');
-            const quickBtns = document.querySelectorAll('.quick-btn');
-            const donateBtn = document.getElementById('donateBtn');
-
-            // Модальное окно
-            const modal = document.getElementById('confirmModal');
-            const modalStarsText = document.getElementById('modalStarsText');
-            const modalStarsValue = document.getElementById('modalStarsValue');
-            const modalConfirmStars = document.getElementById('modalConfirmStars');
-            const modalConfirmBtn = document.getElementById('modalConfirm');
-            const modalClose = document.getElementById('modalClose');
-            const modalCancel = document.getElementById('modalCancel');
-
-            // Помощь
-            const helpToggle = document.getElementById('helpToggle');
-            const helpSection = document.getElementById('helpSection');
-            const closeHelp = document.getElementById('closeHelp');
-
-            // Переменная для хранения текущей суммы
-            let currentStars = 50;
-
-            // --- Обновление быстрыми кнопками ---
-            quickBtns.forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    const amount = parseInt(this.getAttribute('data-amount'), 10);
-                    starsInput.value = amount;
-                    // Анимация
-                    starsInput.style.borderColor = '#f5b042';
-                    setTimeout(() => starsInput.style.borderColor = '', 600);
-                    // Обновить текущую сумму для модалки
-                    currentStars = amount;
-                });
+        function switchPage(pageId) {
+            // Скрыть все страницы
+            Object.values(pages).forEach(p => p.classList.remove('active'));
+            // Показать нужную
+            if (pages[pageId]) pages[pageId].classList.add('active');
+            // Обновить активную кнопку
+            navBtns.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.page === pageId);
             });
+            // Закрыть модалку, если открыта
+            closeModal();
+        }
 
-            // --- Ввод в поле ---
-            starsInput.addEventListener('input', function() {
-                let val = parseInt(this.value, 10);
-                if (isNaN(val) || val < 1) {
-                    // Если пусто или 0, не обновляем currentStars, но сохраняем как 0?
-                    // Лучше оставить предыдущее значение, но показываем предупреждение при клике
-                    return;
-                }
+        navBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const page = this.dataset.page;
+                switchPage(page);
+            });
+        });
+
+        // ================= КНОПКИ НА ГЛАВНОЙ =================
+        document.getElementById('goDonateBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            switchPage('donate');
+        });
+
+        document.getElementById('goHelpBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            switchPage('help');
+        });
+
+        // ================= ДОНАТ =================
+        const BOT_USERNAME = 'LiraGame_Bot';
+        const starsInput = document.getElementById('starsInput');
+        const quickBtns = document.querySelectorAll('.quick-btn');
+        const donateBtn = document.getElementById('donateBtn');
+
+        // Модалка
+        const modal = document.getElementById('confirmModal');
+        const modalStarsText = document.getElementById('modalStarsText');
+        const modalStarsValue = document.getElementById('modalStarsValue');
+        const modalConfirmStars = document.getElementById('modalConfirmStars');
+        const modalConfirmBtn = document.getElementById('modalConfirm');
+        const modalClose = document.getElementById('modalClose');
+        const modalCancel = document.getElementById('modalCancel');
+
+        let currentStars = 50;
+
+        // Быстрые кнопки
+        quickBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const amount = parseInt(this.getAttribute('data-amount'), 10);
+                starsInput.value = amount;
+                starsInput.style.borderColor = '#f5b042';
+                setTimeout(() => starsInput.style.borderColor = '', 600);
+                currentStars = amount;
+            });
+        });
+
+        // Ввод вручную
+        starsInput.addEventListener('input', function() {
+            let val = parseInt(this.value, 10);
+            if (!isNaN(val) && val > 0) {
                 currentStars = val;
-            });
-
-            // --- Открытие модалки ---
-            function openModal(stars) {
-                if (!stars || stars < 1) {
-                    alert('Пожалуйста, введите количество звёзд (минимум 1).');
-                    starsInput.focus();
-                    return false;
-                }
-                // Обновляем содержимое модалки
-                modalStarsText.textContent = stars;
-                modalStarsValue.textContent = '★ ' + stars;
-                modalConfirmStars.textContent = stars;
-                modal.classList.add('active');
-                return true;
             }
+        });
 
-            // --- Закрытие модалки ---
-            function closeModal() {
-                modal.classList.remove('active');
+        // Открытие модалки
+        function openModal(stars) {
+            if (!stars || stars < 1) {
+                alert('Введите корректное количество звёзд (минимум 1).');
+                starsInput.focus();
+                return false;
             }
+            modalStarsText.textContent = stars;
+            modalStarsValue.textContent = '★ ' + stars;
+            modalConfirmStars.textContent = stars;
+            modal.classList.add('active');
+            return true;
+        }
 
-            // --- Обработчик главной кнопки ---
-            donateBtn.addEventListener('click', function() {
-                let val = parseInt(starsInput.value, 10);
-                if (isNaN(val) || val < 1) {
-                    alert('Введите корректное количество звёзд (минимум 1).');
-                    starsInput.focus();
-                    return;
-                }
-                currentStars = val;
-                openModal(val);
-            });
+        function closeModal() {
+            modal.classList.remove('active');
+        }
 
-            // --- Обработчик подтверждения в модалке ---
-            modalConfirmBtn.addEventListener('click', function() {
-                const stars = currentStars;
-                if (!stars || stars < 1) {
-                    closeModal();
-                    return;
-                }
-                // Формируем deep link и открываем
-                const link = `https://t.me/${BOT_USERNAME}?start=donate_${stars}`;
-                window.open(link, '_blank');
+        // Главная кнопка доната
+        donateBtn.addEventListener('click', function() {
+            let val = parseInt(starsInput.value, 10);
+            if (isNaN(val) || val < 1) {
+                alert('Введите количество звёзд (минимум 1).');
+                starsInput.focus();
+                return;
+            }
+            currentStars = val;
+            openModal(val);
+        });
+
+        // Подтверждение в модалке
+        modalConfirmBtn.addEventListener('click', function() {
+            const stars = currentStars;
+            if (!stars || stars < 1) {
                 closeModal();
-            });
+                return;
+            }
+            const link = `https://t.me/${BOT_USERNAME}?start=donate_${stars}`;
+            window.open(link, '_blank');
+            closeModal();
+        });
 
-            // --- Закрытие модалки (крестик, отмена) ---
-            modalClose.addEventListener('click', closeModal);
-            modalCancel.addEventListener('click', closeModal);
+        // Закрытие
+        modalClose.addEventListener('click', closeModal);
+        modalCancel.addEventListener('click', closeModal);
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
 
-            // Закрытие по клику вне модального окна
-            modal.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeModal();
-                }
-            });
-
-            // --- Помощь ---
-            helpToggle.addEventListener('click', function(e) {
+        // Enter в поле ввода
+        starsInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
                 e.preventDefault();
-                helpSection.classList.toggle('active');
-                if (helpSection.classList.contains('active')) {
-                    this.textContent = '✕ Закрыть помощь';
-                } else {
-                    this.textContent = '❓ Как это работает?';
-                }
-            });
+                donateBtn.click();
+            }
+        });
 
-            closeHelp.addEventListener('click', function() {
-                helpSection.classList.remove('active');
-                helpToggle.textContent = '❓ Как это работает?';
-            });
+        // Установка начального значения
+        starsInput.value = 50;
+        currentStars = 50;
 
-            // --- Инициализация: установить значение по умолчанию ---
-            starsInput.value = 50;
-            currentStars = 50;
+        // ================= ДОПОЛНИТЕЛЬНО: ССЫЛКИ НА ПРАВИЛА В МОДАЛКЕ =================
+        // Обработчик клика на ссылку "условия пользовательского соглашения" в модалке уже есть (onclick)
 
-            // Обработка клавиши Enter в поле ввода
-            starsInput.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    donateBtn.click();
-                }
-            });
+        // ================= ПОДДЕРЖКА: ОТКРЫТИЕ ЧАТА =================
+        // Кнопки уже ведут на @azvaren и @LiraUltimateChat
 
-            // --- Если открыто в Telegram, можно добавить обработку кнопки "Назад" ---
-            // Для совместимости с WebApp можно использовать Telegram.WebApp, но это необязательно.
-        })();
+        console.log('✅ LIRA Web App загружен!');
     </script>
 </body>
 </html>
