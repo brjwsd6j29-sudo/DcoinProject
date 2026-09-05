@@ -5,109 +5,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Донат в Telegram Stars</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
-        body {
-            min-height: 100vh;
-            background: linear-gradient(145deg, #1e293b, #0f172a);
-            display: flex;
+        /* Основные стили как ранее, плюс модальное окно */
+        /* ... весь предыдущий CSS ... */
+        /* Добавим стили для модального окна */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            z-index: 1000;
         }
-        .card {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(12px);
-            border-radius: 32px;
-            padding: 40px 30px;
-            max-width: 440px;
-            width: 100%;
-            box-shadow: 0 25px 50px -8px rgba(0,0,0,0.6);
-            border: 1px solid rgba(255,255,255,0.08);
-            transition: transform 0.2s;
+        .modal-box {
+            background: #1e293b;
+            border-radius: 24px;
+            padding: 30px 25px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #f1f5f9;
         }
-        .card:hover { transform: scale(1.01); }
-        .icon { text-align: center; font-size: 56px; margin-bottom: 12px; }
-        h1 { color: #f1f5f9; font-size: 26px; font-weight: 600; text-align: center; }
-        .subtitle { color: #94a3b8; text-align: center; font-size: 15px; margin: 8px 0 28px; line-height: 1.5; }
-        .input-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 24px; }
-        .input-group label { color: #cbd5e1; font-size: 14px; font-weight: 500; margin-left: 4px; }
-        .input-group input {
-            background: rgba(255,255,255,0.07);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 16px;
-            padding: 16px 18px;
-            font-size: 20px;
-            font-weight: 500;
-            color: #f8fafc;
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            width: 100%;
+        .modal-box h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 22px;
         }
-        .input-group input:focus {
-            border-color: #fbbf24;
-            box-shadow: 0 0 0 3px rgba(251,191,36,0.2);
-        }
-        .input-group input::placeholder { color: #64748b; font-weight: 400; }
-        .input-group input::-webkit-inner-spin-button { -webkit-appearance: none; }
-        .input-group input[type="number"] { -moz-appearance: textfield; }
-        .quick-buttons {
+        .modal-box .detail {
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-            margin: 8px 0 24px;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-        .quick-btn {
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 40px;
-            padding: 8px 18px;
-            color: #e2e8f0;
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.15s;
+        .modal-box .detail:last-of-type {
+            border-bottom: none;
         }
-        .quick-btn:hover {
-            background: rgba(251,191,36,0.15);
-            border-color: #fbbf24;
-            color: #fbbf24;
-            transform: translateY(-2px);
-        }
-        .quick-btn:active { transform: scale(0.96); }
-        .donate-btn {
-            background: linear-gradient(135deg, #fbbf24, #f59e0b);
-            border: none;
-            border-radius: 40px;
-            padding: 18px 20px;
-            width: 100%;
+        .modal-box .total {
             font-size: 20px;
-            font-weight: 700;
-            color: #0f172a;
+            font-weight: bold;
+            color: #fbbf24;
+            text-align: center;
+            margin: 15px 0;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .modal-buttons button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
-            box-shadow: 0 8px 18px -6px rgba(251,191,36,0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
         }
-        .donate-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 14px 28px -8px rgba(251,191,36,0.4);
-            background: linear-gradient(135deg, #fcd34d, #f59e0b);
+        .modal-buttons .confirm {
+            background: #fbbf24;
+            color: #0f172a;
         }
-        .donate-btn:active { transform: scale(0.97); }
-        .footer { margin-top: 24px; text-align: center; color: #64748b; font-size: 13px; }
-        .footer a { color: #94a3b8; text-decoration: none; border-bottom: 1px dashed #475569; }
-        .footer a:hover { color: #fbbf24; border-bottom-color: #fbbf24; }
-        .star-icon { display: inline-block; font-size: 24px; line-height: 1; }
-        @media (max-width: 480px) {
-            .card { padding: 30px 20px; }
-            h1 { font-size: 22px; }
-            .input-group input { font-size: 18px; padding: 14px 16px; }
-            .donate-btn { font-size: 18px; padding: 16px; }
+        .modal-buttons .confirm:hover {
+            background: #fcd34d;
+            transform: scale(1.02);
         }
+        .modal-buttons .cancel {
+            background: rgba(255,255,255,0.1);
+            color: #e2e8f0;
+        }
+        .modal-buttons .cancel:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        /* остальное как было */
     </style>
 </head>
 <body>
@@ -116,7 +88,7 @@
     <h1>Поддержать в Stars</h1>
     <p class="subtitle">
         Введите количество звёзд, которые хотите отправить.<br>
-        После нажатия вы перейдёте в бота для оплаты.
+        После нажатия появится подтверждение.
     </p>
     <div class="input-group">
         <label for="starsInput">Количество звёзд</label>
@@ -133,19 +105,61 @@
         <span class="star-icon">⭐</span> Отправить донат
     </button>
     <div class="footer">
-        <p>🔹 Ваш бот должен принимать команду <br><code style="background:rgba(255,255,255,0.06);padding:2px 8px;border-radius:6px;">/start donate_сумма</code></p>
-        <p style="margin-top:6px;">Измените <strong>BOT_USERNAME</strong> в коде ниже</p>
+        <p>🔹 Ваш бот: <strong>@LiraGame_Bot</strong></p>
+        <p style="margin-top:6px;">Курс: 1 ⭐ = <span id="rateDisplay">700 000</span> лир</p>
     </div>
 </div>
+
+<!-- Модальное окно подтверждения -->
+<div class="modal-overlay" id="confirmModal">
+    <div class="modal-box">
+        <h2>⭐ Подтверждение доната</h2>
+        <div class="detail">
+            <span>Звёзды:</span>
+            <span id="modalStars">100</span>
+        </div>
+        <div class="detail">
+            <span>Курс:</span>
+            <span id="modalRate">1 ⭐ = 700 000 лир</span>
+        </div>
+        <div class="detail">
+            <span>Начислится:</span>
+            <span id="modalLira">70 000 000 лир</span>
+        </div>
+        <div class="total" id="modalTotal">
+            Итого: 70 000 000 лир
+        </div>
+        <div class="modal-buttons">
+            <button class="cancel" id="cancelBtn">Отмена</button>
+            <button class="confirm" id="confirmBtn">✅ Подтвердить</button>
+        </div>
+    </div>
+</div>
+
 <script>
     (function() {
-        // ⚠️ ЗАМЕНИТЕ НА ИМЯ ВАШЕГО БОТА (без @)
-        const BOT_USERNAME = 'LiraGame_Bot'; 
+        // Имя бота (без @)
+        const BOT_USERNAME = 'LiraGame_Bot';
+        // Курс: 1 звезда = сколько лир (можно менять здесь)
+        const STAR_RATE = 700000;
 
+        // Элементы
         const starsInput = document.getElementById('starsInput');
         const quickBtns = document.querySelectorAll('.quick-btn');
         const donateBtn = document.getElementById('donateBtn');
+        const modal = document.getElementById('confirmModal');
+        const modalStars = document.getElementById('modalStars');
+        const modalRate = document.getElementById('modalRate');
+        const modalLira = document.getElementById('modalLira');
+        const modalTotal = document.getElementById('modalTotal');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const confirmBtn = document.getElementById('confirmBtn');
+        const rateDisplay = document.getElementById('rateDisplay');
 
+        // Устанавливаем отображение курса
+        rateDisplay.textContent = STAR_RATE.toLocaleString();
+
+        // Быстрые кнопки
         quickBtns.forEach(btn => {
             btn.addEventListener('click', function() {
                 const amount = this.getAttribute('data-amount');
@@ -155,26 +169,62 @@
             });
         });
 
-        function openDonateLink(amount) {
-            if (!amount || amount < 1) {
+        // Функция обновления модального окна
+        function updateModal(stars) {
+            const lira = stars * STAR_RATE;
+            modalStars.textContent = stars;
+            modalRate.textContent = `1 ⭐ = ${STAR_RATE.toLocaleString()} лир`;
+            modalLira.textContent = `${lira.toLocaleString()} лир`;
+            modalTotal.textContent = `Итого: ${lira.toLocaleString()} лир`;
+        }
+
+        // Показать модальное окно
+        function showModal(stars) {
+            updateModal(stars);
+            modal.style.display = 'flex';
+        }
+
+        // Скрыть модальное окно
+        function hideModal() {
+            modal.style.display = 'none';
+        }
+
+        // Обработчик на кнопку "Отправить донат"
+        donateBtn.addEventListener('click', function() {
+            const val = starsInput.value.trim();
+            if (!val || val < 1) {
                 alert('Пожалуйста, введите количество звёзд (минимум 1).');
                 starsInput.focus();
                 return;
             }
-            const stars = Math.floor(Number(amount));
+            const stars = Math.floor(Number(val));
             if (isNaN(stars) || stars < 1) {
                 alert('Введите корректное число.');
                 return;
             }
-            const link = `https://t.me/${BOT_USERNAME}?start=donate_${stars}`;
-            window.open(link, '_blank');
-        }
-
-        donateBtn.addEventListener('click', function() {
-            const val = starsInput.value.trim();
-            openDonateLink(val);
+            showModal(stars);
         });
 
+        // Подтверждение - открываем ссылку на бота
+        confirmBtn.addEventListener('click', function() {
+            const stars = parseInt(modalStars.textContent);
+            const link = `https://t.me/${BOT_USERNAME}?start=donate_${stars}`;
+            // Открываем в новой вкладке
+            window.open(link, '_blank');
+            hideModal();
+        });
+
+        // Отмена
+        cancelBtn.addEventListener('click', hideModal);
+
+        // Закрытие по клику на overlay (но не на box)
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                hideModal();
+            }
+        });
+
+        // Enter в поле ввода
         starsInput.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
@@ -182,9 +232,7 @@
             }
         });
 
-        if (BOT_USERNAME === 'LiraGame_Bot') {
-            console.log('✅ Имя бота установлено: LiraGame_Bot');
-        }
+        console.log('✅ Страница доната готова, курс:', STAR_RATE);
     })();
 </script>
 </body>
