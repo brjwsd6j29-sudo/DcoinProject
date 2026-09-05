@@ -2,238 +2,733 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Донат в Telegram Stars</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Пополнение Lira</title>
     <style>
-        /* Основные стили как ранее, плюс модальное окно */
-        /* ... весь предыдущий CSS ... */
-        /* Добавим стили для модального окна */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: #0f0f0f;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 420px;
+            width: 100%;
+            background: #1c1c1e;
+            border-radius: 28px;
+            padding: 30px 24px 24px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8);
+            color: #ffffff;
+            position: relative;
+        }
+
+        /* Шапка */
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .header .logo {
+            font-size: 32px;
+        }
+
+        .header .title {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #f5b042, #f7d94a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header .badge {
+            margin-left: auto;
+            background: #2c2c2e;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            color: #aeaeb2;
+            font-weight: 500;
+        }
+
+        /* Блок курса */
+        .rate-info {
+            background: #2c2c2e;
+            border-radius: 16px;
+            padding: 14px 16px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .rate-info .label {
+            color: #aeaeb2;
+        }
+
+        .rate-info .value {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* Поле ввода */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 15px;
+            font-weight: 500;
+            color: #aeaeb2;
+            margin-bottom: 6px;
+        }
+
+        .input-group .input-wrapper {
+            display: flex;
+            align-items: center;
+            background: #2c2c2e;
+            border-radius: 16px;
+            padding: 0 16px;
+            border: 1px solid #3a3a3c;
+            transition: border-color 0.2s;
+        }
+
+        .input-group .input-wrapper:focus-within {
+            border-color: #f5b042;
+        }
+
+        .input-group .input-wrapper span {
+            color: #aeaeb2;
+            font-size: 18px;
+            margin-right: 8px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 16px 0;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .input-group input::placeholder {
+            color: #5a5a5e;
+            font-weight: 400;
+        }
+
+        .input-group input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+        .input-group input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        /* Быстрые кнопки */
+        .quick-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 24px;
+            justify-content: center;
+        }
+
+        .quick-btn {
+            background: #2c2c2e;
+            border: 1px solid #3a3a3c;
+            border-radius: 30px;
+            padding: 8px 18px;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s;
+            flex: 0 1 auto;
+        }
+
+        .quick-btn:hover {
+            background: #3a3a3c;
+            border-color: #f5b042;
+            color: #f5b042;
+        }
+
+        .quick-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Главная кнопка */
+        .main-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #f5b042, #f7d94a);
+            border: none;
+            border-radius: 40px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #0f0f0f;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 6px 20px rgba(245, 176, 66, 0.25);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .main-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(245, 176, 66, 0.35);
+        }
+
+        .main-btn:active {
+            transform: scale(0.97);
+        }
+
+        .main-btn .star {
+            font-size: 22px;
+        }
+
+        /* Ссылка помощи */
+        .help-link {
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        .help-link a {
+            color: #5a9bff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-bottom: 1px dashed rgba(90, 155, 255, 0.3);
+            padding-bottom: 2px;
+        }
+
+        .help-link a:hover {
+            border-bottom-color: #5a9bff;
+        }
+
+        /* ======= МОДАЛЬНОЕ ОКНО ======= */
         .modal-overlay {
             display: none;
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(4px);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            padding: 20px;
         }
-        .modal-box {
-            background: #1e293b;
-            border-radius: 24px;
-            padding: 30px 25px;
-            max-width: 400px;
-            width: 90%;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: #f1f5f9;
+
+        .modal-overlay.active {
+            display: flex;
         }
-        .modal-box h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 22px;
+
+        .modal {
+            background: #1c1c1e;
+            border-radius: 28px;
+            max-width: 380px;
+            width: 100%;
+            padding: 28px 24px 24px;
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.9);
+            animation: modalIn 0.25s ease-out;
         }
-        .modal-box .detail {
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.92) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal .modal-header {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            align-items: center;
+            margin-bottom: 16px;
         }
-        .modal-box .detail:last-of-type {
-            border-bottom: none;
-        }
-        .modal-box .total {
+
+        .modal .modal-header h2 {
             font-size: 20px;
-            font-weight: bold;
-            color: #fbbf24;
-            text-align: center;
-            margin: 15px 0;
+            font-weight: 700;
+            color: #ffffff;
         }
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .modal-buttons button {
-            flex: 1;
-            padding: 12px;
+
+        .modal .modal-close {
+            background: transparent;
             border: none;
-            border-radius: 12px;
-            font-size: 16px;
+            color: #aeaeb2;
+            font-size: 26px;
+            cursor: pointer;
+            padding: 0 4px;
+            line-height: 1;
+        }
+
+        .modal .modal-close:hover {
+            color: #ffffff;
+        }
+
+        .modal .modal-body {
+            margin-bottom: 24px;
+        }
+
+        .modal .modal-body .bot-name {
+            font-size: 18px;
             font-weight: 600;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .modal .modal-body .bot-name .badge {
+            background: #2c2c2e;
+            font-size: 12px;
+            padding: 2px 12px;
+            border-radius: 30px;
+            color: #aeaeb2;
+            font-weight: 400;
+        }
+
+        .modal .modal-body .description {
+            color: #aeaeb2;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .modal .modal-body .amount-highlight {
+            background: #2c2c2e;
+            border-radius: 12px;
+            padding: 14px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0 16px;
+        }
+
+        .modal .modal-body .amount-highlight .label {
+            color: #aeaeb2;
+            font-size: 14px;
+        }
+
+        .modal .modal-body .amount-highlight .value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #f7d94a;
+        }
+
+        .modal .modal-body .terms {
+            font-size: 13px;
+            color: #5a5a5e;
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        .modal .modal-body .terms a {
+            color: #5a9bff;
+            text-decoration: none;
+        }
+
+        .modal .modal-footer {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .modal .btn-confirm {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #f5b042, #f7d94a);
+            border: none;
+            border-radius: 40px;
+            font-size: 17px;
+            font-weight: 700;
+            color: #0f0f0f;
             cursor: pointer;
             transition: all 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 16px rgba(245, 176, 66, 0.2);
         }
-        .modal-buttons .confirm {
-            background: #fbbf24;
-            color: #0f172a;
+
+        .modal .btn-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(245, 176, 66, 0.3);
         }
-        .modal-buttons .confirm:hover {
-            background: #fcd34d;
-            transform: scale(1.02);
+
+        .modal .btn-confirm:active {
+            transform: scale(0.97);
         }
-        .modal-buttons .cancel {
-            background: rgba(255,255,255,0.1);
-            color: #e2e8f0;
+
+        .modal .btn-cancel {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            border: 1px solid #3a3a3c;
+            border-radius: 40px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #aeaeb2;
+            cursor: pointer;
+            transition: background 0.2s;
         }
-        .modal-buttons .cancel:hover {
-            background: rgba(255,255,255,0.2);
+
+        .modal .btn-cancel:hover {
+            background: #2c2c2e;
+            color: #ffffff;
         }
-        /* остальное как было */
+
+        /* ======= ПОМОЩЬ (встроенный блок) ======= */
+        .help-section {
+            display: none;
+            margin-top: 24px;
+            background: #2c2c2e;
+            border-radius: 16px;
+            padding: 18px 16px;
+        }
+
+        .help-section.active {
+            display: block;
+        }
+
+        .help-section h3 {
+            color: #ffffff;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .help-section p {
+            color: #aeaeb2;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .help-section .step {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .help-section .step .num {
+            background: #3a3a3c;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 700;
+            color: #f5b042;
+            flex-shrink: 0;
+        }
+
+        .help-section .step .text {
+            color: #d1d1d6;
+            font-size: 14px;
+        }
+
+        .help-section .close-help {
+            margin-top: 12px;
+            background: transparent;
+            border: none;
+            color: #5a9bff;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* Адаптив */
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px 16px;
+            }
+            .header .title {
+                font-size: 20px;
+            }
+            .rate-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+            .quick-btn {
+                padding: 6px 14px;
+                font-size: 13px;
+            }
+        }
     </style>
 </head>
 <body>
-<div class="card">
-    <div class="icon">⭐</div>
-    <h1>Поддержать в Stars</h1>
-    <p class="subtitle">
-        Введите количество звёзд, которые хотите отправить.<br>
-        После нажатия появится подтверждение.
-    </p>
-    <div class="input-group">
-        <label for="starsInput">Количество звёзд</label>
-        <input type="number" id="starsInput" min="1" step="1" placeholder="Например, 100" value="100">
+    <div class="container">
+        <!-- Шапка -->
+        <div class="header">
+            <span class="logo">⭐</span>
+            <span class="title">Lira</span>
+            <span class="badge">бот</span>
+        </div>
+
+        <!-- Курс -->
+        <div class="rate-info">
+            <span class="label">Курс обмена</span>
+            <span class="value">1 ★ = 1,000,000 лир</span>
+        </div>
+
+        <!-- Ввод суммы -->
+        <div class="input-group">
+            <label for="starsInput">Введите количество звёзд</label>
+            <div class="input-wrapper">
+                <span>★</span>
+                <input type="number" id="starsInput" min="1" step="1" placeholder="Например, 100" value="50">
+            </div>
+        </div>
+
+        <!-- Быстрые кнопки -->
+        <div class="quick-buttons">
+            <button class="quick-btn" data-amount="10">10 ★</button>
+            <button class="quick-btn" data-amount="25">25 ★</button>
+            <button class="quick-btn" data-amount="50">50 ★</button>
+            <button class="quick-btn" data-amount="100">100 ★</button>
+            <button class="quick-btn" data-amount="250">250 ★</button>
+            <button class="quick-btn" data-amount="500">500 ★</button>
+        </div>
+
+        <!-- Главная кнопка -->
+        <button class="main-btn" id="donateBtn">
+            <span class="star">⭐</span> Пополнить баланс
+        </button>
+
+        <!-- Ссылка помощи -->
+        <div class="help-link">
+            <a href="#" id="helpToggle">❓ Как это работает?</a>
+        </div>
+
+        <!-- Блок помощи (скрыт) -->
+        <div class="help-section" id="helpSection">
+            <h3>📖 Как пополнить баланс?</h3>
+            <div class="step">
+                <span class="num">1</span>
+                <span class="text">Введите количество звёзд или выберите сумму из быстрых кнопок.</span>
+            </div>
+            <div class="step">
+                <span class="num">2</span>
+                <span class="text">Нажмите <strong>«Пополнить баланс»</strong> — откроется окно подтверждения.</span>
+            </div>
+            <div class="step">
+                <span class="num">3</span>
+                <span class="text">Проверьте сумму и нажмите <strong>«Подтвердить и заплатить ★ N»</strong>.</span>
+            </div>
+            <div class="step">
+                <span class="num">4</span>
+                <span class="text">Вы перейдёте в бота <strong>@LiraGame_Bot</strong> для оплаты звёздами.</span>
+            </div>
+            <p style="margin-top: 12px; color: #5a5a5e; font-size: 13px;">
+                ⚠️ Минимальная сумма — <strong>1 звезда</strong>.<br>
+                После оплаты лиры зачисляются автоматически.
+            </p>
+            <button class="close-help" id="closeHelp">✕ Свернуть</button>
+        </div>
     </div>
-    <div class="quick-buttons">
-        <button class="quick-btn" data-amount="50">50 ⭐</button>
-        <button class="quick-btn" data-amount="100">100 ⭐</button>
-        <button class="quick-btn" data-amount="250">250 ⭐</button>
-        <button class="quick-btn" data-amount="500">500 ⭐</button>
-        <button class="quick-btn" data-amount="1000">1000 ⭐</button>
-    </div>
-    <button class="donate-btn" id="donateBtn">
-        <span class="star-icon">⭐</span> Отправить донат
-    </button>
-    <div class="footer">
-        <p>🔹 Ваш бот: <strong>@LiraGame_Bot</strong></p>
-        <p style="margin-top:6px;">Курс: 1 ⭐ = <span id="rateDisplay">700 000</span> лир</p>
-    </div>
-</div>
 
-<!-- Модальное окно подтверждения -->
-<div class="modal-overlay" id="confirmModal">
-    <div class="modal-box">
-        <h2>⭐ Подтверждение доната</h2>
-        <div class="detail">
-            <span>Звёзды:</span>
-            <span id="modalStars">100</span>
-        </div>
-        <div class="detail">
-            <span>Курс:</span>
-            <span id="modalRate">1 ⭐ = 700 000 лир</span>
-        </div>
-        <div class="detail">
-            <span>Начислится:</span>
-            <span id="modalLira">70 000 000 лир</span>
-        </div>
-        <div class="total" id="modalTotal">
-            Итого: 70 000 000 лир
-        </div>
-        <div class="modal-buttons">
-            <button class="cancel" id="cancelBtn">Отмена</button>
-            <button class="confirm" id="confirmBtn">✅ Подтвердить</button>
+    <!-- ======= МОДАЛЬНОЕ ОКНО ======= -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Подтверждение покупки</h2>
+                <button class="modal-close" id="modalClose">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="bot-name">
+                    Lira <span class="badge">бот</span>
+                </div>
+                <div class="description">
+                    Вы точно хотите приобрести <strong>пополнение баланса</strong> у Lira за <strong id="modalStarsText">50</strong> звёзд?
+                </div>
+                <div class="amount-highlight">
+                    <span class="label">Сумма звёзд</span>
+                    <span class="value" id="modalStarsValue">★ 50</span>
+                </div>
+                <div class="terms">
+                    Совершая покупку, Вы принимаете <a href="https://telegra.ph/LiraGame-Bot-01-15" target="_blank">условия Telegram</a>.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-confirm" id="modalConfirm">
+                    Подтвердить и заплатить ★ <span id="modalConfirmStars">50</span>
+                </button>
+                <button class="btn-cancel" id="modalCancel">Отмена</button>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    (function() {
-        // Имя бота (без @)
-        const BOT_USERNAME = 'LiraGame_Bot';
-        // Курс: 1 звезда = сколько лир (можно менять здесь)
-        const STAR_RATE = 700000;
+    <script>
+        (function() {
+            // Имя бота (без @)
+            const BOT_USERNAME = 'LiraGame_Bot';
 
-        // Элементы
-        const starsInput = document.getElementById('starsInput');
-        const quickBtns = document.querySelectorAll('.quick-btn');
-        const donateBtn = document.getElementById('donateBtn');
-        const modal = document.getElementById('confirmModal');
-        const modalStars = document.getElementById('modalStars');
-        const modalRate = document.getElementById('modalRate');
-        const modalLira = document.getElementById('modalLira');
-        const modalTotal = document.getElementById('modalTotal');
-        const cancelBtn = document.getElementById('cancelBtn');
-        const confirmBtn = document.getElementById('confirmBtn');
-        const rateDisplay = document.getElementById('rateDisplay');
+            const starsInput = document.getElementById('starsInput');
+            const quickBtns = document.querySelectorAll('.quick-btn');
+            const donateBtn = document.getElementById('donateBtn');
 
-        // Устанавливаем отображение курса
-        rateDisplay.textContent = STAR_RATE.toLocaleString();
+            // Модальное окно
+            const modal = document.getElementById('confirmModal');
+            const modalStarsText = document.getElementById('modalStarsText');
+            const modalStarsValue = document.getElementById('modalStarsValue');
+            const modalConfirmStars = document.getElementById('modalConfirmStars');
+            const modalConfirmBtn = document.getElementById('modalConfirm');
+            const modalClose = document.getElementById('modalClose');
+            const modalCancel = document.getElementById('modalCancel');
 
-        // Быстрые кнопки
-        quickBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const amount = this.getAttribute('data-amount');
-                starsInput.value = amount;
-                starsInput.style.borderColor = '#fbbf24';
-                setTimeout(() => starsInput.style.borderColor = '', 600);
+            // Помощь
+            const helpToggle = document.getElementById('helpToggle');
+            const helpSection = document.getElementById('helpSection');
+            const closeHelp = document.getElementById('closeHelp');
+
+            // Переменная для хранения текущей суммы
+            let currentStars = 50;
+
+            // --- Обновление быстрыми кнопками ---
+            quickBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const amount = parseInt(this.getAttribute('data-amount'), 10);
+                    starsInput.value = amount;
+                    // Анимация
+                    starsInput.style.borderColor = '#f5b042';
+                    setTimeout(() => starsInput.style.borderColor = '', 600);
+                    // Обновить текущую сумму для модалки
+                    currentStars = amount;
+                });
             });
-        });
 
-        // Функция обновления модального окна
-        function updateModal(stars) {
-            const lira = stars * STAR_RATE;
-            modalStars.textContent = stars;
-            modalRate.textContent = `1 ⭐ = ${STAR_RATE.toLocaleString()} лир`;
-            modalLira.textContent = `${lira.toLocaleString()} лир`;
-            modalTotal.textContent = `Итого: ${lira.toLocaleString()} лир`;
-        }
+            // --- Ввод в поле ---
+            starsInput.addEventListener('input', function() {
+                let val = parseInt(this.value, 10);
+                if (isNaN(val) || val < 1) {
+                    // Если пусто или 0, не обновляем currentStars, но сохраняем как 0?
+                    // Лучше оставить предыдущее значение, но показываем предупреждение при клике
+                    return;
+                }
+                currentStars = val;
+            });
 
-        // Показать модальное окно
-        function showModal(stars) {
-            updateModal(stars);
-            modal.style.display = 'flex';
-        }
-
-        // Скрыть модальное окно
-        function hideModal() {
-            modal.style.display = 'none';
-        }
-
-        // Обработчик на кнопку "Отправить донат"
-        donateBtn.addEventListener('click', function() {
-            const val = starsInput.value.trim();
-            if (!val || val < 1) {
-                alert('Пожалуйста, введите количество звёзд (минимум 1).');
-                starsInput.focus();
-                return;
+            // --- Открытие модалки ---
+            function openModal(stars) {
+                if (!stars || stars < 1) {
+                    alert('Пожалуйста, введите количество звёзд (минимум 1).');
+                    starsInput.focus();
+                    return false;
+                }
+                // Обновляем содержимое модалки
+                modalStarsText.textContent = stars;
+                modalStarsValue.textContent = '★ ' + stars;
+                modalConfirmStars.textContent = stars;
+                modal.classList.add('active');
+                return true;
             }
-            const stars = Math.floor(Number(val));
-            if (isNaN(stars) || stars < 1) {
-                alert('Введите корректное число.');
-                return;
+
+            // --- Закрытие модалки ---
+            function closeModal() {
+                modal.classList.remove('active');
             }
-            showModal(stars);
-        });
 
-        // Подтверждение - открываем ссылку на бота
-        confirmBtn.addEventListener('click', function() {
-            const stars = parseInt(modalStars.textContent);
-            const link = `https://t.me/${BOT_USERNAME}?start=donate_${stars}`;
-            // Открываем в новой вкладке
-            window.open(link, '_blank');
-            hideModal();
-        });
+            // --- Обработчик главной кнопки ---
+            donateBtn.addEventListener('click', function() {
+                let val = parseInt(starsInput.value, 10);
+                if (isNaN(val) || val < 1) {
+                    alert('Введите корректное количество звёзд (минимум 1).');
+                    starsInput.focus();
+                    return;
+                }
+                currentStars = val;
+                openModal(val);
+            });
 
-        // Отмена
-        cancelBtn.addEventListener('click', hideModal);
+            // --- Обработчик подтверждения в модалке ---
+            modalConfirmBtn.addEventListener('click', function() {
+                const stars = currentStars;
+                if (!stars || stars < 1) {
+                    closeModal();
+                    return;
+                }
+                // Формируем deep link и открываем
+                const link = `https://t.me/${BOT_USERNAME}?start=donate_${stars}`;
+                window.open(link, '_blank');
+                closeModal();
+            });
 
-        // Закрытие по клику на overlay (но не на box)
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                hideModal();
-            }
-        });
+            // --- Закрытие модалки (крестик, отмена) ---
+            modalClose.addEventListener('click', closeModal);
+            modalCancel.addEventListener('click', closeModal);
 
-        // Enter в поле ввода
-        starsInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
+            // Закрытие по клику вне модального окна
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            });
+
+            // --- Помощь ---
+            helpToggle.addEventListener('click', function(e) {
                 e.preventDefault();
-                donateBtn.click();
-            }
-        });
+                helpSection.classList.toggle('active');
+                if (helpSection.classList.contains('active')) {
+                    this.textContent = '✕ Закрыть помощь';
+                } else {
+                    this.textContent = '❓ Как это работает?';
+                }
+            });
 
-        console.log('✅ Страница доната готова, курс:', STAR_RATE);
-    })();
-</script>
+            closeHelp.addEventListener('click', function() {
+                helpSection.classList.remove('active');
+                helpToggle.textContent = '❓ Как это работает?';
+            });
+
+            // --- Инициализация: установить значение по умолчанию ---
+            starsInput.value = 50;
+            currentStars = 50;
+
+            // Обработка клавиши Enter в поле ввода
+            starsInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    donateBtn.click();
+                }
+            });
+
+            // --- Если открыто в Telegram, можно добавить обработку кнопки "Назад" ---
+            // Для совместимости с WebApp можно использовать Telegram.WebApp, но это необязательно.
+        })();
+    </script>
 </body>
 </html>
